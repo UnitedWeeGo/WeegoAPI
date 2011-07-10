@@ -54,6 +54,7 @@ class BadgeResetClass extends ReqBase
 		$me = $this->checkRegUserId($this->dataObj);
 		$existingDevices = $me->GetDeviceList( array( array("deviceUuid", "=", $this->dataObj['deviceUuid'] ) ) );
 		
+		/** @var $device Device */
 		$device;
 		if( count($existingDevices) == 0) // device has not been added, so add it
 		{
