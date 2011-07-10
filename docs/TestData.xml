@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events> 
+	<event id="11111111" date="1295776800"> 
+		<title><![CDATA[The Big One]]></title> 
+		<description><![CDATA[Description Goes Here]]></description> 
+		<creator><![CDATA[Creator goes here]]></creator> 
+		<locations> 
+			<location id="11111111111" latitude="37.76986" longitude="-122.448"> 
+				<establishment><![CDATA[Gold Cane Cocktail Lounge]]></establishment> 
+				<locality><![CDATA[San Francisco]]></locality> 
+				<streetNumber><![CDATA[1569]]></streetNumber> 
+				<route><![CDATA[Haight St]]></route> 
+			</location> 
+			<location id="22222222222" latitude="37.79184" longitude="-122.4068"> 
+				<establishment><![CDATA[Dining Room at Ritz Carlton]]></establishment> 
+				<locality><![CDATA[San Francisco]]></locality> 
+				<streetNumber><![CDATA[600]]></streetNumber> 
+				<route><![CDATA[Stockton St]]></route> 
+			</location> 
+		</locations> 
+		<participants> 
+			<participant email="me@velloff.com"><![CDATA[Test User]]></participant> 
+			<participant email="dave.prukop@gmail.com"><![CDATA[Dave Prukop]]></participant> 
+			<participant email="nick.velloff@gmail.com"><![CDATA[Nick Velloff]]></participant> 
+		</participants> 
+		<votes> 
+			<vote locationId="11111111111"><![CDATA[me@velloff.com,dave.prukop@gmail.com]]></vote> 
+			<vote locationId="22222222222"><![CDATA[nick.velloff@gmail.com]]></vote> 
+		</votes> 
+	</event> 
+</events>

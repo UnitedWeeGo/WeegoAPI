@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+
+<style type="text/css">
+
+BODY {
+	margin: 0;
+	padding: 0;
+	background-color: #F3F3F3;
+}
+
+.infoPage {
+	position: relative;
+	width: 298px;
+	height: 363px;
+	border: 1px solid #F3F3F3;
+	display: none;
+}
+
+H1 {
+	font-family: "MyriadPro-Regular";
+	font-size: 28px;
+	font-weight: normal;
+	margin: 12px 12px 8px 12px;
+	line-height: 28px;
+	color: #444;
+}
+
+P {
+	font-family: "MyriadPro-Regular";
+	font-size: 16px;
+	font-weight: normal;
+	margin: 0 12px 12px 12px;
+	line-height: 16px;
+	color: #444;
+}
+
+IMG.type1 {
+	margin: 4px 12px 0 12px;
+}
+
+</style>
+
+<script type="text/javascript" language="javascript">
+
+var numberOfPages = 4;
+var infoPages;
+
+window.onload = function () {
+	infoPages = document.getElementsByClassName("infoPage");
+	var visiblePage = window.location.search.substring(1,window.location.search.length) * 1;
+	showPageByIndex(visiblePage);
+}
+
+function showPageByIndex(index) {
+	infoPages[index].style.display = "block";
+	return index + " was passed to showPageByIndex";
+}
+
+function getNumberOfPages() {
+	return infoPages.length;
+}
+</script>
+
+</head>
+<body>
+
+<div class="infoPage" id="page0">
+	<h1>The best way to decide where to go with your friends</h1>
+	<img class="type1" src="image_fpo.png" />
+</div>
+
+<div class="infoPage" id="page1">
+	<h1>Plan as a group</h1>
+	<p>Add some of your friends &amp; the places you would like to go to. And your friends can do the same.</p>
+	<img class="type1" src="image_fpo.png" />
+</div>
+
+<div class="infoPage" id="page2">
+	<h1>Get deals as a group</h1>
+	<p>Weego will help identify any deals that may be available at any of your groups locations.</p>
+	<img class="type1" src="image_fpo.png" />
+</div>
+
+<div class="infoPage" id="page3">
+	<h1>Decide as a group</h1>
+	<p>Everyone picks the place(s) they would like to “Go” to. Then Weego will let the group know the group’s decision, including the event time and location.</p>
+	<img class="type1" src="image_fpo.png" />
+</div>
+
+<div class="infoPage" id="page4">
+	<h1>Group messaging</h1>
+	<p>Stay in contact with your group. Weego will take care of letting your group know where you are and when you will get there.</p>
+	<img class="type1" src="image_fpo.png" />
+</div>
+
+<div class="infoPage" id="page5">
+	<h1>Get there as a group</h1>
+	<p>Right around the time of the event Weego will let your group know where you are and when you will get there.</p>
+	<img class="type1" src="image_fpo.png" />
+</div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+// create an entire new event (note no event id)
+<event> 
+    <eventInfo eventDate="2011-02-20 23:49:26"> 
+      <eventTitle><![CDATA[event 3]]></eventTitle> 
+      <eventDescription><![CDATA[Desc 3]]></eventDescription> 
+      <creatorId><![CDATA[45]]></creatorId> 
+      <guestListOpen><![CDATA[false]]></guestListOpen> 
+      <locationListOpen><![CDATA[false]]></locationListOpen> 
+    </eventInfo> 
+    <locations> 
+      <location longitude="-122.39" latitude="37.7794"> 
+        <establishment><![CDATA[Pete's Tavern]]></establishment> 
+        <locality><![CDATA[San Francisco]]></locality> 
+        <street_number><![CDATA[128]]></street_number> 
+        <route><![CDATA[King St]]></route> 
+      </location> 
+      <location longitude="-122.433" latitude="37.7514"> 
+        <establishment><![CDATA[Valley Tavern]]></establishment> 
+        <locality><![CDATA[San Francisco]]></locality> 
+        <street_number><![CDATA[4054]]></street_number> 
+        <route><![CDATA[24th St]]></route> 
+      </location> 
+    </locations> 
+    <participants> 
+      <participant email="dave@velloff.com"> 
+        <firstName><![CDATA[dave]]></firstName> 
+        <lastName><![CDATA[prukop]]></lastName> 
+      </participant>
+      <participant email="doda@velloff.com"> 
+        <firstName><![CDATA[Do]]></firstName> 
+        <lastName><![CDATA[Da]]></lastName> 
+      </participant>
+    </participants>
+    <votes> 
+      <vote selectedLocationIndex="0"/>
+    </votes> 
+</event>
+
+// just a participant or more (n # capable)
+<event id="1754"> 
+    <participant email="DoooDooo@velloff.com"> 
+        <firstName><![CDATA[DoooDooo]]></firstName> 
+        <lastName><![CDATA[Brown]]></lastName> 
+    </participant>
+</event>
+
+// just a location or more (n # capable)
+<event id="1754"> 
+      <location longitude="-122.39" latitude="37.7794"> 
+        <establishment><![CDATA[Location add 1]]></establishment> 
+        <locality><![CDATA[San Francisco]]></locality> 
+        <street_number><![CDATA[128]]></street_number> 
+        <route><![CDATA[King St]]></route> 
+      </location> 
+      <location longitude="-122.433" latitude="37.7514"> 
+        <establishment><![CDATA[Location add 2]]></establishment> 
+        <locality><![CDATA[San Francisco]]></locality> 
+        <street_number><![CDATA[4054]]></street_number> 
+        <route><![CDATA[24th St]]></route> 
+      </location> 
+</event>
+
+// just an event detail, and only a couple params (must be enclosed in <eventInfo> node)
+<event id="1754"> 
+    <eventInfo> 
+      <eventTitle><![CDATA[DIGGITY]]></eventTitle> 
+      <locationListOpen><![CDATA[true]]></locationListOpen> 
+    </eventInfo>
+</event>
+
+// just a vote
+<event id="1754"> 
+    <votes> 
+      <vote locationId="1088"/>
+    </votes> 
+</event>
+
