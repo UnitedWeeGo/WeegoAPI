@@ -47,7 +47,7 @@ class InviteService extends ReqBase
 			$receiverEmail = $invite->inviteeId;
 			
 			$bodyGen = new InviteEmail();
-			$body = $bodyGen->getInviteHTMLBody($sender, $event);
+			$body = $bodyGen->getInviteHTMLBody($sender, $event, $invite->token);
 			$senderName = $bodyGen->getFriendlyName($sender);
 			
 			$mail             = new PHPMailerLite(); // defaults to using php "Sendmail" (or Qmail, depending on availability)

@@ -22,7 +22,7 @@ class InviteEmail extends ReqBase
 	* @param Event $event
 	* @return string
 	*/
-	function getInviteHTMLBody($sender, $event)
+	function getInviteHTMLBody($sender, $event, $token)
 	{
 		$base_invite_url = $GLOBALS['configuration']['base_invite_url'];
 		$senderAvatarURL = $sender->avatarURL;
@@ -33,6 +33,7 @@ class InviteEmail extends ReqBase
 		$winningLocation = $this->determineWinningLocationForEvent($event);
 		$name = $winningLocation ? $winningLocation->name : 'no location name';
 		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'no location address';
+		$inviteToken = $token;
 		$message = 
 <<< EOT
 <body bgcolor="#F3F3F3">
@@ -110,7 +111,7 @@ class InviteEmail extends ReqBase
 	</tr>
 	<tr>
 		<td colspan="2">
-			<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url">Click here to Sign-Up for the Weego Private Beta</a>
+			<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to Sign-Up for the Weego Private Beta</a>
 			<br />
 			<br />
 			<br />
