@@ -11,7 +11,7 @@ require_once('../PHPMailer-Lite_v5.1/class.phpmailer-lite.php');
 
 require_once '../util/request.base.php';
 
-require_once 'invite_v1.php';
+require_once 'invite_v2.php';
 
 date_default_timezone_set('GMT');
 
