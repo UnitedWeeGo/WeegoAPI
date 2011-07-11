@@ -27,7 +27,7 @@ class InviteEmail extends ReqBase
 		$base_invite_url = $GLOBALS['configuration']['base_invite_url'];
 		$senderAvatarURL = $sender->avatarURL;
 		$senderFriendlyName = $this->getFriendlyName($sender);
-		$eventTitle = $event->eventTitle;
+		$eventTitle = urldecode($event->eventTitle);
 		$eventDate = $this->getFormattedTime($event->eventDate);
 		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate);
 		$winningLocation = $this->determineWinningLocationForEvent($event);
