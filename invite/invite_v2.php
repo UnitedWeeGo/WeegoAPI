@@ -160,7 +160,6 @@ EOT;
 	
 	function getFormattedTime($eventDate)
 	{
-		$dateStr = "";
 		$eventTime = new DateTime($eventDate);
 		$dateStr = $eventTime->format('D, M j g:i A');
 		return $dateStr;
