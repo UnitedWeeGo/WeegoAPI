@@ -72,7 +72,7 @@ class InviteEmail extends ReqBase
 				</tr>
 				<tr>
 					<td width="13" height="1"><img src="http://www.unitedweego.com/email_images/event_bg_2_ml.png" width="13" height="1"></td>
-					<td bgcolor="#DEDEDE"></td>
+					<td bgcolor="#DEDEDE"><img src="http://www.unitedweego.com/email_images/spacer.gif" width="100%" height="1"></td>
 					<td width="13" height="1"><img src="http://www.unitedweego.com/email_images/event_bg_2_mr.png" width="13" height="1"></td>
 				</tr>
 				<tr>
