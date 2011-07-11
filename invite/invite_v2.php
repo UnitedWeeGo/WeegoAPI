@@ -37,7 +37,7 @@ class InviteEmail extends ReqBase
 		$message = 
 <<< EOT
 <body bgcolor="#F3F3F3">
-<div align="center" style="width: 600px; font-family: Arial, Helvetica, sans-serif; font-size: 10px;">
+<div align="center" style="width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 10px;">
 <div align="center"><img src="images/email_header_01.png" style="height: 170px; width: 600px"></div>
 <table width="600" border="0" cellspacing="5" cellpadding="10" bgcolor="#FFF">
 	<tr>
@@ -73,7 +73,7 @@ class InviteEmail extends ReqBase
 				</tr>
 				<tr>
 					<td width="13" height="1"><img src="http://www.unitedweego.com/email_images/event_bg_2_ml.png" width="13" height="1"></td>
-					<td bgcolor="#DEDEDE"><img src="http://www.unitedweego.com/email_images/spacer.gif" width="100%" height="1"></td>
+					<td bgcolor="#DEDEDE" height="1"><img src="http://www.unitedweego.com/email_images/spacer.gif" width="100%" height="1"></td>
 					<td width="13" height="1"><img src="http://www.unitedweego.com/email_images/event_bg_2_mr.png" width="13" height="1"></td>
 				</tr>
 				<tr>
@@ -82,7 +82,7 @@ class InviteEmail extends ReqBase
 						<br />
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td valign="top" width="60"><img src="http://www.unitedweego.com/email_images/button_unlike_default.png" width="50" height="50"></td>
+								<td valign="top" width="60"><img src="http://www.unitedweego.com/email_images/button_like_default.png" width="50" height="50"></td>
 								<td valign="top">
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$name</span><br />
 									<span style="font-size:1.2em; color:#666">$formatted_address</span><br />
@@ -114,9 +114,42 @@ class InviteEmail extends ReqBase
 			<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to Sign-Up for the Weego Private Beta</a>
 			<br />
 			<br />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<span style="color:#666; font-size:1.8em; font-weight:bold;">What is Weego?</span><br />
+			<span style="font-size:1.4em; color:#666">Weego is a group collaboration application that allows you and your friends to decide where to go.</span><br />
 			<br />
+			<span style="color:#666; font-size:1.8em; font-weight:bold;">Plan as a group</span><br />
+			<span style="font-size:1.4em; color:#666">Add some of your friends and the places you would like to go to. And your friends can do the same.</span><br />
 			<br />
+			<span style="color:#666; font-size:1.8em; font-weight:bold;">Get deals as a group</span><br />
+			<span style="font-size:1.4em; color:#666">In the future, Weego will help identify any deals that may be available at any of your groups locations. For now, we have baked in a &ldquo;For Placement Only&rdquo; deal so you can get an idea on how we will deliver these deals seamlessly into the experience.</span><br />
 			<br />
+			<span style="color:#666; font-size:1.8em; font-weight:bold;">Decide as a group</span><br />
+			<span style="font-size:1.4em; color:#666">Everyone picks the place(s) they would like to &ldquo;Go&rdquo; to. Then Weego will let the group know the group's decision, including the event time and location.</span><br />
+			<br />
+			<span style="color:#666; font-size:1.8em; font-weight:bold;">Group Messaging</span><br />
+			<span style="font-size:1.4em; color:#666">Stay in contact with your group. Weego will take care of letting your group know where you are and when you will get there.</span><br />
+			<br />
+			<span style="color:#666; font-size:1.8em; font-weight:bold;">Get there as a group</span><br />
+			<span style="font-size:1.4em; color:#666">Right around the time of the event Weego will let your group know where you are and when you will get there.</span></div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div style="font-size:1.2em; color: #999;">
+				<br />
+				<br />
+				Copyright &copy; 2011 UnitedWeego Inc., All rights reserved.<br />
+				You are receiving this email because you expressed interest in our service or you opted into our Beta program.&nbsp;<br />
+				<br />
+				<strong>Our mailing address is:</strong><br />
+				UnitedWeego Inc.<br />
+				665 3rd St. Suite 521<br />
+				San Francisco,&nbsp;CA&nbsp;94103
+			</div>
 		</td>
 	</tr>
 </table>
