@@ -488,9 +488,19 @@ class XMLUtil extends ReqBase
 			
 			// add the creator participant only if the timestamp is older
 			$creatorArray = $event->GetParticipantList( array( array("email", "=", $event->creatorId) ) );
-			$creator = $creatorArray[0];
-			$participantXML = $this->GetParticipantXML($creator);
-	    	$participantsNode->appendChild( $doc->importNode($participantXML->firstChild, true)  );
+			
+			try
+			{
+				$creatorArray = $event->GetParticipantList( array( array("email", "=", $event->creatorId) ) );
+				if (count($creatorArray) == 0) throw new Exception($event->creatorId . " not found in event: " . $event->eventId);
+				$creator = $creatorArray[0];
+				$participantXML = $this->GetParticipantXML($creator);
+	    		$participantsNode->appendChild( $doc->importNode($participantXML->firstChild, true)  );
+			}
+			catch (Exception $e)
+			{
+				echo $e->getMessage();
+			}
 			
 	    	if ($winningLocation)	$eventInfoNode->setAttribute('topLocationId', $winningLocation->locationId);
 	    	
