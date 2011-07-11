@@ -31,8 +31,8 @@ class InviteEmail extends ReqBase
 		$eventDate = $this->getFormattedTime($event->eventDate);
 		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate);
 		$winningLocation = $this->determineWinningLocationForEvent($event);
-		$name = $winningLocation->name;
-		$formatted_address = $winningLocation->formatted_address;
+		$name = $winningLocation ? $winningLocation->name : 'no location name';
+		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'no location address';
 		$message = 
 <<< EOT
 <body bgcolor="#F3F3F3">

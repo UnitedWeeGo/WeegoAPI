@@ -360,6 +360,7 @@ class ReqBase
 	function determineWinningLocationForEvent(&$event)
 	{
 		$locations = $this->getLocationObjectsInOrderForEvent($event);
+		if ( count($locations) == 0 ) return null;
 		return $locations[count($locations) - 1]; // first one is the winner
 	}
 
