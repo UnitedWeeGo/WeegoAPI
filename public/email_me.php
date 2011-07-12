@@ -2,6 +2,8 @@
 
 require_once('../PHPMailer-Lite_v5.1/class.phpmailer-lite.php');
 
+phpinfo();
+
 $mail             = new PHPMailerLite(); // defaults to using php "Sendmail" (or Qmail, depending on availability)
 $mail->IsMail(); // telling the class to use native PHP mail()
 
