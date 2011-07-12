@@ -8,7 +8,7 @@ $mail             = new PHPMailerLite(); // defaults to using php "Sendmail" (or
 $mail->IsMail(); // telling the class to use native PHP mail()
 
 try {
-  $mail->SetFrom('nick@velloff.com', 'Nick Velloff');
+  $mail->SetFrom('beta@unitedweego.com', 'Nick Velloff');
   $mail->AddAddress('nick.velloff@gmail.com');
   $mail->Subject = 'You have been invited to happy hour.';
   $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
