@@ -55,7 +55,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 			
 			try {
-			  //$mail->SetFrom($sender->email, $senderName);
+			  $mail->SetFrom($sender->email, $senderName);
 			  $mail->AddAddress($receiverEmail);
 			  $mail->Subject = 'You have been invited to ' . $event->eventTitle;
 			  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
