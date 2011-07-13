@@ -1,2 +1,12 @@
 
 configuration.php
+
+.buildpath
+
+.project
+
+.settings/org.eclipse.ltk.core.refactoring.prefs
+
+.settings/org.eclipse.php.core.prefs
+
+.settings/org.eclipse.wst.html.core.prefs
