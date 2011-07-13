@@ -18,15 +18,15 @@ class InviteEmail extends ReqBase
 	}
 	/**
 	* Get the invite html message body
-	* @param Participant $sender
+	* @param Participant $creator
 	* @param Event $event
 	* @return string
 	*/
-	function getInviteHTMLBody($sender, $event, $token)
+	function getInviteHTMLBody($creator, $event, $token)
 	{
 		$base_invite_url = $GLOBALS['configuration']['base_invite_url'];
-		$senderAvatarURL = $sender->avatarURL;
-		$senderFriendlyName = $this->getFriendlyName($sender);
+		$creatorAvatarURL = $creator->avatarURL;
+		$creatorFriendlyName = $this->getFriendlyName($creator);
 		$eventTitle = urldecode($event->eventTitle);
 		$eventDate = $this->getFormattedTime($event->eventDate);
 		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate);
@@ -59,9 +59,9 @@ class InviteEmail extends ReqBase
 					<td bgcolor="#F3F3F3">
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td valign="top" width="60"><img src="$senderAvatarURL" border="1" style="border-color:#CCC"></td>
+								<td valign="top" width="60"><img src="$creatorAvatarURL" border="1" style="border-color:#CCC"></td>
 								<td valign="top">
-									<span style="font-size:1.2em; color:#666">$senderFriendlyName</span><br />
+									<span style="font-size:1.2em; color:#666">$creatorFriendlyName</span><br />
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$eventTitle</span><br />
 									<span style="font-size:1.2em; color:#666">$eventDate</span><br />
 									<span style="font-size:1.1em; color:#666; font-weight:bold">Voting ends at </span><span style="font-size:1.1em; color:#690; font-weight:bold">$eventExpireDate</span><br /><br />
@@ -164,7 +164,7 @@ EOT;
 	}
 	
 	/**
-	* Returns a firendly name string
+	* Returns a friendly name string
 	* @param Participant $participant
 	* @return string
 	*/
