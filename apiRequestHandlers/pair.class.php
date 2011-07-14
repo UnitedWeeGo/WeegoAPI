@@ -120,6 +120,8 @@ class Pair extends ReqBase
 	*/
 	function addParticipantToEvent(&$participant, &$event)
 	{
+		// update the participants timestamp
+		$participant->timestamp = $this->getTimeStamp();
 		$event->AddParticipant($participant);
 		$event->timestamp = $this->getTimeStamp();
 		$event->Save(true);
@@ -268,6 +270,7 @@ class Pair extends ReqBase
 		
 		$altemail->email = $email;
 		$participant->AddAltemail($altemail);
+		$participant->timestamp = $this->getTimeStamp();
 		$participant->Save(true);
 		//echo "Add alternate email" . $email . "to valid participant " . $participant->participantId . PHP_EOL;
 	}
