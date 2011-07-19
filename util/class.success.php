@@ -15,6 +15,7 @@
 		const ParticipantAddRegisteredSuccess = '231';
 		const ParticipantRegisteredSuccess = '232';
 		const ParticipantNotRegisteredSuccess = '233';
+		const ParticipantListGetSuccess = '234';
 		// vote range
 		const VoteAddSuccess = '240';
 		const VoteRemoveSuccess = '241';

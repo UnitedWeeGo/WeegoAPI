@@ -15,7 +15,7 @@ require_once '../util/class.success.php';
 class GetParticipantInfo extends ReqBase
 {
 	public $dataObj;
-	private $requiredFields = array('registeredId', 'email');
+	private $requiredFields = array('registeredId');
 	
 	function GetParticipantInfo()
 	{
@@ -29,23 +29,31 @@ class GetParticipantInfo extends ReqBase
 
 		// check if you are a registered user
 		$me = $this->checkRegUserId($this->dataObj);
-		$email = $this->dataObj['email'];
 		
-		$existingRegisteredUser = $this->isParticipantRegistered($email);
+		// get all of my events
+		$eventArray = $me->GetEventList();
+		
+		$xmlUtil = new XMLUtil();
+		$xmlArray = array();
+		$index = 0;
+		foreach ($eventArray as $i => $value)
+		{
+			$event = $eventArray[$i];
+			
+			$participantsArray = $event->GetParticipantList();
+			foreach ($participantsArray as $ii => $value)
+			{
+				$c_participant = $participantsArray[$ii];
+				if (strlen($c_participant->registeredId) > 0) // user is registered
+				{
+					$xmlArray[$index] = $xmlUtil->GetParticipantXML($c_participant);
+					$index++;
+				}
+			}
+			
+		}
+		
 		$s = new SuccessResponse();
-		if ($existingRegisteredUser)
-		{
-			// return registered info
-			$xmlUtil = new XMLUtil();
-			$xmlArray = array();
-			$participantXML= $xmlUtil->GetParticipantXML($existingRegisteredUser);
-			$xmlArray[0] = $participantXML;
-			echo $s->genSuccessWithXMLArray(SuccessResponse::ParticipantRegisteredSuccess, $xmlArray);
-		}
-		else
-		{
-			// return not registered //ParticipantNotRegisteredSuccess
-			echo $s->genSuccess(SuccessResponse::ParticipantNotRegisteredSuccess);
-		}
+		echo $s->genSuccessWithXMLArray(SuccessResponse::ParticipantListGetSuccess, $xmlArray);
 	}
 }
