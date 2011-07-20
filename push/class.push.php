@@ -479,10 +479,7 @@ class Push
 					if ($device->pushBadge == 'enabled')
 					{
 						$badgeCount = $device->badgeCount;
-						$newBadgeCount = $badgeCount + 1;
-						$device->badgeCount = $newBadgeCount;
-						$device->Save();
-						$message->setBadge($newBadgeCount);
+						if ($badgeCount > 0) $message->setBadge($badgeCount);
 					}
 					
 					if ($device->isSandbox) // determine which queue to add to
