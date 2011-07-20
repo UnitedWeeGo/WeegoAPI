@@ -100,22 +100,28 @@ class EventClass extends ReqBase
 		
 		if ($isAnUpdate) 
 		{
+			$push = new Push();
 			if ($eventTimeDidChange)
 			{
 				// Send out a feed message for the location addition
 				$message = new FeedMessage();
 				$message->timestamp = $this->getTimeStamp();
-				$message->type = FeedMessageClass::TYPE_SYSTEM;
+				$message->type = FeedMessageClass::TYPE_SYSTEM_EVENT_UPDATE;
 				$message->message = $event->name . ' time changed!';
 				$message->senderId = $me->email;
 				$message->readParticipantList = $me->participantId;
 				
 				$event->AddFeedmessage($message);
 				$event->Save(true);
+				
+				$push->addFeedMessageToQueue($message);
 			}
-
-			$push = new Push();
-			$push->triggerClientUpdateForEvent($event);
+			else
+			{
+				$push->triggerClientUpdateForEvent($event);
+			}
+			
+			
 		}
 			
 		if (!$doSkipResult) // only give success and kill if not called by http

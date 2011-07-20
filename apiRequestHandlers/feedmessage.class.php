@@ -22,6 +22,7 @@ class FeedMessageClass extends ReqBase
 	const TYPE_SYSTEM_DECIDED = 'decided';
 	const TYPE_SYSTEM_LOCATION_ADDED = 'locationadd';
 	const TYPE_SYSTEM_INVITE = 'invite';
+	const TYPE_SYSTEM_EVENT_UPDATE = 'eventupdate';
 	const TYPE_USER = 'user';
 	
 	public $dataObj = null;	

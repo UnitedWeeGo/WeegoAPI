@@ -73,32 +73,42 @@ class Push
 					/** @var $device Device */
 					$device = $devices[$k];
 					
+					if ($device->pushBadge != 'enabled' && $device->pushAlert != 'enabled') continue;
+					
+					$badgeCount = $device->badgeCount;
+					$newBadgeCount = $badgeCount + 1;
+					$device->badgeCount = $newBadgeCount;
+					$device->Save();
+					
+					// construct the message
+					$message = new ApnsPHP_Message($device->deviceToken);
+					
 					if ($device->pushBadge == 'enabled')
 					{
-						$badgeCount = $device->badgeCount;
-						$newBadgeCount = $badgeCount + 1;
-						$device->badgeCount = $newBadgeCount;
-						$device->Save();
-						
-						// construct the message
-						$message = new ApnsPHP_Message($device->deviceToken);
 						$message->setBadge($newBadgeCount);
-						$message->setCustomProperty('messageType', 'feed');
-						
-						// Play the default sound
-						if ($device->pushSound == 'enabled') $message->setSound();
-						
-						if ($device->isSandbox) // determine which queue to add to
-						{
-							$doSendSandMessages = true;
-							$sandPush->add($message);
-						}
-						else
-						{
-							$doSendProdMessages = true;
-							$prodPush->add($message);
-						}
 					}
+					
+					if ($device->pushAlert == 'enabled' && $feedMessage->type == 'eventupdate')	
+					{
+						$message->setText($feedMessage->message);
+					}
+					
+					$message->setCustomProperty('messageType', 'feed');
+					
+					// Play the default sound
+					if ($device->pushSound == 'enabled') $message->setSound();
+					
+					if ($device->isSandbox) // determine which queue to add to
+					{
+						$doSendSandMessages = true;
+						$sandPush->add($message);
+					}
+					else
+					{
+						$doSendProdMessages = true;
+						$prodPush->add($message);
+					}
+					
 				}
 			}
 			// remove the event from the queue
