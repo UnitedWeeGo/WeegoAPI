@@ -100,9 +100,6 @@ class FeedMessageClass extends ReqBase
 		$event->timestamp = $this->getTimeStamp();
 		$event->Save(true);
 		
-		//$push = new Push();
-		//$push->addFeedMessageToQueue($message);
-		
 		$push = new Push();
 		$push->triggerClientUpdateForEvent($event);
 		

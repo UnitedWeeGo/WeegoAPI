@@ -414,7 +414,8 @@ class Push
 					$event->timestamp = $ts;
 					$event->Save(true);
 		
-					$this->addFeedMessageToQueue($message);
+					//$this->addFeedMessageToQueue($message);
+					//$this->triggerClientUpdateForEvent($event);
 				}
 			}
 		}
