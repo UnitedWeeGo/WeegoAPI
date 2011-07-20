@@ -68,6 +68,7 @@ class EventClass extends ReqBase
 		}
 //			print_r($event);
 		$eventTimeDidChange = false;
+		$expirationTimeDidChange = false;
 		// check the event expiration 
 		if (isset($this->dataObj['eventDate']))
 		{
@@ -120,8 +121,6 @@ class EventClass extends ReqBase
 			{
 				$push->triggerClientUpdateForEvent($event);
 			}
-			
-			
 		}
 			
 		if (!$doSkipResult) // only give success and kill if not called by http
