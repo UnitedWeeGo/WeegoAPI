@@ -480,9 +480,9 @@ class Push
 
 				}
 			}
-			// remove the event from the queue
-			$pushdispatchList = array();
-			$event->SetPushdispatchList($pushdispatchList);
+			// remove the event from the queue - NO, we should not remove from the queue
+			//$pushdispatchList = array();
+			//$event->SetPushdispatchList($pushdispatchList);
 		}
 		// Send all messages in the message queue
 		if ($doSendProdMessages)
