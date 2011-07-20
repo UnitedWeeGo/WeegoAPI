@@ -115,7 +115,7 @@ class EventClass extends ReqBase
 				$event->AddFeedmessage($message);
 				$event->Save(true);
 				
-				//$push->addFeedMessageToQueue($message);
+				$push->addFeedMessageToQueue($message);
 			}
 			else
 			{
