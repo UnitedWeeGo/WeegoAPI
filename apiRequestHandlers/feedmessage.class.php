@@ -101,7 +101,7 @@ class FeedMessageClass extends ReqBase
 		$event->Save(true);
 		
 		$push = new Push();
-		$push->triggerClientUpdateForEvent($event);
+		$push->addFeedMessageToQueue($message);
 		
 		if (!$doSkipResult) // only give success and kill if not called by location class
 		{
