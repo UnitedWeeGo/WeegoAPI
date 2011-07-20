@@ -107,7 +107,7 @@ class EventClass extends ReqBase
 				$message = new FeedMessage();
 				$message->timestamp = $this->getTimeStamp();
 				$message->type = FeedMessageClass::TYPE_SYSTEM_EVENT_UPDATE;
-				$message->message = $event->name . ' time changed!';
+				$message->message = $event->eventTitle . ' time changed!';
 				$message->senderId = $me->email;
 				$message->readParticipantList = $me->participantId;
 				
