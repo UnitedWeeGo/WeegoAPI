@@ -556,7 +556,7 @@ class Push
 		echo 'timeUntilVotingEnds -2: ' . ($timeUntilVotingEnds - 2) . PHP_EOL . PHP_EOL;
 		
 		// event must be DECIDED and under 30 minutes away
-		return $timeUntilStart < 30 && $nowTs > ($eventExpireTs - 2);
+		return $timeUntilStart < 30 && $timeUntilVotingEnds < 2;
 	}
 	
 	/**
