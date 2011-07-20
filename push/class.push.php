@@ -195,11 +195,13 @@ class Push
 						$message->setActionLocKey('Yes!');
 						$message->setCustomProperty('messageType', 'upcoming');
 						
-						// set the badge count without incrementing
 						if ($device->pushBadge == 'enabled')
 						{
 							$badgeCount = $device->badgeCount;
-							$message->setBadge($badgeCount);
+							$newBadgeCount = $badgeCount + 1;
+							$device->badgeCount = $newBadgeCount;
+							$device->Save();
+							$message->setBadge($newBadgeCount);
 						}
 						
 						if ($device->isSandbox) // determine which queue to add to
@@ -474,11 +476,13 @@ class Push
 					// Set the "View" button title.
 					$message->setCustomProperty('messageType', 'refresh');
 					
-					// set the badge count without incrementing
 					if ($device->pushBadge == 'enabled')
 					{
 						$badgeCount = $device->badgeCount;
-						$message->setBadge($badgeCount);
+						$newBadgeCount = $badgeCount + 1;
+						$device->badgeCount = $newBadgeCount;
+						$device->Save();
+						$message->setBadge($newBadgeCount);
 					}
 					
 					if ($device->isSandbox) // determine which queue to add to
