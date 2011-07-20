@@ -160,7 +160,7 @@ class Push
 			
 			if (!$this->eventShouldDispatch($event)) continue; // skips to the next if event does not meet time requirement
 			
-			printf( 'event dispatch start notification: ' . $event->eventTitle );
+			echo 'event dispatch start notification: ' . $event->eventTitle;
 			
 			// for each participant...
 			$participants = $event->GetParticipantList();
@@ -172,7 +172,7 @@ class Push
 				// add the user to the queue so any other messages get ignored and this one is delivered
 				array_push($this->queuedUpUserIDCollection, $participant->email);
 				
-				printf( 'checking user for devices: ' . $participant->email . PHP_EOL );
+				echo 'checking user for devices: ' . $participant->email . PHP_EOL;
 				
 				// for each device, generate message and add to appropriate push queue
 				$devices = $participant->GetDeviceList();
@@ -200,7 +200,7 @@ class Push
 							$doSendSandMessages = true;
 							$sandPush->add($message);
 							
-							printf( 'adding: ' . $device->deviceName . ' to queue' . PHP_EOL );
+							echo 'adding: ' . $device->deviceName . ' to queue' . PHP_EOL;
 							
 						}
 						else
@@ -391,7 +391,7 @@ class Push
 			{
 				$didFindOneToDispatch = true;
 				unset($events[$i]);
-				printf( "create DECIDED feed notification for event: " . $event->eventTitle . PHP_EOL);
+				echo "create DECIDED feed notification for event: " . $event->eventTitle . PHP_EOL;
 				
 				if ( count($event->GetLocationList()) > 0) // make sure there are locations
 				{
@@ -528,6 +528,10 @@ class Push
 		$nowTs = $now->getTimestamp();
 		$eventTs =  $eventTime->getTimestamp();
 		$timeUntilStart = ceil( ($eventTs - $nowTs) / 60);
+		
+		echo 'nowTs: ' . $nowTs . PHP_EOL;
+		echo 'eventTs: ' . $eventTs . PHP_EOL;
+		echo 'timeUntilStart: ' . $timeUntilStart . PHP_EOL . PHP_EOL;
 		
 		return $timeUntilStart < 30;
 		/*
