@@ -111,9 +111,6 @@ class Push
 					
 				}
 			}
-			// remove the event from the queue
-			$pushdispatchList = array();
-			$event->SetPushdispatchList($pushdispatchList);
 		}
 		
 		// Send all messages in the message queue
@@ -505,9 +502,6 @@ class Push
 
 				}
 			}
-			// remove the event from the queue - NO, we should not remove from the queue
-			//$pushdispatchList = array();
-			//$event->SetPushdispatchList($pushdispatchList);
 		}
 		// Send all messages in the message queue
 		if ($doSendProdMessages)
@@ -560,12 +554,12 @@ class Push
 		$timeUntilStart = ceil( ($eventTs - $nowTs) / 60);
 		$timeUntilVotingEnds = ceil( ($eventExpireTs - $nowTs) / 60);
 		
-		
+		/*
 		echo 'nowTs: ' . $nowTs . PHP_EOL;
 		echo 'eventTs: ' . $eventTs . PHP_EOL;
 		echo 'timeUntilStart: ' . $timeUntilStart . PHP_EOL;
 		echo 'timeUntilVotingEnds -2: ' . ($timeUntilVotingEnds - 5) . PHP_EOL . PHP_EOL;
-		
+		*/
 		
 		// event must be (almost) DECIDED and under 30 minutes away
 		return $timeUntilStart < 30 && $timeUntilVotingEnds < 5;
