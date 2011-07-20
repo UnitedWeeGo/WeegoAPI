@@ -6,6 +6,8 @@ chdir( dirname ( __FILE__ ) );
 require_once "class.push.php";
 while (true) {
 	
+	echo 'running script';
+	
 	$pusher = new Push();
 	$pusher->dispatchQueuedInviteNotifications();
 	$pusher->dispatchQueuedEventStartNotifications();
