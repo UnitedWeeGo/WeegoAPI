@@ -160,7 +160,7 @@ class Push
 			
 			if (!$this->eventShouldDispatch($event)) continue; // skips to the next if event does not meet time requirement
 			
-			echo 'event dispatch start notification: ' . $event->eventTitle;
+			printf( 'event dispatch start notification: ' . $event->eventTitle );
 			
 			// for each participant...
 			$participants = $event->GetParticipantList();
@@ -172,7 +172,7 @@ class Push
 				// add the user to the queue so any other messages get ignored and this one is delivered
 				array_push($this->queuedUpUserIDCollection, $participant->email);
 				
-				echo 'checking user for devices: ' . $participant->email . PHP_EOL;
+				printf( 'checking user for devices: ' . $participant->email . PHP_EOL );
 				
 				// for each device, generate message and add to appropriate push queue
 				$devices = $participant->GetDeviceList();
@@ -200,7 +200,7 @@ class Push
 							$doSendSandMessages = true;
 							$sandPush->add($message);
 							
-							echo 'adding: ' . $device->deviceName . ' to queue' . PHP_EOL;
+							printf( 'adding: ' . $device->deviceName . ' to queue' . PHP_EOL );
 							
 						}
 						else
