@@ -118,6 +118,9 @@ class DeleteLocationClass extends ReqBase
 			$xml = $xmlUtil->GetEventXML($savedEvent, $me);
 		}
 		
+		$push = new Push();
+		$push->triggerClientUpdateForEvent($savedEvent);
+		
 		$xmlArray = array();
 		$xmlArray[0] = $xml;
 		$s = new SuccessResponse();
