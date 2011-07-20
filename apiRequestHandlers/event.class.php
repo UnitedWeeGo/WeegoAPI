@@ -67,13 +67,15 @@ class EventClass extends ReqBase
 			$event = new Event();
 		}
 //			print_r($event);
-		$eventDetailsDidChange = $this->populateObject($this->allFields, $this->dataObj, $event);
-		
+		$eventTimeDidChange = false;
 		// check the event expiration 
 		if (isset($this->dataObj['eventDate']))
 		{
+			$eventTimeDidChange = $event->eventDate != $this->dataObj['eventDate'];
 			$expirationTimeDidChange = $this->populateExpirationForEvent($event, $this->dataObj['eventDate']);
 		}
+		
+		$eventDetailsDidChange = $this->populateObject($this->allFields, $this->dataObj, $event);
 		
 		$ts = $this->getTimeStamp();
 		
@@ -98,6 +100,20 @@ class EventClass extends ReqBase
 		
 		if ($isAnUpdate) 
 		{
+			if ($eventTimeDidChange)
+			{
+				// Send out a feed message for the location addition
+				$message = new FeedMessage();
+				$message->timestamp = $this->getTimeStamp();
+				$message->type = FeedMessageClass::TYPE_SYSTEM;
+				$message->message = $event->name . ' time changed!';
+				$message->senderId = $me->email;
+				$message->readParticipantList = $me->participantId;
+				
+				$event->AddFeedmessage($message);
+				$event->Save(true);
+			}
+
 			$push = new Push();
 			$push->triggerClientUpdateForEvent($event);
 		}
