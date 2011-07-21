@@ -60,6 +60,9 @@ class Push
 				/** @var $participant Participant */
 				$participant = $participants[$j];
 				
+				// skip user if they have not accepted the event
+				if (!$this->getHasAcceptedEvent($event, $participant->email)) continue;
+				
 				// skip user if they are in queue to receive an invite, so they do not get over messaged
 				if (in_array($participant->email, $this->queuedUpUserIDCollection)) continue;
 				array_push($this->queuedUpUserIDCollection, $participant->email);
@@ -175,6 +178,9 @@ class Push
 			{
 				/** @var $participant Participant */
 				$participant = $participants[$j];
+				
+				// skip user if they have not accepted the event
+				if (!$this->getHasAcceptedEvent($event, $participant->email)) continue;
 				
 				// add the user to the queue so any other messages get ignored and this one is delivered
 				array_push($this->queuedUpUserIDCollection, $participant->email);
@@ -713,6 +719,20 @@ class Push
 			$queue = $queueList[0];
 		}
 		return $queue;
+	}
+	
+	/**
+	* Determines if the user has accepted the event
+	* @param Event $event
+	* @param string $email
+	* @return Boolean
+	*/
+	function getHasAcceptedEvent(&$event, $email)
+	{
+		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$hasAccepted = in_array($email, $acceptedParticipantList);
+	
+		return $hasAccepted;
 	}
 }
 

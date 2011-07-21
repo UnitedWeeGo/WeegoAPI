@@ -578,7 +578,6 @@ class XMLUtil extends ReqBase
 		return $hasCheckedIn;
 	}
 	
-	
 	/**
 	* Populate an object with xml data
 	* @param DOMElement $node
