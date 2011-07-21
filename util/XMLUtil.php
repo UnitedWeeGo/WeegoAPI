@@ -15,6 +15,25 @@ class XMLUtil extends ReqBase
 	}
 	
 	/**
+	* Generates an xml object for the client info
+	* @return DOMDocument
+	*/
+	function GetAppInfoXML()
+	{
+		$doc = new DOMDocument('1.0', 'UTF-8');
+		$root = $doc->createElement('appinfo');
+		$doc->appendChild($root);
+		
+		$app_store_url = $GLOBALS['configuration']['app_store_url'];
+		$root->setAttribute('app_store_url', $app_store_url);
+		
+		$app_store_version = $GLOBALS['configuration']['app_store_version'];
+		$root->setAttribute('app_store_version', $app_store_version);
+		
+		return $doc;
+	}
+	
+	/**
 	* Generates an xml object for a Participant object type
 	* @param Participant $participant
 	* @return DOMDocument
