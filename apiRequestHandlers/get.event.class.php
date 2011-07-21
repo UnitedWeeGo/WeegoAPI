@@ -114,7 +114,7 @@ class GetEvents extends ReqBase
 		
 		// append the app info to trigger a client update if necessary
 		$appInfoXML = $xmlUtil->GetAppInfoXML();
-		array_unshift($xmlArray, $xml);
+		array_unshift($xmlArray, $appInfoXML);
 		
 		if (!$doSkipResult) // only give success and kill if not called by http
 		{
