@@ -24,8 +24,8 @@ class XMLUtil extends ReqBase
 		$root = $doc->createElement('appinfo');
 		$doc->appendChild($root);
 		
-		$app_store_url = $GLOBALS['configuration']['app_store_url'];
-		$root->setAttribute('app_store_url', $app_store_url);
+		$app_store_id = $GLOBALS['configuration']['app_store_id'];
+		$root->setAttribute('app_store_id', $app_store_id);
 		
 		$app_store_version = $GLOBALS['configuration']['app_store_version'];
 		$root->setAttribute('app_store_version', $app_store_version);
