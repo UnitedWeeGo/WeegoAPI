@@ -112,6 +112,10 @@ class GetEvents extends ReqBase
 		$badgeResetter = new BadgeResetClass();
 		$badgeResetter->resetAllDeviceBadgesForUser($me);
 		
+		// append the app info to trigger a client update if necessary
+		$appInfoXML = $xmlUtil->GetAppInfoXML();
+		array_unshift($xmlArray, $xml);
+		
 		if (!$doSkipResult) // only give success and kill if not called by http
 		{
 			$s = new SuccessResponse();

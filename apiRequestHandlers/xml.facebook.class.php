@@ -60,10 +60,8 @@ class XMLFacebookClass extends ReqBase
 			$s = new SuccessResponse();
 			$xmlUtil = new XMLUtil();
 			$xmlArray = array();
-			$appInfoXML = $xmlUtil->GetAppInfoXML();
 			$participantXML= $xmlUtil->GetParticipantWithRuidXML($me);
-			$xmlArray[0] = $appInfoXML;
-			$xmlArray[1] = $participantXML;
+			$xmlArray[0] = $participantXML;
 		
 			echo $s->genSuccessWithXMLArray(SuccessResponse::LoginSuccess, $xmlArray);
 			die();
@@ -163,10 +161,8 @@ class XMLFacebookClass extends ReqBase
 		$s = new SuccessResponse();
 		$xmlUtil = new XMLUtil();
 		$xmlArray = array();
-		$appInfoXML = $xmlUtil->GetAppInfoXML();
 		$participantXML= $xmlUtil->GetParticipantWithRuidXML($me);
-		$xmlArray[0] = $appInfoXML;
-		$xmlArray[1] = $participantXML;
+		$xmlArray[0] = $participantXML;
 	
 		echo $s->genSuccessWithXMLArray(SuccessResponse::LoginSuccess, $xmlArray);
 		die();
