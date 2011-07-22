@@ -8,6 +8,7 @@
 		// event range
 		const EventAddSuccess = '210';
 		const EventUpdateSuccess = '211';
+		const EventRemoveSuccess = '212';
 		// location range
 		const LocationAddSuccess = '220';
 		// participant range

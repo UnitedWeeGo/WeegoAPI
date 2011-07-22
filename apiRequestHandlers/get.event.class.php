@@ -51,6 +51,14 @@ class GetEvents extends ReqBase
 		{
 			$isSingleEventRequest = true;
 			$myEvents = $me->GetEventList( array(array("eventId", "=", $this->dataObj['eventId'])) );
+			
+			if ( count($myEvents) == 0 )
+			{
+				$e = new ErrorResponse();
+				echo $e->genError(ErrorResponse::InvalidParamError, 'eventId invalid');
+				die();
+			}
+			
 			$eventToMarkRead = $myEvents[0];
 			$this->markEventReadByParticipant($eventToMarkRead, $me->participantId);
 		}
@@ -78,6 +86,7 @@ class GetEvents extends ReqBase
 			for($i=0; $i<count($myEvents); $i++)
 			{
 				$event = $myEvents[$i];
+				if ($this->participantHasRemoved($event, $me->participantId)) continue;
 				$eventTimestampNumber = $event->timestamp;
 				$eventTimestamp = new DateTime( $eventTimestampNumber );
 				
@@ -98,6 +107,7 @@ class GetEvents extends ReqBase
 			for($i=0; $i<count($myEvents); $i++)
 			{
 				$event = $myEvents[$i];
+				if ($this->participantHasRemoved($event, $me->participantId)) continue;
 				if ($this->lightEventInfo)
 				{
 					$xml = $xmlUtil->GetEventXMLLight($event, $me);

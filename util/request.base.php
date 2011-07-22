@@ -380,6 +380,20 @@ class ReqBase
 		}
 		return false;
 	}
+	
+	/**
+	* Determines if the user has removed the event
+	* @param Event $event
+	* @param string $participantId
+	* @return Boolean
+	*/
+	function participantHasRemoved(&$event, $participantId)
+	{
+		$removedParticipantList = explode(',', $event->removedParticipantList);
+		$hasRemoved = in_array($participantId, $removedParticipantList);
+	
+		return $hasRemoved;
+	}
 
 	/**
 	 * Simple logging
