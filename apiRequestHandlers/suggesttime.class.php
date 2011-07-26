@@ -76,7 +76,7 @@ class SuggestTimeClass extends ReqBase
 		$message = new FeedMessage();
 		$message->timestamp = $this->getTimeStamp();
 		$message->type = FeedMessageClass::TYPE_SYSTEM_EVENT_TIME_SUGGESTION;
-		$message->message = 'Can\'t make it until #' . $this->dataObj['suggestedTime'];
+		$message->message = $this->dataObj['suggestedTime'];
 		$message->senderId = $me->email;
 		$message->readParticipantList = $me->participantId;
 		
