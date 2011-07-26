@@ -40,6 +40,8 @@
 		// report location
 		const ReportLocationSuccess = '290';
 		const ReportLocationGetSuccess = '291';
+		// suggest time
+		const SuggestTimeAddSuccess = '300';
 		
 		/**
 		* Generates an success response string

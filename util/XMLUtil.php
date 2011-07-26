@@ -132,6 +132,26 @@ class XMLUtil extends ReqBase
 	}
 	
 	/**
+	* Generates an xml object for a FeedMessage object type
+	* @param SuggestedTime $suggestedTime
+	* @return DOMDocument
+	*/
+	function GetSuggestedTimeXML(&$suggestedTime)
+	{
+		if ($suggestedTime instanceof SuggestedTime)
+		{
+			$doc = new DOMDocument('1.0', 'UTF-8');
+			$root = $doc->createElement('suggestedTime');
+			$doc->appendChild($root);
+			
+			$root->setAttribute('id', $suggestedTime->suggestedtimeId);
+			$root->setAttribute('email', $suggestedTime->email);
+			$root->setAttribute('suggestedTime', $suggestedTime->suggestedTime);
+			return $doc;
+		}
+	}
+	
+	/**
 	* Generates an xml object for a removed invalid Participant object type
 	* @param Invite $invite
 	* @return DOMDocument
@@ -371,6 +391,27 @@ class XMLUtil extends ReqBase
 	    			$locationXML = $this->GetLocationXML($location, false, $showTempId);
 	    			$locationsNode->appendChild( $doc->importNode($locationXML->firstChild, true)  );
 	    		}
+			}
+			
+			$suggestedTimeList = $event->GetSuggestedtimeList();
+			$created = false;
+			foreach ($suggestedTimeList as $i => $value)
+			{
+				$suggestedTime = $suggestedTimeList[$i];
+				$objTimestampNumber = $suggestedTime->timestamp;
+				$objTimestamp = new DateTime( $objTimestampNumber );
+				
+				if ( $timestamp < $objTimestamp )
+				{
+					if (!$created)
+					{
+						$created = true;
+						$suggestedTimeNode = $doc->createElement('suggestedTimes');
+						$root->appendChild($suggestedTimeNode);
+					}
+					$suggestedtimeXML = $this->GetSuggestedTimeXML($suggestedTime);
+					$suggestedTimeNode->appendChild( $doc->importNode($suggestedtimeXML->firstChild, true)  );
+				}
 			}
 			
 			$participantsArray = $event->GetParticipantList();

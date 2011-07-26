@@ -27,7 +27,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27guestListOpen%27%2C%0A++11+%3D%3E+%27locationListOpen%27%2C%0A++12+%3D%3E+%27PushDispatch%27%2C%0A++13+%3D%3E+%27FeedMessage%27%2C%0A++14+%3D%3E+%27checkedInParticipantList%27%2C%0A++15+%3D%3E+%27ReportLocation%27%2C%0A++16+%3D%3E+%27locationReorderTimestamp%27%2C%0A++17+%3D%3E+%27acceptedParticipantList%27%2C%0A++18+%3D%3E+%27declinedParticipantList%27%2C%0A++19+%3D%3E+%27eventDate%27%2C%0A++20+%3D%3E+%27eventExpireDate%27%2C%0A++21+%3D%3E+%27removedParticipantList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27guestListOpen%27%2C%0A++11+%3D%3E+%27locationListOpen%27%2C%0A++12+%3D%3E+%27PushDispatch%27%2C%0A++13+%3D%3E+%27FeedMessage%27%2C%0A++14+%3D%3E+%27checkedInParticipantList%27%2C%0A++15+%3D%3E+%27ReportLocation%27%2C%0A++16+%3D%3E+%27locationReorderTimestamp%27%2C%0A++17+%3D%3E+%27acceptedParticipantList%27%2C%0A++18+%3D%3E+%27declinedParticipantList%27%2C%0A++19+%3D%3E+%27eventDate%27%2C%0A++20+%3D%3E+%27eventExpireDate%27%2C%0A++21+%3D%3E+%27removedParticipantList%27%2C%0A++22+%3D%3E+%27SuggestedTime%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B22%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.eventparticipantmap.php');
@@ -146,6 +146,11 @@ class Event extends POG_Base
 	 */
 	public $removedParticipantList;
 	
+	/**
+	 * @var private array of SuggestedTime objects
+	 */
+	private $_suggestedtimeList = array();
+	
 	public $pog_attribute_type = array(
 		"eventId" => array('db_attributes' => array("NUMERIC", "INT")),
 		"eventTitle" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
@@ -170,6 +175,7 @@ class Event extends POG_Base
 		"eventDate" => array('db_attributes' => array("TEXT", "DATETIME")),
 		"eventExpireDate" => array('db_attributes' => array("TEXT", "DATETIME")),
 		"removedParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"SuggestedTime" => array('db_attributes' => array("OBJECT", "HASMANY")),
 		);
 	public $pog_query;
 	
@@ -214,6 +220,7 @@ class Event extends POG_Base
 		$this->eventDate = $eventDate;
 		$this->eventExpireDate = $eventExpireDate;
 		$this->removedParticipantList = $removedParticipantList;
+		$this->_suggestedtimeList = array();
 	}
 	
 	
@@ -377,11 +384,11 @@ class Event extends POG_Base
 			`declinedparticipantlist`='".$this->Escape($this->declinedParticipantList)."', 
 			`eventdate`='".$this->eventDate."', 
 			`eventexpiredate`='".$this->eventExpireDate."', 
-			`removedparticipantlist`='".$this->Escape($this->removedParticipantList)."' where `eventid`='".$this->eventId."'";
+			`removedparticipantlist`='".$this->Escape($this->removedParticipantList)."'where `eventid`='".$this->eventId."'";
 		}
 		else
 		{
-			$this->pog_query = "insert into `event` (`eventtitle`, `eventdescription`, `creatorid`, `readparticipantlist`, `timestamp`, `infotimestamp`, `guestlistopen`, `locationlistopen`, `checkedinparticipantlist`, `locationreordertimestamp`, `acceptedparticipantlist`, `declinedparticipantlist`, `eventdate`, `eventexpiredate`, `removedparticipantlist` ) values (
+			$this->pog_query = "insert into `event` (`eventtitle`, `eventdescription`, `creatorid`, `readparticipantlist`, `timestamp`, `infotimestamp`, `guestlistopen`, `locationlistopen`, `checkedinparticipantlist`, `locationreordertimestamp`, `acceptedparticipantlist`, `declinedparticipantlist`, `eventdate`, `eventexpiredate`, `removedparticipantlist`) values (
 			'".$this->Escape($this->eventTitle)."', 
 			'".$this->Escape($this->eventDescription)."', 
 			'".$this->Escape($this->creatorId)."', 
@@ -396,7 +403,7 @@ class Event extends POG_Base
 			'".$this->Escape($this->declinedParticipantList)."', 
 			'".$this->eventDate."', 
 			'".$this->eventExpireDate."', 
-			'".$this->Escape($this->removedParticipantList)."' )";
+			'".$this->Escape($this->removedParticipantList)."')";
 		}
 		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
 		if ($this->eventId == "")
@@ -441,6 +448,11 @@ class Event extends POG_Base
 			{
 				$reportlocation->eventId = $this->eventId;
 				$reportlocation->Save($deep);
+			}
+			foreach ($this->_suggestedtimeList as $suggestedtime)
+			{
+				$suggestedtime->eventId = $this->eventId;
+				$suggestedtime->Save($deep);
 			}
 		}
 		return $this->eventId;
@@ -490,6 +502,11 @@ class Event extends POG_Base
 			foreach ($reportlocationList as $reportlocation)
 			{
 				$reportlocation->Delete($deep, $across);
+			}
+			$suggestedtimeList = $this->GetSuggestedtimeList();
+			foreach ($suggestedtimeList as $suggestedtime)
+			{
+				$suggestedtime->Delete($deep, $across);
 			}
 		}
 		if ($across)
@@ -1136,6 +1153,63 @@ class Event extends POG_Base
 		if (!$found)
 		{
 			$this->_reportlocationList[] = $reportlocation;
+		}
+	}
+	
+	
+	/**
+	* Gets a list of SuggestedTime objects associated to this one
+	* @param multidimensional array {("field", "comparator", "value"), ("field", "comparator", "value"), ...} 
+	* @param string $sortBy 
+	* @param boolean $ascending 
+	* @param int limit 
+	* @return array of SuggestedTime objects
+	*/
+	function GetSuggestedtimeList($fcv_array = array(), $sortBy='', $ascending=true, $limit='')
+	{
+		$suggestedtime = new SuggestedTime();
+		$fcv_array[] = array("eventId", "=", $this->eventId);
+		$dbObjects = $suggestedtime->GetList($fcv_array, $sortBy, $ascending, $limit);
+		return $dbObjects;
+	}
+	
+	
+	/**
+	* Makes this the parent of all SuggestedTime objects in the SuggestedTime List array. Any existing SuggestedTime will become orphan(s)
+	* @return null
+	*/
+	function SetSuggestedtimeList(&$list)
+	{
+		$this->_suggestedtimeList = array();
+		$existingSuggestedtimeList = $this->GetSuggestedtimeList();
+		foreach ($existingSuggestedtimeList as $suggestedtime)
+		{
+			$suggestedtime->eventId = '';
+			$suggestedtime->Save(false);
+		}
+		$this->_suggestedtimeList = $list;
+	}
+	
+	
+	/**
+	* Associates the SuggestedTime object to this one
+	* @return 
+	*/
+	function AddSuggestedtime(&$suggestedtime)
+	{
+		$suggestedtime->eventId = $this->eventId;
+		$found = false;
+		foreach($this->_suggestedtimeList as $suggestedtime2)
+		{
+			if ($suggestedtime->suggestedtimeId > 0 && $suggestedtime->suggestedtimeId == $suggestedtime2->suggestedtimeId)
+			{
+				$found = true;
+				break;
+			}
+		}
+		if (!$found)
+		{
+			$this->_suggestedtimeList[] = $suggestedtime;
 		}
 	}
 }
