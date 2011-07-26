@@ -11,7 +11,8 @@
 	`registeredid` VARCHAR(255) NOT NULL,
 	`timestamp` TIMESTAMP NOT NULL,
 	`avatarurl` VARCHAR(255) NOT NULL,
-	`facebookid` VARCHAR(255) NOT NULL, PRIMARY KEY  (`participantid`)) ENGINE=MyISAM;
+	`facebookid` VARCHAR(255) NOT NULL,
+	`facebooktoken` VARCHAR(255) NOT NULL, PRIMARY KEY  (`participantid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -20,7 +21,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Participant&attributeList=array+%28%0A++0+%3D%3E+%27firstName%27%2C%0A++1+%3D%3E+%27lastName%27%2C%0A++2+%3D%3E+%27email%27%2C%0A++3+%3D%3E+%27Event%27%2C%0A++4+%3D%3E+%27password%27%2C%0A++5+%3D%3E+%27registeredId%27%2C%0A++6+%3D%3E+%27timestamp%27%2C%0A++7+%3D%3E+%27avatarURL%27%2C%0A++8+%3D%3E+%27Device%27%2C%0A++9+%3D%3E+%27facebookId%27%2C%0A++10+%3D%3E+%27AltEmail%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Participant&attributeList=array+%28%0A++0+%3D%3E+%27firstName%27%2C%0A++1+%3D%3E+%27lastName%27%2C%0A++2+%3D%3E+%27email%27%2C%0A++3+%3D%3E+%27Event%27%2C%0A++4+%3D%3E+%27password%27%2C%0A++5+%3D%3E+%27registeredId%27%2C%0A++6+%3D%3E+%27timestamp%27%2C%0A++7+%3D%3E+%27avatarURL%27%2C%0A++8+%3D%3E+%27Device%27%2C%0A++9+%3D%3E+%27facebookId%27%2C%0A++10+%3D%3E+%27AltEmail%27%2C%0A++11+%3D%3E+%27facebookToken%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.eventparticipantmap.php');
@@ -83,6 +84,11 @@ class Participant extends POG_Base
 	 */
 	private $_altemailList = array();
 	
+	/**
+	 * @var VARCHAR(255)
+	 */
+	public $facebookToken;
+	
 	public $pog_attribute_type = array(
 		"participantId" => array('db_attributes' => array("NUMERIC", "INT")),
 		"firstName" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
@@ -96,6 +102,7 @@ class Participant extends POG_Base
 		"Device" => array('db_attributes' => array("OBJECT", "HASMANY")),
 		"facebookId" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"AltEmail" => array('db_attributes' => array("OBJECT", "HASMANY")),
+		"facebookToken" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		);
 	public $pog_query;
 	
@@ -116,7 +123,7 @@ class Participant extends POG_Base
 		}
 	}
 	
-	function Participant($firstName='', $lastName='', $email='', $password='', $registeredId='', $timestamp='', $avatarURL='', $facebookId='')
+	function Participant($firstName='', $lastName='', $email='', $password='', $registeredId='', $timestamp='', $avatarURL='', $facebookId='', $facebookToken='')
 	{
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
@@ -129,6 +136,7 @@ class Participant extends POG_Base
 		$this->_deviceList = array();
 		$this->facebookId = $facebookId;
 		$this->_altemailList = array();
+		$this->facebookToken = $facebookToken;
 	}
 	
 	
@@ -153,6 +161,7 @@ class Participant extends POG_Base
 			$this->timestamp = $row['timestamp'];
 			$this->avatarURL = $this->Unescape($row['avatarurl']);
 			$this->facebookId = $this->Unescape($row['facebookid']);
+			$this->facebookToken = $this->Unescape($row['facebooktoken']);
 		}
 		return $this;
 	}
@@ -246,6 +255,7 @@ class Participant extends POG_Base
 			$participant->timestamp = $row['timestamp'];
 			$participant->avatarURL = $this->Unescape($row['avatarurl']);
 			$participant->facebookId = $this->Unescape($row['facebookid']);
+			$participant->facebookToken = $this->Unescape($row['facebooktoken']);
 			$participantList[] = $participant;
 		}
 		return $participantList;
@@ -271,11 +281,12 @@ class Participant extends POG_Base
 			`registeredid`='".$this->Escape($this->registeredId)."', 
 			`timestamp`='".$this->timestamp."', 
 			`avatarurl`='".$this->Escape($this->avatarURL)."', 
-			`facebookid`='".$this->Escape($this->facebookId)."'where `participantid`='".$this->participantId."'";
+			`facebookid`='".$this->Escape($this->facebookId)."', 
+			`facebooktoken`='".$this->Escape($this->facebookToken)."' where `participantid`='".$this->participantId."'";
 		}
 		else
 		{
-			$this->pog_query = "insert into `participant` (`firstname`, `lastname`, `email`, `password`, `registeredid`, `timestamp`, `avatarurl`, `facebookid`) values (
+			$this->pog_query = "insert into `participant` (`firstname`, `lastname`, `email`, `password`, `registeredid`, `timestamp`, `avatarurl`, `facebookid`, `facebooktoken` ) values (
 			'".$this->Escape($this->firstName)."', 
 			'".$this->Escape($this->lastName)."', 
 			'".$this->Escape($this->email)."', 
@@ -283,7 +294,8 @@ class Participant extends POG_Base
 			'".$this->Escape($this->registeredId)."', 
 			'".$this->timestamp."', 
 			'".$this->Escape($this->avatarURL)."', 
-			'".$this->Escape($this->facebookId)."')";
+			'".$this->Escape($this->facebookId)."', 
+			'".$this->Escape($this->facebookToken)."' )";
 		}
 		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
 		if ($this->participantId == "")

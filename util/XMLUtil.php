@@ -36,9 +36,11 @@ class XMLUtil extends ReqBase
 	/**
 	* Generates an xml object for a Participant object type
 	* @param Participant $participant
+	* @param string $eventId
+	* @param string $type
 	* @return DOMDocument
 	*/
-	function GetParticipantXML(&$participant, $eventId=null)
+	function GetParticipantXML(&$participant, $eventId=null, $type=null)
 	{
 		if ($participant instanceof Participant)
 		{
@@ -47,6 +49,7 @@ class XMLUtil extends ReqBase
 			$doc->appendChild($root);
 			
 			if($eventId) $root->setAttribute('eventId', $eventId);
+			if($type) $root->setAttribute('type', $type);
 			$root->setAttribute('email', $participant->email);
 		
 			if ( strlen($participant->firstName) > 0 )

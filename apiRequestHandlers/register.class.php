@@ -17,7 +17,7 @@ class Register extends ReqBase
 {
 	public $dataObj;	
 	private $requiredFields = array('email', 'password');
-	private $allFields = array('email', 'password', 'firstName', 'lastName', 'avatarURL', 'facebookId');
+	private $allFields = array('email', 'password', 'firstName', 'lastName', 'avatarURL', 'facebookId', 'facebookToken');
 	
 	function Register()
 	{

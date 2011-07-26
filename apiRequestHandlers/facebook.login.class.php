@@ -87,6 +87,7 @@ class FacebookLogin extends ReqBase
 			if ($lastName) $regObj['lastName'] = $lastName;
 			$regObj['facebookId'] = $fb_id;
 			$regObj['avatarURL'] = $avatarURL;
+			$regObj['facebookToken'] = $access_token;
 			
 			$register->dataObj = $regObj;
 			$register->RegisterGo();
@@ -98,6 +99,7 @@ class FacebookLogin extends ReqBase
 		$existingRegisteredUser->facebookId = $fb_id;
 		$existingRegisteredUser->avatarURL = $avatarURL;
 		$existingRegisteredUser->timestamp = $this->getTimeStamp();
+		$existingRegisteredUser->facebookToken = $access_token;
 		$existingRegisteredUser->Save();
 		
 		if (!$doSkipResult) // only give success and kill if not called by post class
