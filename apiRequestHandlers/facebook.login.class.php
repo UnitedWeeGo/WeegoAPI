@@ -65,16 +65,17 @@ class FacebookLogin extends ReqBase
 			die();
 		}
 		$email = $user_profile['email'];
+		$fb_id = $user_profile['id'];
+		$avatarURL = 'http://graph.facebook.com/' . $fb_id . '/picture';
 		
 		/** @var $existingRegisteredUser Participant */
-		$existingRegisteredUser = $this->isParticipantRegistered($email);
+		$existingRegisteredUser = $this->isParticipantRegisteredWithFacebookId($fb_id);
 		//private $allFields = array('email', 'password', 'firstName', 'lastName', 'registeredId', 'avatarURL', 'facebookId');
 		
 		$firstName = isset($user_profile['first_name']) ? $user_profile['first_name'] : null;
 		$lastName = isset($user_profile['last_name']) ? $user_profile['last_name'] : null;
 		
-		$fb_id = $user_profile['id'];
-		$avatarURL = 'http://graph.facebook.com/' . $fb_id . '/picture';
+		
 		
 		if (!$existingRegisteredUser)
 		{
@@ -96,6 +97,7 @@ class FacebookLogin extends ReqBase
 		// should update the existing user with any new information
 		if ($firstName) $existingRegisteredUser->firstName = $firstName;
 		if ($lastName) $existingRegisteredUser->lastName = $lastName;
+		$existingRegisteredUser->email = $email;
 		$existingRegisteredUser->facebookId = $fb_id;
 		$existingRegisteredUser->avatarURL = $avatarURL;
 		$existingRegisteredUser->timestamp = $this->getTimeStamp();

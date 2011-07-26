@@ -42,6 +42,7 @@ class Pair extends ReqBase
 		$user_profile = $this->getFBUserProfile();
 		
 		$validEmailAddress = $user_profile['email'];
+		$fb_id = $user_profile['id'];
 		
 		// get the Invite list for user with email address
 		$inviteList = $this->getInviteList();
@@ -56,6 +57,7 @@ class Pair extends ReqBase
 		{
 			// check to see if user is registered
 			$existingRegisteredUser = $this->isParticipantRegistered($validEmailAddress);
+			if(!$existingRegisteredUser) $existingRegisteredUser = $this->isParticipantRegisteredWithFacebookId($fb_id);
 			
 			$invite = $inviteList[$i];
 			$invalidEmailAddress = $invite->inviteeId;

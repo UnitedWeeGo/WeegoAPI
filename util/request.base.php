@@ -169,6 +169,19 @@ class ReqBase
 	}
 	
 	/**
+	* Checks to see if the Participant is registered and return them
+	* @param string $email
+	* @return Participant
+	*/
+	function isParticipantRegisteredWithFacebookId($facebookId)
+	{
+		$lookup = new Participant();
+		$participants = $lookup->GetList( array( array("facebookId", "=", $facebookId) ) );
+		if (count($participants) > 0) return $participants[0];
+		return null;
+	}
+	
+	/**
 	* Checks to see if the Participant exists in the system
 	* @param string $email
 	* @return Participant
