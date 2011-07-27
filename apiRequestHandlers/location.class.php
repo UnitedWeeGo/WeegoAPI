@@ -80,7 +80,8 @@ class LocationClass extends ReqBase
 		
 		$this->populateObject($this->allFields, $this->dataObj, $location); // populate the location obj
 		
-		// get the detail data from google
+		// get the detail data from google DEPRICATED - using simple geo
+		/*
 		$refSet = isset($this->dataObj['g_reference']);
 		$isPlace = $this->dataObj['location_type'] == LocationClass::TYPE_PLACE;
 		if ($refSet && $isPlace)
@@ -88,6 +89,7 @@ class LocationClass extends ReqBase
 			// decorates the location with google data
 			$location = $this->decorateLocationWithGoogleDetails($location);
 		}
+		*/
 		
 		if (!$locationUpdate) $event->AddLocation($location);
 		if ($locationUpdate) $location->Save();
@@ -118,6 +120,8 @@ class LocationClass extends ReqBase
 	 * @param Location $location
 	 * @return Location
 	 */
+	
+	/* DEPRICATED - using simple geo
 	function decorateLocationWithGoogleDetails(&$location)
 	{
 		$g_reference = $this->dataObj['g_reference'];
@@ -134,5 +138,6 @@ class LocationClass extends ReqBase
 		}
 		return $location;
 	}
+	*/
 }
 ?>
