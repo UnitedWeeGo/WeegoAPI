@@ -20,6 +20,9 @@ class XMLFacebookClass extends ReqBase
 	public $dataObj;	
 	private $requiredFields = array();
 	
+	/** @var $eventToReturnThatMatchesRequestId Event */
+	private $eventToReturnThatMatchesRequestId;
+	
 	function XMLFacebookClass()
 	{
 		parent::__construct();
@@ -67,6 +70,8 @@ class XMLFacebookClass extends ReqBase
 			die();
 		}
 		
+		$returnEventWithRequestId = false;
+		if (isset($this->dataObj['requestId'])) $returnEventWithRequestId = true;
 		
 		$xml = $this->dataObj['xml'];
 		$doc = new DOMDocument('1.0', 'UTF-8');
@@ -78,8 +83,9 @@ class XMLFacebookClass extends ReqBase
 		
 		for ($i = 0; $i < $nodeListLength; $i++)
 		{
-		
+			/** @var $event DOMNode  */
 			$event = $events->item($i);
+			
 			// at a minimum, an event node must be passed
 			if ( !$event ) $this->xmlStructureError(); // error out and die
 			
@@ -97,6 +103,12 @@ class XMLFacebookClass extends ReqBase
 			$eventGenerator->dataObj = $eventObj;
 			$savedEvent = $eventGenerator->EventGo();
 			
+			// if a request id is passes, check the event for that value and set it to be returned if it exists
+			if ($returnEventWithRequestId)
+			{
+				$requestId = $event->attributes->getNamedItem('requestId')->nodeValue;
+				if ($requestId == $this->dataObj['requestId']) $this->eventToReturnThatMatchesRequestId = $savedEvent;
+			}
 			
 			// Locations -------
 			$tempLocationStorageForVote = array();
@@ -163,6 +175,11 @@ class XMLFacebookClass extends ReqBase
 		$xmlArray = array();
 		$participantXML= $xmlUtil->GetParticipantWithRuidXML($me);
 		$xmlArray[0] = $participantXML;
+		
+		if ($this->eventToReturnThatMatchesRequestId)
+		{
+			$xmlArray[1] = $xmlUtil->GetEventXML($this->eventToReturnThatMatchesRequestId, $me);
+		}
 	
 		echo $s->genSuccessWithXMLArray(SuccessResponse::LoginSuccess, $xmlArray);
 		die();
