@@ -69,12 +69,13 @@ class Pair extends ReqBase
 			if (!$existingRegisteredUser)
 			{
 				//echo "User is NOT registered." . PHP_EOL;
+				
+				// delete the invalid participant from the system
+				$this->deleteInvalidParticipant($invalidEmailAddress);
 				// register the user
 				$newParticipant = $this->createNewParticipant($user_profile);
 				// clean the invite, user not added previously
 				$this->cleanInvite($invite, false, $validEmailAddress);
-				// delete the invalid participant from the system
-				$this->deleteInvalidParticipant($invalidEmailAddress);
 				// add the valid participant to the event
 				$this->addParticipantToEvent($newParticipant, $event);
 				// add alternate email to valid participant
@@ -148,6 +149,7 @@ class Pair extends ReqBase
 		if ($firstName) $newParticipant->firstName = $firstName;
 		if ($lastName) $newParticipant->lastName = $lastName;
 		$newParticipant->facebookId = $fb_id;
+		$newParticipant->facebookToken = $this->dataObj['fb_token'];
 		$newParticipant->avatarURL = $avatarURL;
 		$newParticipant->timestamp = $this->getTimeStamp();
 		$newParticipant->email = $user_profile['email'];
@@ -265,6 +267,8 @@ class Pair extends ReqBase
 	*/
 	function addAlternateEmail(&$participant, $email)
 	{
+		if ($participant->email == $email) return; // invited email was actually valid, just not registered
+		
 		$altemail = new AltEmail();
 		// check to see if alternate email has already been added
 		$list = $altemail->GetList( array( array("email", "=", $email ) ) );
