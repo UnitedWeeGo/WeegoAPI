@@ -102,7 +102,7 @@ class Pair extends ReqBase
 			else
 			{
 				//echo "User is registered, and added to the event." . PHP_EOL;
-				// clean the invite, user not added previously
+				// clean the invite, user WAS added previously
 				$this->cleanInvite($invite, true, $validEmailAddress);
 				// delete the invalid participant from the system
 				$this->deleteInvalidParticipant($invalidEmailAddress);
@@ -210,11 +210,18 @@ class Pair extends ReqBase
 	*/
 	function cleanInvite(&$invite, $userPreviouslyAdded, $validEmailAddress)
 	{
-		$invite->token = '';
-		$invite->pending = 0;
-		$invite->hasBeenRemoved = 1;
-		$invite->timestamp = $this->getTimeStamp();
-		$invite->Save();
+		if ($invite->inviteeId == $validEmailAddress)
+		{
+			$invite->Delete();
+		}
+		else
+		{
+			$invite->token = '';
+			$invite->pending = 0;
+			$invite->hasBeenRemoved = 1;
+			$invite->timestamp = $this->getTimeStamp();
+			$invite->Save();
+		}
 		
 		if (!$userPreviouslyAdded)
 		{
