@@ -199,12 +199,12 @@ EOT;
 	* @param string $eventTimeZone
 	* @return string
 	*/
-	function getFormattedTime($eventDate, $eventTimeZone)
+	function getFormattedTime($eventDate, $eventTimeZone=null)
 	{
 		$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
 		$eventTime = new DateTime($eventDate);
 		if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
-		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $tz : 'GMT');
+		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $eventTimeZone : 'GMT');
 		return $dateStr;
 	}
 	
