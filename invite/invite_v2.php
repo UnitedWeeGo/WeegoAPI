@@ -8,6 +8,7 @@ foreach(glob("../objects/*.php") as $class_filename) {
 	require_once($class_filename);
 }
 require_once '../util/request.base.php';
+require_once '../util/TimeZoneUtil.php';
 
 class InviteEmail extends ReqBase
 {
@@ -28,8 +29,8 @@ class InviteEmail extends ReqBase
 		$creatorAvatarURL = $creator->avatarURL;
 		$creatorFriendlyName = $this->getFriendlyName($creator);
 		$eventTitle = urldecode($event->eventTitle);
-		$eventDate = $this->getFormattedTime($event->eventDate);
-		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate);
+		$eventDate = $this->getFormattedTime($event->eventDate, $event->eventTimeZone);
+		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate, $event->eventTimeZone);
 		$winningLocation = $this->determineWinningLocationForEvent($event);
 		$name = $winningLocation ? $winningLocation->name : 'no location name';
 		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'no location address';
@@ -192,10 +193,18 @@ EOT;
 		}
 	}
 	
-	function getFormattedTime($eventDate)
+	/**
+	* Get the formatted event time
+	* @param string $eventDate
+	* @param string $eventTimeZone
+	* @return string
+	*/
+	function getFormattedTime($eventDate, $eventTimeZone)
 	{
+		$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
 		$eventTime = new DateTime($eventDate);
-		$dateStr = $eventTime->format('D, M j g:i A');
+		if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
+		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $tz : 'GMT');
 		return $dateStr;
 	}
 	

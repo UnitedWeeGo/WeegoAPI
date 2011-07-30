@@ -17,7 +17,7 @@ class EventClass extends ReqBase
 {
 	public $dataObj;	
 	private $requiredFields = array('registeredId');
-	private $allFields = array('eventTitle', 'eventDate', 'eventDescription', 'guestListOpen', 'locationListOpen');
+	private $allFields = array('eventTitle', 'eventDate', 'eventDescription', 'guestListOpen', 'locationListOpen', 'eventTimeZone');
 	
 	function EventClass()
 	{
