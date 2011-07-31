@@ -70,12 +70,9 @@ class FacebookLogin extends ReqBase
 		
 		/** @var $existingRegisteredUser Participant */
 		$existingRegisteredUser = $this->isParticipantRegisteredWithFacebookId($fb_id);
-		//private $allFields = array('email', 'password', 'firstName', 'lastName', 'registeredId', 'avatarURL', 'facebookId');
-		
+				
 		$firstName = isset($user_profile['first_name']) ? $user_profile['first_name'] : null;
 		$lastName = isset($user_profile['last_name']) ? $user_profile['last_name'] : null;
-		
-		
 		
 		if (!$existingRegisteredUser)
 		{
@@ -83,7 +80,6 @@ class FacebookLogin extends ReqBase
 			$register = new Register();
 			$regObj = array();
 			$regObj['email'] = $email;
-			$regObj['password'] = '$no_password$';
 			if ($firstName) $regObj['firstName'] = $firstName;
 			if ($lastName) $regObj['lastName'] = $lastName;
 			$regObj['facebookId'] = $fb_id;

@@ -16,8 +16,8 @@ require_once '../util/XMLUtil.php';
 class Register extends ReqBase
 {
 	public $dataObj;	
-	private $requiredFields = array('email', 'password');
-	private $allFields = array('email', 'password', 'firstName', 'lastName', 'avatarURL', 'facebookId', 'facebookToken');
+	private $requiredFields = array();
+	private $allFields = array('email', 'firstName', 'lastName', 'avatarURL', 'facebookId', 'facebookToken');
 	
 	function Register()
 	{

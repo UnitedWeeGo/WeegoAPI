@@ -3,20 +3,6 @@
 $server = $_SERVER['SERVER_NAME'];
 
 echo "Notes ---------
-
-register a participant: ($server/public/register.php)
-http://$server/public/register.php
-required - email, password
-optional - firstName, lastName
-returns RegisterSuccess = '200';
-
------------
-login a participant: ($server/public/login.php)
-http://$server/public/login.php
-required - email, password
-optional - deviceToken
-returns LoginSuccess = '201';
-
 -----------
 create or modify an event:
 required - registeredId, eventDate(format: 0000-00-00 00:00:00), eventTitle
