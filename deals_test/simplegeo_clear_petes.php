@@ -5,10 +5,6 @@ foreach(glob("../objects/*.php") as $class_filename) {
 	require_once($class_filename);
 }
 
-set_include_path(
-get_include_path() . PATH_SEPARATOR . '/Applications/MAMP/bin/php5/lib/php'
-);
-
 require_once 'Services/SimpleGeo.php';
 
 $key = 'bcRryckAyj5YT3ZrSGraENdxqdLJRz9Q';
