@@ -181,7 +181,7 @@ class XMLUtil extends ReqBase
 	* @param Boolean $showTempId
 	* @return DOMDocument
 	*/
-	function GetLocationXML(&$location, $iVotedForLocation=false, $showTempId=false)
+	function GetLocationXML(&$location, $iVotedForLocation=false, $showTempId=false, $hasDeal=false)
 	{
 		if ($location instanceof Location)
 		{
@@ -208,6 +208,9 @@ class XMLUtil extends ReqBase
 			}
 			if ($showTempId) {
 				$root->setAttribute('tempId', $location->tempId);
+			}
+			if ($hasDeal) {
+				$root->setAttribute('hasDeal', "true");
 			}
 			
 			$nameNode = $doc->createElement('name');
@@ -391,6 +394,10 @@ class XMLUtil extends ReqBase
 	    				$locationsNode = $doc->createElement('locations');
 						$root->appendChild($locationsNode);
 	    			}
+	    			
+	    			$dealLookup = new Deal();
+	    			$hasDeal = count ($dealLookup->GetList( array( array("featureId", "=", $location->g_id ))) ) > 0;
+	    			
 	    			$locationXML = $this->GetLocationXML($location, false, $showTempId);
 	    			$locationsNode->appendChild( $doc->importNode($locationXML->firstChild, true)  );
 	    		}
@@ -537,10 +544,13 @@ class XMLUtil extends ReqBase
 			{			
 				$winningLocation = $this->determineWinningLocationForEvent($event);
 				
+				$dealLookup = new Deal();
+				$hasDeal = count ($dealLookup->GetList( array( array("featureId", "=", $winningLocation->g_id ))) ) > 0;
+				
 	    		$locationsNode = $doc->createElement('locations');
 				$root->appendChild($locationsNode);
 				$iVotedForLocation = $this->iVotedForLocation($votesArray, $participant, $winningLocation->locationId);
-    			$locationXML = $this->GetLocationXML($winningLocation, $iVotedForLocation);
+    			$locationXML = $this->GetLocationXML($winningLocation, $iVotedForLocation, false, $hasDeal);
     			$locationsNode->appendChild( $doc->importNode($locationXML->firstChild, true)  );
 			}
 			
