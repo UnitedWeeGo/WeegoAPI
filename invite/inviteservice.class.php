@@ -41,6 +41,10 @@ class InviteService extends ReqBase
 		{
 			/** @var $participant Participant */
 			$receiver = $participants[$j];
+			
+			// skip any user that has declined the event
+			if ($this->getHasDeclinedEvent($event, $receiver->email)) continue;
+			
 			$creatorEmail = $event->creatorId;
 			
 			$creatorLookup = new Participant();
@@ -124,6 +128,34 @@ class InviteService extends ReqBase
 			  echo $e->getMessage(); //Boring error messages from anything else!
 			}
 		}
+	}
+	
+	/**
+	* Determines if the user has accepted the event
+	* @param Event $event
+	* @param string $email
+	* @return Boolean
+	*/
+	function getHasAcceptedEvent(&$event, $email)
+	{
+		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$hasAccepted = in_array($email, $acceptedParticipantList);
+	
+		return $hasAccepted;
+	}
+	
+	/**
+	* Determines if the user has declined the event
+	* @param Event $event
+	* @param string $email
+	* @return Boolean
+	*/
+	function getHasDeclinedEvent(&$event, $email)
+	{
+		$declinedParticipantList = explode(',', $event->declinedParticipantList);
+		$hasDeclined = in_array($email, $declinedParticipantList);
+	
+		return $hasDeclined;
 	}
 }
 
