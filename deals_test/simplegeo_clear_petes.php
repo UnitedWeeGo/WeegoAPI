@@ -13,10 +13,10 @@ $secret = 'q2AMUDLyHpcPuaKkETchSqxQaPrY2fD9';
 $client = new Services_SimpleGeo($key, $secret);
 
 // Petes tavern id
-//$existingPlaceHandle = 'SG_1J66yIxSElIpKWsHpMTYRP_37.779507_-122.390710@1303263314';
+$existingPlaceHandle = 'SG_1J66yIxSElIpKWsHpMTYRP_37.779507_-122.390710@1303263314';
 
 // Long bar id
-$existingPlaceHandle = 'SG_4YZBUkiLgcObCceSGj02Gk_37.790616_-122.433905@1303263324';
+//$existingPlaceHandle = 'SG_4YZBUkiLgcObCceSGj02Gk_37.790616_-122.433905@1303263324';
 
 // check to make sure the place is valid
 
