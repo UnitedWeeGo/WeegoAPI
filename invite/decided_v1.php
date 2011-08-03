@@ -43,7 +43,7 @@ class DecidedEmail extends ReqBase
 	<tr>
 		<td colspan="2">
 			<br />
-			<span style="font-size:32px; color:#666;">You have been invited to...</span>
+			<span style="font-size:32px; color:#666;">$eventTitle has been decided!</span>
 		</td>
 	</tr>
 	<tr>
