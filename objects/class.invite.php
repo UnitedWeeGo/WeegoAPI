@@ -10,7 +10,8 @@
 	`token` VARCHAR(255) NOT NULL,
 	`pending` TINYINT NOT NULL,
 	`hasbeenremoved` TINYINT NOT NULL,
-	`timestamp` TIMESTAMP NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`inviteid`)) ENGINE=MyISAM;
+	`timestamp` TIMESTAMP NOT NULL,
+	`sent` TINYINT NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`inviteid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -19,7 +20,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Invite&attributeList=array+%28%0A++0+%3D%3E+%27inviterId%27%2C%0A++1+%3D%3E+%27inviteeId%27%2C%0A++2+%3D%3E+%27Event%27%2C%0A++3+%3D%3E+%27PushDispatch%27%2C%0A++4+%3D%3E+%27token%27%2C%0A++5+%3D%3E+%27pending%27%2C%0A++6+%3D%3E+%27hasBeenRemoved%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Invite&attributeList=array+%28%0A++0+%3D%3E+%27inviterId%27%2C%0A++1+%3D%3E+%27inviteeId%27%2C%0A++2+%3D%3E+%27Event%27%2C%0A++3+%3D%3E+%27PushDispatch%27%2C%0A++4+%3D%3E+%27token%27%2C%0A++5+%3D%3E+%27pending%27%2C%0A++6+%3D%3E+%27hasBeenRemoved%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27sent%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.invitepushdispatchmap.php');
@@ -67,6 +68,11 @@ class Invite extends POG_Base
 	 */
 	public $timestamp;
 	
+	/**
+	 * @var TINYINT
+	 */
+	public $sent;
+	
 	public $pog_attribute_type = array(
 		"inviteId" => array('db_attributes' => array("NUMERIC", "INT")),
 		"inviterId" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
@@ -77,6 +83,7 @@ class Invite extends POG_Base
 		"pending" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		"hasBeenRemoved" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		"timestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
+		"sent" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		);
 	public $pog_query;
 	
@@ -97,7 +104,7 @@ class Invite extends POG_Base
 		}
 	}
 	
-	function Invite($inviterId='', $inviteeId='', $token='', $pending='', $hasBeenRemoved='', $timestamp='')
+	function Invite($inviterId='', $inviteeId='', $token='', $pending='', $hasBeenRemoved='', $timestamp='', $sent='')
 	{
 		$this->inviterId = $inviterId;
 		$this->inviteeId = $inviteeId;
@@ -106,6 +113,7 @@ class Invite extends POG_Base
 		$this->pending = $pending;
 		$this->hasBeenRemoved = $hasBeenRemoved;
 		$this->timestamp = $timestamp;
+		$this->sent = $sent;
 	}
 	
 	
@@ -129,6 +137,7 @@ class Invite extends POG_Base
 			$this->pending = $this->Unescape($row['pending']);
 			$this->hasBeenRemoved = $this->Unescape($row['hasbeenremoved']);
 			$this->timestamp = $row['timestamp'];
+			$this->sent = $this->Unescape($row['sent']);
 		}
 		return $this;
 	}
@@ -221,6 +230,7 @@ class Invite extends POG_Base
 			$invite->pending = $this->Unescape($row['pending']);
 			$invite->hasBeenRemoved = $this->Unescape($row['hasbeenremoved']);
 			$invite->timestamp = $row['timestamp'];
+			$invite->sent = $this->Unescape($row['sent']);
 			$inviteList[] = $invite;
 		}
 		return $inviteList;
@@ -245,18 +255,20 @@ class Invite extends POG_Base
 			`token`='".$this->Escape($this->token)."', 
 			`pending`='".$this->Escape($this->pending)."', 
 			`hasbeenremoved`='".$this->Escape($this->hasBeenRemoved)."', 
-			`timestamp`='".$this->timestamp."' where `inviteid`='".$this->inviteId."'";
+			`timestamp`='".$this->timestamp."', 
+			`sent`='".$this->Escape($this->sent)."' where `inviteid`='".$this->inviteId."'";
 		}
 		else
 		{
-			$this->pog_query = "insert into `invite` (`inviterid`, `inviteeid`, `eventid`, `token`, `pending`, `hasbeenremoved`, `timestamp` ) values (
+			$this->pog_query = "insert into `invite` (`inviterid`, `inviteeid`, `eventid`, `token`, `pending`, `hasbeenremoved`, `timestamp`, `sent` ) values (
 			'".$this->Escape($this->inviterId)."', 
 			'".$this->Escape($this->inviteeId)."', 
 			'".$this->eventId."', 
 			'".$this->Escape($this->token)."', 
 			'".$this->Escape($this->pending)."', 
 			'".$this->Escape($this->hasBeenRemoved)."', 
-			'".$this->timestamp."' )";
+			'".$this->timestamp."', 
+			'".$this->Escape($this->sent)."' )";
 		}
 		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
 		if ($this->inviteId == "")

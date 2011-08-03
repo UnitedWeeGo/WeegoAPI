@@ -98,6 +98,7 @@ class ParticipantClass extends ReqBase
 		$userIsRegistered = (strlen($participant->registeredId) > 0);
 		
 		$invite = new Invite();
+		$invite->sent = 0;
 		$invite->inviterId = $me->email;
 		$invite->inviteeId = $participant->email;
 		$invite->timestamp = $this->getTimeStamp();
