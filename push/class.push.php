@@ -10,6 +10,7 @@ foreach(glob("../objects/*.php") as $class_filename) {
 
 // Using Autoload all classes are loaded on-demand
 require_once '../../apns-php/ApnsPHP/Autoload.php';
+require_once '../invite/inviteservice.class.php';
 
 date_default_timezone_set('GMT');
 
@@ -417,6 +418,10 @@ class Push
 				
 				if ( count($event->GetLocationList()) > 0) // make sure there are locations
 				{
+					$inviteService = new InviteService();
+					$inviteService->dispatchEventDecidedEmailForEvent($event);
+					
+					// Add the decided feed message to the queue
 					$message = new FeedMessage();
 					$message->timestamp = $ts;
 					$message->type = 'decided';
