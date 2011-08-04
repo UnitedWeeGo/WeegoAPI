@@ -58,7 +58,7 @@ class InviteService extends ReqBase
 			
 			// get the receivers invite if one exists (that has not been removed), to check if pairing is still needed
 			$token = '';
-			$needsPair = false;			
+			$needsPair = 0;			
 			$inviteList = $event->GetInviteList( array( array("inviteeId", "=", $receiverEmail ), array("pending", "=", 1 ) ) );
 			
 			if (count($inviteList) > 0)
@@ -66,7 +66,7 @@ class InviteService extends ReqBase
 				/** @var $invite Invite */
 				$invite = $inviteList[0];
 				$token = $invite->token;
-				$needsPair = true;
+				$needsPair = 1;
 			}
 			
 			$bodyGen = new DecidedEmail();
