@@ -34,6 +34,7 @@ class DecidedEmail extends ReqBase
 		$winningLocation = $this->determineWinningLocationForEvent($event);
 		$name = $winningLocation ? $winningLocation->name : 'no location name';
 		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'no location address';
+		$inviteToken = $token;
 		$message = 
 <<< EOT
 <body bgcolor="#F3F3F3">
