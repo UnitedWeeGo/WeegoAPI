@@ -34,7 +34,7 @@ class InviteEmail extends ReqBase
 		$eventDate = $this->getFormattedTime($event->eventDate, $event->eventTimeZone);
 		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate, $event->eventTimeZone);
 		$winningLocation = $this->determineWinningLocationForEvent($event);
-		$name = $winningLocation ? $winningLocation->name : 'No location added';
+		$name = $winningLocation ? urldecode($winningLocation->name) : 'No location added';
 		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'Add a location!';
 		$inviteToken = $token;
 		

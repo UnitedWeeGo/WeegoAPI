@@ -32,7 +32,7 @@ class DecidedEmail extends ReqBase
 		$eventDate = $this->getFormattedTime($event->eventDate, $event->eventTimeZone);
 		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate, $event->eventTimeZone);
 		$winningLocation = $this->determineWinningLocationForEvent($event);
-		$name = $winningLocation ? $winningLocation->name : 'No location added';
+		$name = $winningLocation ? urldecode($winningLocation->name) : 'No location added';
 		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'Add a location!';
 		$inviteToken = $token;
 		
@@ -79,7 +79,6 @@ EOT;
 									<span style="font-size:1.2em; color:#666">$creatorFriendlyName</span><br />
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$eventTitle</span><br />
 									<span style="font-size:1.2em; color:#666">$eventDate</span><br />
-									<span style="font-size:1.1em; color:#666; font-weight:bold">Voting is </span><span style="font-size:1.1em; color:#690; font-weight:bold">open</span><br /><br />
 								</td>
 							</tr>
 						</table>
