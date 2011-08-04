@@ -40,14 +40,40 @@ class DecidedEmail extends ReqBase
 <<< EOT
 				<tr>
 					<td colspan="2">
-					<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to sign-up for Weego</a>
-					<br />
-					<br />
+						<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to sign-up for Weego</a>
+						<br />
+						<br />
 					</td>
-					</tr>
+				</tr>
 EOT;
 		
 		if (!$needsPair) $pairHTML = '';
+		
+		$aboutHTML =
+		<<< EOT
+		
+			<tr>
+				<td colspan="2">
+					<span style="color:#666; font-size:1.8em; font-weight:bold;">What is Weego?</span><br />
+					<span style="font-size:1.4em; color:#666">Weego is a group collaboration application that allows you and your friends to decide where to go.</span><br />
+					<br />
+					<span style="color:#666; font-size:1.8em; font-weight:bold;">Plan as a group</span><br />
+					<span style="font-size:1.4em; color:#666">Add some of your friends and the places you would like to go to. And your friends can do the same.</span><br />
+					<br />
+					<span style="color:#666; font-size:1.8em; font-weight:bold;">Decide as a group</span><br />
+					<span style="font-size:1.4em; color:#666">Everyone picks the place(s) they would like to &ldquo;Go&rdquo; to. Then Weego will let the group know the group's decision, including the event time and location.</span><br />
+					<br />
+					<span style="color:#666; font-size:1.8em; font-weight:bold;">Group Messaging</span><br />
+					<span style="font-size:1.4em; color:#666">Stay in contact with your group. Weego will take care of letting your group know where you are and when you will get there.</span><br />
+					<br />
+					<span style="color:#666; font-size:1.8em; font-weight:bold;">Get there as a group</span><br />
+					<span style="font-size:1.4em; color:#666">Right around the time of the event Weego will let your group know where you are and when you will get there.</span></div>
+				</td>
+			</tr>
+		
+		EOT;
+		
+		if (!$needsPair) $aboutHTML = '';
 		
 		$message = 
 <<< EOT
@@ -115,24 +141,7 @@ EOT;
 		</td>
 	</tr>
 	$pairHTML
-	<tr>
-		<td colspan="2">
-			<span style="color:#666; font-size:1.8em; font-weight:bold;">What is Weego?</span><br />
-			<span style="font-size:1.4em; color:#666">Weego is a group collaboration application that allows you and your friends to decide where to go.</span><br />
-			<br />
-			<span style="color:#666; font-size:1.8em; font-weight:bold;">Plan as a group</span><br />
-			<span style="font-size:1.4em; color:#666">Add some of your friends and the places you would like to go to. And your friends can do the same.</span><br />
-			<br />
-			<span style="color:#666; font-size:1.8em; font-weight:bold;">Decide as a group</span><br />
-			<span style="font-size:1.4em; color:#666">Everyone picks the place(s) they would like to &ldquo;Go&rdquo; to. Then Weego will let the group know the group's decision, including the event time and location.</span><br />
-			<br />
-			<span style="color:#666; font-size:1.8em; font-weight:bold;">Group Messaging</span><br />
-			<span style="font-size:1.4em; color:#666">Stay in contact with your group. Weego will take care of letting your group know where you are and when you will get there.</span><br />
-			<br />
-			<span style="color:#666; font-size:1.8em; font-weight:bold;">Get there as a group</span><br />
-			<span style="font-size:1.4em; color:#666">Right around the time of the event Weego will let your group know where you are and when you will get there.</span></div>
-		</td>
-	</tr>
+	$aboutHTML
 	<tr>
 		<td colspan="2">
 			<div style="font-size:1.2em; color: #999;">
