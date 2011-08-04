@@ -44,7 +44,6 @@ class InviteEmail extends ReqBase
 			<td colspan="2">
 			<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to sign-up for Weego</a>
 			<br />
-			NEEDS INVITE BUTTON = $needsPair
 			<br />
 			</td>
 			</tr>
