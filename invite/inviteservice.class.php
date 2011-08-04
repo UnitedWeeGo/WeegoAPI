@@ -80,7 +80,7 @@ class InviteService extends ReqBase
 			try {
 				$mail->SetFrom('beta@unitedweego.com', 'Weego Admin');
 				$mail->AddAddress($receiverEmail);
-				$mail->Subject = $winningLocation->name . ' is where we are going!';
+				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going!';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 				$mail->MsgHTML( $body );
 				$mail->AddAttachment('images/email_header_01.png');      // attachment
@@ -128,7 +128,7 @@ class InviteService extends ReqBase
 			try {
 			  $mail->SetFrom('beta@unitedweego.com', 'Weego Admin');
 			  $mail->AddAddress($receiverEmail);
-			  $mail->Subject = 'You have been invited to ' . $event->eventTitle;
+			  $mail->Subject = 'You have been invited to ' . urldecode($event->eventTitle);
 			  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 			  $mail->MsgHTML( $body );
 			  $mail->AddAttachment('images/email_header_01.png');      // attachment
