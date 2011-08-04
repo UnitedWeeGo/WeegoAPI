@@ -50,7 +50,7 @@ EOT;
 		if (!$needsPair) $pairHTML = '';
 		
 		$aboutHTML =
-		<<< EOT
+<<< EOT
 		
 			<tr>
 				<td colspan="2">
@@ -71,7 +71,7 @@ EOT;
 				</td>
 			</tr>
 		
-		EOT;
+EOT;
 		
 		if (!$needsPair) $aboutHTML = '';
 		
