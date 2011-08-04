@@ -38,6 +38,8 @@ class InviteService extends ReqBase
 		// only send out decided emails if event has locations added, otherwise abort
 		if (!$eventHasLocations) return;
 		
+		$winningLocation = $this->determineWinningLocationForEvent($event);
+		
 		$participants = $event->GetParticipantList();
 		for ($j=0; $j<count($participants); $j++)
 		{
@@ -78,7 +80,7 @@ class InviteService extends ReqBase
 			try {
 				$mail->SetFrom('beta@unitedweego.com', 'Weego Admin');
 				$mail->AddAddress($receiverEmail);
-				$mail->Subject = $event->eventTitle . ' has been decided!';
+				$mail->Subject = $winningLocation->name . ' is where we are going!';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 				$mail->MsgHTML( $body );
 				$mail->AddAttachment('images/email_header_01.png');      // attachment

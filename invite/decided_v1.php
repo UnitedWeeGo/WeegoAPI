@@ -32,9 +32,23 @@ class DecidedEmail extends ReqBase
 		$eventDate = $this->getFormattedTime($event->eventDate, $event->eventTimeZone);
 		$eventExpireDate = $this->getFormattedTime($event->eventExpireDate, $event->eventTimeZone);
 		$winningLocation = $this->determineWinningLocationForEvent($event);
-		$name = $winningLocation ? $winningLocation->name : 'no location name';
-		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'no location address';
+		$name = $winningLocation ? $winningLocation->name : 'No location added';
+		$formatted_address = $winningLocation ? $winningLocation->formatted_address : 'Add a location!';
 		$inviteToken = $token;
+		
+		$pairHTML =
+<<< EOT
+				<tr>
+					<td colspan="2">
+					<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to sign-up for Weego</a>
+					<br />
+					<br />
+					</td>
+					</tr>
+EOT;
+		
+		if (!$needsPair) $pairHTML = '';
+		
 		$message = 
 <<< EOT
 <body bgcolor="#F3F3F3">
@@ -44,7 +58,7 @@ class DecidedEmail extends ReqBase
 	<tr>
 		<td colspan="2">
 			<br />
-			<span style="font-size:32px; color:#666;">$eventTitle has been decided!</span>
+			<span style="font-size:32px; color:#666;">$name is where we are going!</span>
 		</td>
 	</tr>
 	<tr>
@@ -65,7 +79,7 @@ class DecidedEmail extends ReqBase
 									<span style="font-size:1.2em; color:#666">$creatorFriendlyName</span><br />
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$eventTitle</span><br />
 									<span style="font-size:1.2em; color:#666">$eventDate</span><br />
-									<span style="font-size:1.1em; color:#666; font-weight:bold">Voting ends at </span><span style="font-size:1.1em; color:#690; font-weight:bold">$eventExpireDate</span><br /><br />
+									<span style="font-size:1.1em; color:#666; font-weight:bold">Voting is </span><span style="font-size:1.1em; color:#690; font-weight:bold">open</span><br /><br />
 								</td>
 							</tr>
 						</table>
@@ -100,24 +114,8 @@ class DecidedEmail extends ReqBase
 				</tr>
 			</table>
 		</td>
-		<td valign="top">
-			<span style="font-size:1.2em; color:#666">*The location shown is likely to change. Actually, thats the joy of the experience.</span><br />
-			<br />
-			<span style="font-size:1.2em; color:#666">Your vote could decide where everyone will be going.</span><br />
-			<br />
-			<span style="font-size:1.2em; color:#666; font-weight:bold">OR</span><br />
-			<br />
-			<span style="font-size:1.2em; color:#666">Add some of your friends &amp; the places you would like to go to. And your friends can do the same.</span>
-		</td>
 	</tr>
-	<tr>
-		<td colspan="2">
-		<a style="display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:24px; height:1.6em; color:#FFF; background-color:#690; text-decoration:none; text-align:center; padding-top:0.4em" href="$base_invite_url?$inviteToken">Click here to Sign-Up for the Weego Private Beta</a>
-			<br />
-			NEEDS INVITE BUTTON = $needsPair
-			<br />
-		</td>
-	</tr>
+	$pairHTML
 	<tr>
 		<td colspan="2">
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">What is Weego?</span><br />
@@ -125,9 +123,6 @@ class DecidedEmail extends ReqBase
 			<br />
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">Plan as a group</span><br />
 			<span style="font-size:1.4em; color:#666">Add some of your friends and the places you would like to go to. And your friends can do the same.</span><br />
-			<br />
-			<span style="color:#666; font-size:1.8em; font-weight:bold;">Get deals as a group</span><br />
-			<span style="font-size:1.4em; color:#666">In the future, Weego will help identify any deals that may be available at any of your groups locations. For now, we have baked in a &ldquo;For Placement Only&rdquo; deal so you can get an idea on how we will deliver these deals seamlessly into the experience.</span><br />
 			<br />
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">Decide as a group</span><br />
 			<span style="font-size:1.4em; color:#666">Everyone picks the place(s) they would like to &ldquo;Go&rdquo; to. Then Weego will let the group know the group's decision, including the event time and location.</span><br />
@@ -144,11 +139,11 @@ class DecidedEmail extends ReqBase
 			<div style="font-size:1.2em; color: #999;">
 				<br />
 				<br />
-				Copyright &copy; 2011 UnitedWeego Inc., All rights reserved.<br />
-				You are receiving this email because you expressed interest in our service or you opted into our Beta program.&nbsp;<br />
+				Copyright &copy; 2011 UnitedWego LLC, All rights reserved.<br />
+				You are receiving this email because one of your friends has invited you to an event. You have not been added to any email lists or promotions.&nbsp;<br />
 				<br />
 				<strong>Our mailing address is:</strong><br />
-				UnitedWeego Inc.<br />
+				UnitedWego LLC<br />
 				665 3rd St. Suite 521<br />
 				San Francisco,&nbsp;CA&nbsp;94103
 			</div>
