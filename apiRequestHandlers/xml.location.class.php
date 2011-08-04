@@ -78,6 +78,15 @@ class XMLLocationClass extends ReqBase
 			$locationGenerator = new LocationClass();
 			$locationGenerator->dataObj = $locationObj;
 			$savedLocation = $locationGenerator->LocationGo();
+			
+			$voteObj = array();
+			$voteObj['registeredId'] = $this->dataObj['registeredId'];
+			$voteObj['eventId'] = $savedEvent->eventId;
+			$voteObj['locationId'] = $savedLocation->locationId;
+			
+			$voteGenerator = new VoteClass();
+			$voteGenerator->dataObj = $voteObj;
+			$voteGenerator->VoteGo();
 		}
 		
 		$userTs = null;
