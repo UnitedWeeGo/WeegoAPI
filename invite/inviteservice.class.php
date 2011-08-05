@@ -86,11 +86,11 @@ class InviteService extends ReqBase
 				$mail->MsgHTML( $body );
 				$mail->AddAttachment('images/email_header_01.png');      // attachment
 				$mail->Send();
-				echo "Message Sent OK" . PHP_EOL;
+				//echo "Message Sent OK" . PHP_EOL;
 			} catch (phpmailerException $e) {
-				echo $e->errorMessage(); //Pretty error messages from PHPMailer
+				//echo $e->errorMessage(); //Pretty error messages from PHPMailer
 			} catch (Exception $e) {
-				echo $e->getMessage(); //Boring error messages from anything else!
+				//echo $e->getMessage(); //Boring error messages from anything else!
 			}
 				
 		}
@@ -159,11 +159,11 @@ class InviteService extends ReqBase
 				$mail->MsgHTML( $body );
 				$mail->AddAttachment('images/email_header_01.png');      // attachment
 				$mail->Send();
-				echo "Message Sent OK" . PHP_EOL;
+				//echo "Message Sent OK" . PHP_EOL;
 			} catch (phpmailerException $e) {
-				echo $e->errorMessage(); //Pretty error messages from PHPMailer
+				//echo $e->errorMessage(); //Pretty error messages from PHPMailer
 			} catch (Exception $e) {
-				echo $e->getMessage(); //Boring error messages from anything else!
+				//echo $e->getMessage(); //Boring error messages from anything else!
 			}
 				
 		}
@@ -206,17 +206,14 @@ class InviteService extends ReqBase
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 				$mail->MsgHTML( $body );
 				$mail->AddAttachment('images/email_header_01.png');      // attachment
-				$mail->Send();
-				echo "Message Sent OK" . PHP_EOL;
-					
-				//$invite->pending = 0;
+				$mail->Send();					
 				$invite->sent = 1;
 				$invite->Save();
 					
 			} catch (phpmailerException $e) {
-				echo $e->errorMessage(); //Pretty error messages from PHPMailer
+				//echo $e->errorMessage(); //Pretty error messages from PHPMailer
 			} catch (Exception $e) {
-				echo $e->getMessage(); //Boring error messages from anything else!
+				//echo $e->getMessage(); //Boring error messages from anything else!
 			}
 		}
 	}
