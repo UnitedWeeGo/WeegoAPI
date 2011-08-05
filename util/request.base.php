@@ -229,7 +229,6 @@ class ReqBase
 	* Checks to see if the email address is associated with event
 	* @param Event $event
 	* @param string $email
-	* @return
 	*/
 	function validateUserPartOfEvent(&$event, $email)
 	{
@@ -240,6 +239,23 @@ class ReqBase
 		{
 			$e = new ErrorResponse();
 			echo $e->genError(ErrorResponse::InvalidParamError, 'User is not part of this event');
+			die();
+		}
+	}
+	
+	/**
+	* Checks to see if the email address is the creator of the event
+	* @param Event $event
+	* @param string $email
+	*/
+	function validateUserCreatedEvent(&$event, $email)
+	{
+		$didCreateEvent = $event->creatorId == $email;
+		
+		if (!$didCreateEvent)
+		{
+			$e = new ErrorResponse();
+			echo $e->genError(ErrorResponse::InvalidParamError, 'User did not create this event');
 			die();
 		}
 	}

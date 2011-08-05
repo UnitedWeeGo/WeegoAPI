@@ -65,15 +65,58 @@ class RemoveEventClass extends ReqBase
 			$aec->AcceptEventGo();
 		}
 		
-		$this->markEventRemovedByParticipant($event, $me->participantId);
+		$eventShouldBeCancelled = false;
+		if ( isset($this->dataObj['cancel'] )) $eventShouldBeCancelled = $this->dataObj['cancel'] == 'true';
+		if ($eventShouldBeCancelled)
+		{
+			$this->validateUserCreatedEvent($event, $me->email); // exits with error upon non-validation
+			$event->cancelled = 1;
+			$event->timestamp = $this->getTimeStamp();
+			$event->infoTimestamp = $this->getTimeStamp();
+			$event->Save();
+		}
+		else
+		{
+			$this->markEventRemovedByParticipant($event, $me->participantId);
+		}
 		
-		/* maybe enable this later, not sure yet
-		$push = new Push();
-		$push->triggerClientUpdateForEvent($event);
-		*/
-		
-		$s = new SuccessResponse();
-		echo $s->genSuccess(SuccessResponse::EventRemoveSuccess, $event->eventId);
+		if ($eventShouldBeCancelled)
+		{
+			$userTs = null;
+			if (isset($this->dataObj['timestamp'])) // hit the method to only do timestamp stuff
+			{
+				try {
+					$userTs = new DateTime($this->dataObj['timestamp']);
+				} catch (Exception $e) {
+					$e = new ErrorResponse();
+					echo $e->genError(ErrorResponse::InvalidTimestampError, 'Timestamp was invalid format, must be 2011-02-10 18:50:06');
+					die();
+				}
+			}
+			$xmlUtil = new XMLUtil();
+			
+			if ($userTs)
+			{
+				$xml = $xmlUtil->GetEventXML($event, $me, $userTs);
+			}
+			else
+			{
+				$xml = $xmlUtil->GetEventXML($event, $me);
+			}
+			
+			$push = new Push();
+			$push->triggerClientUpdateForEvent($event);
+			
+			$xmlArray = array();
+			$xmlArray[0] = $xml;
+			$s = new SuccessResponse();
+			echo $s->genSuccessWithXMLArray(SuccessResponse::EventPostSuccess, $xmlArray);
+		}
+		else
+		{
+			$s = new SuccessResponse();
+			echo $s->genSuccess(SuccessResponse::EventRemoveSuccess, $event->eventId);
+		}
 	}
 	
 	/**

@@ -327,6 +327,7 @@ class XMLUtil extends ReqBase
 				$root->appendChild($eventInfoNode);
 				$eventInfoNode->setAttribute('eventDate', $event->eventDate);
 				$eventInfoNode->setAttribute('eventExpireDate', $event->eventExpireDate);
+				if ($event->cancelled == 1) $eventInfoNode->setAttribute('hasBeenCancelled', 'true');
 				
 				$eventTitleNode = $doc->createElement('eventTitle');
 				$eventInfoNode->appendChild($eventTitleNode);
@@ -512,6 +513,7 @@ class XMLUtil extends ReqBase
 			$eventInfoNode->setAttribute('eventExpireDate', $event->eventExpireDate);
 			$eventInfoNode->setAttribute('hasBeenRead', $this->participantHasRead($event, $participant->participantId) ? 'true':'false');
 			$eventInfoNode->setAttribute('hasCheckedIn', $this->getCheckedIn($event, $participant->participantId) ? 'true':'false');
+			if ($event->cancelled == 1) $eventInfoNode->setAttribute('hasBeenCancelled', 'true');
 			
 			$eventTitleNode = $doc->createElement('eventTitle');
 			$eventInfoNode->appendChild($eventTitleNode);
