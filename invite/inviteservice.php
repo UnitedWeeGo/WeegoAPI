@@ -7,7 +7,8 @@ require_once "inviteservice.class.php";
 while (true) {
 	
 	$service = new InviteService();
-	$service->dispatchUnkownEmailInvites();
+	$service->dispatchUnsentEmailInvites();
+	$service->checkForCancelledEvents();
 	
 	usleep(10000000); // 10 second delay
 }

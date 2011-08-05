@@ -79,7 +79,7 @@ class RemoveEventClass extends ReqBase
 			$event->Save(true);
 			
 			$inviteService = new InviteService();
-			$inviteService->dispatchEventCancelledEmailForEvent($event);
+			$inviteService->sendCancelledEmailForEvent($event);
 		}
 		else
 		{

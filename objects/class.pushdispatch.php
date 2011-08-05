@@ -6,7 +6,8 @@
 	`pushdispatchid` int(11) NOT NULL auto_increment,
 	`lastdispatch` TIMESTAMP NOT NULL,
 	`generaleventupdateidlist` BLOB NOT NULL,
-	`decidednotificationdispatcheventidlist` BLOB NOT NULL, PRIMARY KEY  (`pushdispatchid`)) ENGINE=MyISAM;
+	`decidednotificationdispatcheventidlist` BLOB NOT NULL,
+	`cancelledeventidlist` BLOB NOT NULL, PRIMARY KEY  (`pushdispatchid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -15,7 +16,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=PushDispatch&attributeList=array+%28%0A++0+%3D%3E+%27Invite%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27lastDispatch%27%2C%0A++3+%3D%3E+%27FeedMessage%27%2C%0A++4+%3D%3E+%27generalEventUpdateIdList%27%2C%0A++5+%3D%3E+%27decidedNotificationDispatchEventIdList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=PushDispatch&attributeList=array+%28%0A++0+%3D%3E+%27Invite%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27lastDispatch%27%2C%0A++3+%3D%3E+%27FeedMessage%27%2C%0A++4+%3D%3E+%27generalEventUpdateIdList%27%2C%0A++5+%3D%3E+%27decidedNotificationDispatchEventIdList%27%2C%0A++6+%3D%3E+%27cancelledEventIdList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.invitepushdispatchmap.php');
@@ -55,6 +56,11 @@ class PushDispatch extends POG_Base
 	 */
 	public $decidedNotificationDispatchEventIdList;
 	
+	/**
+	 * @var BLOB
+	 */
+	public $cancelledEventIdList;
+	
 	public $pog_attribute_type = array(
 		"pushdispatchId" => array('db_attributes' => array("NUMERIC", "INT")),
 		"Invite" => array('db_attributes' => array("OBJECT", "JOIN")),
@@ -63,6 +69,7 @@ class PushDispatch extends POG_Base
 		"FeedMessage" => array('db_attributes' => array("OBJECT", "JOIN")),
 		"generalEventUpdateIdList" => array('db_attributes' => array("TEXT", "BLOB")),
 		"decidedNotificationDispatchEventIdList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"cancelledEventIdList" => array('db_attributes' => array("TEXT", "BLOB")),
 		);
 	public $pog_query;
 	
@@ -83,7 +90,7 @@ class PushDispatch extends POG_Base
 		}
 	}
 	
-	function PushDispatch($lastDispatch='', $generalEventUpdateIdList='', $decidedNotificationDispatchEventIdList='')
+	function PushDispatch($lastDispatch='', $generalEventUpdateIdList='', $decidedNotificationDispatchEventIdList='', $cancelledEventIdList='')
 	{
 		$this->_inviteList = array();
 		$this->_eventList = array();
@@ -91,6 +98,7 @@ class PushDispatch extends POG_Base
 		$this->_feedmessageList = array();
 		$this->generalEventUpdateIdList = $generalEventUpdateIdList;
 		$this->decidedNotificationDispatchEventIdList = $decidedNotificationDispatchEventIdList;
+		$this->cancelledEventIdList = $cancelledEventIdList;
 	}
 	
 	
@@ -110,6 +118,7 @@ class PushDispatch extends POG_Base
 			$this->lastDispatch = $row['lastdispatch'];
 			$this->generalEventUpdateIdList = $this->Unescape($row['generaleventupdateidlist']);
 			$this->decidedNotificationDispatchEventIdList = $this->Unescape($row['decidednotificationdispatcheventidlist']);
+			$this->cancelledEventIdList = $this->Unescape($row['cancelledeventidlist']);
 		}
 		return $this;
 	}
@@ -198,6 +207,7 @@ class PushDispatch extends POG_Base
 			$pushdispatch->lastDispatch = $row['lastdispatch'];
 			$pushdispatch->generalEventUpdateIdList = $this->Unescape($row['generaleventupdateidlist']);
 			$pushdispatch->decidedNotificationDispatchEventIdList = $this->Unescape($row['decidednotificationdispatcheventidlist']);
+			$pushdispatch->cancelledEventIdList = $this->Unescape($row['cancelledeventidlist']);
 			$pushdispatchList[] = $pushdispatch;
 		}
 		return $pushdispatchList;
@@ -218,14 +228,16 @@ class PushDispatch extends POG_Base
 			$this->pog_query = "update `pushdispatch` set 
 			`lastdispatch`='".$this->lastDispatch."', 
 			`generaleventupdateidlist`='".$this->Escape($this->generalEventUpdateIdList)."', 
-			`decidednotificationdispatcheventidlist`='".$this->Escape($this->decidedNotificationDispatchEventIdList)."' where `pushdispatchid`='".$this->pushdispatchId."'";
+			`decidednotificationdispatcheventidlist`='".$this->Escape($this->decidedNotificationDispatchEventIdList)."', 
+			`cancelledeventidlist`='".$this->Escape($this->cancelledEventIdList)."' where `pushdispatchid`='".$this->pushdispatchId."'";
 		}
 		else
 		{
-			$this->pog_query = "insert into `pushdispatch` (`lastdispatch`, `generaleventupdateidlist`, `decidednotificationdispatcheventidlist` ) values (
+			$this->pog_query = "insert into `pushdispatch` (`lastdispatch`, `generaleventupdateidlist`, `decidednotificationdispatcheventidlist`, `cancelledeventidlist` ) values (
 			'".$this->lastDispatch."', 
 			'".$this->Escape($this->generalEventUpdateIdList)."', 
-			'".$this->Escape($this->decidedNotificationDispatchEventIdList)."' )";
+			'".$this->Escape($this->decidedNotificationDispatchEventIdList)."', 
+			'".$this->Escape($this->cancelledEventIdList)."' )";
 		}
 		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
 		if ($this->pushdispatchId == "")

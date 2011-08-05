@@ -652,15 +652,6 @@ class Push
 		array_push($generalEventUpdateIdList, $event->eventId);
 		$queue->generalEventUpdateIdList = implode(',', $generalEventUpdateIdList);
 		$queue->Save();
-		/*
-		$queue = $this->getQueue();
-		$generalEventUpdateIdList = explode(',', $queue->generalEventUpdateIdList);
-		$inlist = in_array($event->eventId, $generalEventUpdateIdList);
-		if (!$inlist) {
-			array_push($generalEventUpdateIdList, $event->eventId);
-			$queue->generalEventUpdateIdList = implode(',', $generalEventUpdateIdList);
-			$queue->Save();
-		}*/
 	}
 	
 	/**
