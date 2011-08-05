@@ -14,6 +14,7 @@ require_once '../util/class.success.php';
 
 require_once 'acceptevent.class.php';
 require_once '../push/class.push.php';
+require_once '../invite/inviteservice.class.php';
 
 class RemoveEventClass extends ReqBase
 {
@@ -73,7 +74,12 @@ class RemoveEventClass extends ReqBase
 			$event->cancelled = 1;
 			$event->timestamp = $this->getTimeStamp();
 			$event->infoTimestamp = $this->getTimeStamp();
-			$event->Save();
+			$pushdispatchList = array();
+			$event->SetPushdispatchList($pushdispatchList); // remove from push dispatch list so notifications don't go out
+			$event->Save(true);
+			
+			$inviteService = new InviteService();
+			$inviteService->dispatchEventCancelledEmailForEvent($event);
 		}
 		else
 		{
