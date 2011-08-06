@@ -142,15 +142,6 @@ EOT;
 				</tr>
 			</table>
 		</td>
-		<td valign="top">
-			<span style="font-size:1.2em; color:#666">*The location shown is likely to change. Actually, thats the joy of the experience.</span><br />
-			<br />
-			<span style="font-size:1.2em; color:#666">Your vote could decide where everyone will be going.</span><br />
-			<br />
-			<span style="font-size:1.2em; color:#666; font-weight:bold">OR</span><br />
-			<br />
-			<span style="font-size:1.2em; color:#666">Add some of your friends &amp; the places you would like to go to. And your friends can do the same.</span>
-		</td>
 	</tr>
 	$pairHTML
 	$aboutHTML
