@@ -34,13 +34,6 @@ class InviteService extends ReqBase
 	{
 		$inviteLookup = new Invite();
 
-		$eventHasLocations = count($event->GetLocationList()) > 0;
-
-		// only send out decided emails if event has locations added, otherwise abort
-		if (!$eventHasLocations) return;
-
-		$winningLocation = $this->determineWinningLocationForEvent($event);
-
 		$participants = $event->GetParticipantList();
 		for ($j=0; $j<count($participants); $j++)
 		{
