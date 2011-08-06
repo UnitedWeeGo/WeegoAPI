@@ -425,7 +425,7 @@ class Push
 				unset($events[$i]);
 				echo "create DECIDED feed notification for event: " . $event->eventTitle . PHP_EOL;
 				
-				if ( count($event->GetLocationList()) > 0) // make sure there are locations
+				if ( count($event->GetLocationList( array( array("hasBeenRemoved", "=", 0) ) )) > 0) // make sure there are locations
 				{
 					$inviteService = new InviteService();
 					$inviteService->dispatchEventDecidedEmailForEvent($event);
