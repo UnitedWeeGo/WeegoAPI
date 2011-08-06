@@ -272,6 +272,9 @@ class InviteService extends ReqBase
 		/** @var $lookup Event */
 		$lookup = new Event();
 		$didFindOneToDispatch = false;
+		
+		echo 'cancelledEventIdList: ' . $queue->cancelledEventIdList;
+		
 		for ($i=0; $i<count($events); $i++)
 		{
 			$didFindOneToDispatch = true;
