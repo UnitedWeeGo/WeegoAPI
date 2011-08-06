@@ -410,7 +410,14 @@ class Push
 		{
 			if (strlen($events[$i]) == 0) continue;
 			/** @var $event Event */
-			$event = $lookup->Get($events[$i]);	
+			$event = $lookup->Get($events[$i]);
+			
+			if ($event->cancelled == 1) // remove any cancelled events from decided queue
+			{
+				unset($events[$i]);
+				continue;
+			}
+			
 			if ($this->eventShouldDispatchDecided($event))
 			{
 				$didFindOneToDispatch = true;
