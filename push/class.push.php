@@ -414,6 +414,7 @@ class Push
 			
 			if ($event->cancelled == 1) // remove any cancelled events from decided queue
 			{
+				$didFindOneToDispatch = true;
 				unset($events[$i]);
 				continue;
 			}
