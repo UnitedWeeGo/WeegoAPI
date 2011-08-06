@@ -277,6 +277,7 @@ class InviteService extends ReqBase
 		
 		for ($i=0; $i<count($events); $i++)
 		{
+			if (strlen($events[$i]) == 0) continue;
 			$didFindOneToDispatch = true;
 			/** @var $event Event */
 			$event = $lookup->Get($events[$i]);
