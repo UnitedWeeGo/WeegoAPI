@@ -280,11 +280,14 @@ class InviteService extends ReqBase
 			$didFindOneToDispatch = true;
 			/** @var $event Event */
 			$event = $lookup->Get($events[$i]);
+			
+			echo 'send cancel email for ' . $event->eventTitle . PHP_EOL;
+			
 			$this->dispatchEventCancelledEmailForEvent($event);
 		}
 		if ($didFindOneToDispatch)
 		{
-			$queue->decidedNotificationDispatchEventIdList = '';
+			$queue->cancelledEventIdList = '';
 			$queue->Save();
 		}
 	}
