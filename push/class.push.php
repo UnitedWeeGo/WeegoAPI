@@ -408,6 +408,7 @@ class Push
 		$ts = date('Y-m-d H:i:s', microtime(true));
 		for ($i=0; $i<count($events); $i++)
 		{
+			if (strlen($events[$i]) == 0) continue;
 			/** @var $event Event */
 			$event = $lookup->Get($events[$i]);	
 			if ($this->eventShouldDispatchDecided($event))
@@ -466,6 +467,7 @@ class Push
 		
 		for ($i=0; $i<count($events); $i++)
 		{
+			if (strlen($events[$i]) == 0) continue;
 			/** @var $event Event */
 			$event = $lookup->Get($events[$i]);			
 			// for each participant...
