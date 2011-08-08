@@ -639,7 +639,7 @@ class Push
 	function getPushQueue($env)
 	{
 		// Instanciate a new ApnsPHP_Push object
-		$cert = $env == ApnsPHP_Abstract::ENVIRONMENT_SANDBOX ? '../../certs/server_cerificates_bundle_sandbox.pem' : '../../certs/server_cerificates_bundle_prod.pem';
+		$cert = $env == ApnsPHP_Abstract::ENVIRONMENT_SANDBOX ? '../../certs/server_cerificates_bundle_sandbox.pem' : '../../certs/server_cerificates_bundle_distribution.pem';
 		$push = new ApnsPHP_Push(
 			$env,
 			$cert
