@@ -12,6 +12,8 @@ require_once '../util/request.base.php';
 require_once '../util/class.error.php';
 require_once '../util/class.success.php';
 
+date_default_timezone_set('GMT');
+
 class GetReportLocations extends ReqBase
 {
 	public $dataObj;
@@ -66,7 +68,23 @@ class GetReportLocations extends ReqBase
 			}
 		}
 		
-		$reportLocations = $event->GetReportlocationList();
+		$reportLocations = array();
+		
+		$eventParticipants = $event->GetParticipantList();
+		$reportedLocationLookup = new ReportLocation();
+		
+		for ($i=0; $i<count($eventParticipants); $i++)
+		{
+			$participant = $eventParticipants[$i];
+			if (!$this->getHasAcceptedEvent($event, $participant->email)) continue; // skip any user that has not accepted the event
+			$reportedLocationList = $reportedLocationLookup->GetList( array( array("email", "=", $participant->email) ) );
+			if (count($reportedLocationList) > 0)
+			{
+				/** @var $reportLocation ReportLocation */
+				$reportedLocation = $reportedLocationList[0];
+				if ($this->locationEligibleForReporting($event, $reportedLocation)) array_push($reportLocations, $reportedLocation);
+			}
+		}
 		
 		$xmlUtil = new XMLUtil();
 		$xmlArray = array();
@@ -103,5 +121,50 @@ class GetReportLocations extends ReqBase
 			die();
 		}
 	}
+	
+	/**
+	* Does the time calculation to determine if the reported location should be sent
+	* Sends 
+	* @param Event $event
+	* @param ReportLocation $reportLocation
+	* @return boolean
+	*/
+	function locationEligibleForReporting(&$event, &$reportLocation)
+	{
+		$now = new DateTime();
+		$nowTs = $now->getTimestamp();
+		
+		$reportedLocDate = new DateTime($reportLocation->timestamp);
+		$reportedLocTs = $reportedLocDate->getTimestamp();
+	
+		$eventTime = new DateTime($event->eventDate);
+		$eventTs =  $eventTime->getTimestamp();	
+	
+		$timeUntilStart = ceil( ($eventTs - $nowTs) / 60);
+		$timeSinceLocationReported = ceil( ($reportedLocTs - $nowTs) / 60);
+		
+		/*
+		echo 'nowTs: ' . $nowTs . PHP_EOL;
+		echo 'eventTs: ' . $eventTs . PHP_EOL;
+		echo 'timeUntilStart: ' . $timeUntilStart . PHP_EOL;
+		echo 'timeSinceLocationReported: ' . $timeSinceLocationReported . PHP_EOL;
+		*/
+		return $timeUntilStart < 120 && $timeUntilStart > -120 && $timeSinceLocationReported > - 180;
+	}
+	
+	/**
+	* Determines if the user has accepted the event
+	* @param Event $event
+	* @param string $email
+	* @return Boolean
+	*/
+	function getHasAcceptedEvent(&$event, $email)
+	{
+		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$hasAccepted = in_array($email, $acceptedParticipantList);
+	
+		return $hasAccepted;
+	}
+	
 }
 ?>

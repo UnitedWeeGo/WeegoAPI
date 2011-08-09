@@ -7,8 +7,7 @@
 	`email` VARCHAR(255) NOT NULL,
 	`latitude` VARCHAR(255) NOT NULL,
 	`longitude` VARCHAR(255) NOT NULL,
-	`eventid` int(11) NOT NULL,
-	`timestamp` TIMESTAMP NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`reportlocationid`)) ENGINE=MyISAM;
+	`timestamp` TIMESTAMP NOT NULL, PRIMARY KEY  (`reportlocationid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -17,7 +16,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=ReportLocation&attributeList=array+%28%0A++0+%3D%3E+%27email%27%2C%0A++1+%3D%3E+%27latitude%27%2C%0A++2+%3D%3E+%27longitude%27%2C%0A++3+%3D%3E+%27Event%27%2C%0A++4+%3D%3E+%27timestamp%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=ReportLocation&attributeList=array+%28%0A++0+%3D%3E+%27email%27%2C%0A++1+%3D%3E+%27latitude%27%2C%0A++2+%3D%3E+%27longitude%27%2C%0A++3+%3D%3E+%27timestamp%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 class ReportLocation extends POG_Base
@@ -40,11 +39,6 @@ class ReportLocation extends POG_Base
 	public $longitude;
 	
 	/**
-	 * @var INT(11)
-	 */
-	public $eventId;
-	
-	/**
 	 * @var TIMESTAMP
 	 */
 	public $timestamp;
@@ -54,7 +48,6 @@ class ReportLocation extends POG_Base
 		"email" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"latitude" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"longitude" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
-		"Event" => array('db_attributes' => array("OBJECT", "BELONGSTO")),
 		"timestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
 		);
 	public $pog_query;
@@ -101,7 +94,6 @@ class ReportLocation extends POG_Base
 			$this->email = $this->Unescape($row['email']);
 			$this->latitude = $this->Unescape($row['latitude']);
 			$this->longitude = $this->Unescape($row['longitude']);
-			$this->eventId = $row['eventid'];
 			$this->timestamp = $row['timestamp'];
 		}
 		return $this;
@@ -191,7 +183,6 @@ class ReportLocation extends POG_Base
 			$reportlocation->email = $this->Unescape($row['email']);
 			$reportlocation->latitude = $this->Unescape($row['latitude']);
 			$reportlocation->longitude = $this->Unescape($row['longitude']);
-			$reportlocation->eventId = $row['eventid'];
 			$reportlocation->timestamp = $row['timestamp'];
 			$reportlocationList[] = $reportlocation;
 		}
@@ -214,16 +205,14 @@ class ReportLocation extends POG_Base
 			`email`='".$this->Escape($this->email)."', 
 			`latitude`='".$this->Escape($this->latitude)."', 
 			`longitude`='".$this->Escape($this->longitude)."', 
-			`eventid`='".$this->eventId."', 
 			`timestamp`='".$this->timestamp."' where `reportlocationid`='".$this->reportlocationId."'";
 		}
 		else
 		{
-			$this->pog_query = "insert into `reportlocation` (`email`, `latitude`, `longitude`, `eventid`, `timestamp` ) values (
+			$this->pog_query = "insert into `reportlocation` (`email`, `latitude`, `longitude`, `timestamp` ) values (
 			'".$this->Escape($this->email)."', 
 			'".$this->Escape($this->latitude)."', 
 			'".$this->Escape($this->longitude)."', 
-			'".$this->eventId."', 
 			'".$this->timestamp."' )";
 		}
 		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
@@ -295,27 +284,6 @@ class ReportLocation extends POG_Base
 			}
 			return Database::NonQuery($pog_query, $connection);
 		}
-	}
-	
-	
-	/**
-	* Associates the Event object to this one
-	* @return boolean
-	*/
-	function GetEvent()
-	{
-		$event = new Event();
-		return $event->Get($this->eventId);
-	}
-	
-	
-	/**
-	* Associates the Event object to this one
-	* @return 
-	*/
-	function SetEvent(&$event)
-	{
-		$this->eventId = $event->eventId;
 	}
 }
 ?>
