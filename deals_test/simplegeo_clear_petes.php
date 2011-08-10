@@ -40,21 +40,20 @@ try {
 	echo "ERROR: " . $e->getMessage() . " (#" . $e->getCode() . ")";
 }
 
-echo 'adding deal to db' . PHP_EOL;
+echo 'removing deal from db' . PHP_EOL;
 
 $dealObj = new Deal();
 $existingDeals = $dealObj->GetList( array( array("featureId", "=", $existingPlaceHandle )));
 
 if (count($existingDeals) > 0)
 {
-	echo 'deal already in db' . PHP_EOL;
+	echo 'deal in db, removing' . PHP_EOL;
+	$existingDeal = $existingDeals[0];
+	$existingDeal->Delete();
 }
 else
 {
-	echo 'deal does not exist for feature, add to db' . PHP_EOL;
-	
-	$dealObj->featureId = $existingPlaceHandle;
-	$dealObj->Save();
+	echo 'deal does not exist for feature, do nothing' . PHP_EOL;
 }
 
 ?>
