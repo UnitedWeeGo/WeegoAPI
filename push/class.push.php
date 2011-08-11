@@ -402,6 +402,8 @@ class Push
 		$queue = $this->getQueue();
 		$events = explode(',', $queue->decidedNotificationDispatchEventIdList);
 		
+		echo 'starting decidedNotificationDispatchEventIdList: ' . $queue->decidedNotificationDispatchEventIdList . PHP_EOL;
+		
 		/** @var $lookup Event */
 		$lookup = new Event();
 		$didFindOneToDispatch = false;
@@ -424,7 +426,7 @@ class Push
 				$didFindOneToDispatch = true;
 				unset($events[$i]);
 				echo "create DECIDED feed notification for event: " . $event->eventTitle . PHP_EOL;
-				echo "create DECIDED feed notification for event with id: " . $event->eventId . PHP_EOL . PHP_EOL;
+				echo "create DECIDED feed notification for event with id: " . $event->eventId . PHP_EOL;
 				
 				if ( count($event->GetLocationList( array( array("hasBeenRemoved", "=", 0) ) )) > 0) // make sure there are locations
 				{
@@ -448,7 +450,8 @@ class Push
 		}
 		if ($didFindOneToDispatch)
 		{
-			echo 'implode(',', events): ' . implode(',', $events);
+			echo 'events array: ' . print_r($events) . PHP_EOL;
+			echo 'final decidedNotificationDispatchEventIdList: ' . implode(',', $events) . PHP_EOL;
 			$queue->decidedNotificationDispatchEventIdList = implode(',', $events);
 			$queue->Save();
 		}
