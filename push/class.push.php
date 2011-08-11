@@ -408,7 +408,7 @@ class Push
 		/** @var $lookup Event */
 		$lookup = new Event();
 		$didFindOneToDispatch = false;
-		$ts = date('Y-m-d H:i:s', microtime(true) - 60000000);
+		$ts = date('Y-m-d H:i:s', microtime(true) - 60);
 		for ($i=0; $i<count($events); $i++)
 		{
 			if (strlen($events[$i]) == 0) 
