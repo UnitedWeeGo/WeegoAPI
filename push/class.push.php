@@ -448,8 +448,8 @@ class Push
 		
 					$this->addFeedMessageToQueue($message);
 					
-					//$inviteService = new InviteService();
-					//$inviteService->dispatchEventDecidedEmailForEvent($event);
+					$inviteService = new InviteService();
+					$inviteService->dispatchEventDecidedEmailForEvent($event);
 				}
 			}
 		}
