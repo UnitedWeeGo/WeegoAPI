@@ -427,8 +427,8 @@ class Push
 				
 				if ( count($event->GetLocationList( array( array("hasBeenRemoved", "=", 0) ) )) > 0) // make sure there are locations
 				{
-					$inviteService = new InviteService();
-					$inviteService->dispatchEventDecidedEmailForEvent($event);
+					//$inviteService = new InviteService();
+					//$inviteService->dispatchEventDecidedEmailForEvent($event);
 					
 					// Add the decided feed message to the queue
 					$message = new FeedMessage();
