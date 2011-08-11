@@ -79,11 +79,11 @@ class Checkin extends ReqBase
 			$this->dataObj['message'] = 'Checked-in to ' . $location->name;
 			$message->dataObj = $this->dataObj;
 			$message->FeedMessageGo();
+			
+			$event->timestamp = $this->getTimeStamp();
+			$event->Save();
 		}
-		
-		//$event->timestamp = $this->getTimeStamp();
-		//$event->Save();
-		
+
 		if (!$doSkipResult) // only give success and kill if not called by http
 		{
 			$s = new SuccessResponse();
