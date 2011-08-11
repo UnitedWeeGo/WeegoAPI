@@ -436,7 +436,7 @@ class Push
 					
 					$event->AddFeedmessage($message);
 					$event->timestamp = $ts;
-					$event->Save();
+					$event->Save(true);
 		
 					$this->addFeedMessageToQueue($message);
 					
