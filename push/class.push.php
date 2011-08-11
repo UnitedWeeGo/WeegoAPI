@@ -403,6 +403,7 @@ class Push
 		$events = explode(',', $queue->decidedNotificationDispatchEventIdList);
 		
 		echo 'starting decidedNotificationDispatchEventIdList: ' . $queue->decidedNotificationDispatchEventIdList . PHP_EOL;
+		echo 'events count: ' . count($events) . PHP_EOL;
 		
 		/** @var $lookup Event */
 		$lookup = new Event();
@@ -410,7 +411,11 @@ class Push
 		$ts = date('Y-m-d H:i:s', microtime(true));
 		for ($i=0; $i<count($events); $i++)
 		{
-			if (strlen($events[$i]) == 0) continue;
+			if (strlen($events[$i]) == 0) 
+			{
+				unset($events[$i]);
+				continue;
+			}
 			/** @var $event Event */
 			$event = $lookup->Get($events[$i]);
 			
@@ -443,8 +448,8 @@ class Push
 		
 					$this->addFeedMessageToQueue($message);
 					
-					$inviteService = new InviteService();
-					$inviteService->dispatchEventDecidedEmailForEvent($event);
+					//$inviteService = new InviteService();
+					//$inviteService->dispatchEventDecidedEmailForEvent($event);
 				}
 			}
 		}
