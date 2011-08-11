@@ -81,8 +81,8 @@ class Checkin extends ReqBase
 			$message->FeedMessageGo();
 		}
 		
-		$event->timestamp = $this->getTimeStamp();
-		$event->Save(true);
+		//$event->timestamp = $this->getTimeStamp();
+		//$event->Save();
 		
 		if (!$doSkipResult) // only give success and kill if not called by http
 		{
