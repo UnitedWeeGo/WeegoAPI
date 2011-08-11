@@ -424,6 +424,7 @@ class Push
 				$didFindOneToDispatch = true;
 				unset($events[$i]);
 				echo "create DECIDED feed notification for event: " . $event->eventTitle . PHP_EOL;
+				echo "create DECIDED feed notification for event with id: " . $event->eventId . PHP_EOL . PHP_EOL;
 				
 				if ( count($event->GetLocationList( array( array("hasBeenRemoved", "=", 0) ) )) > 0) // make sure there are locations
 				{
@@ -447,6 +448,7 @@ class Push
 		}
 		if ($didFindOneToDispatch)
 		{
+			echo 'implode(',', events): ' . implode(',', $events);
 			$queue->decidedNotificationDispatchEventIdList = implode(',', $events);
 			$queue->Save();
 		}
