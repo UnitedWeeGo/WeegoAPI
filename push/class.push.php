@@ -402,8 +402,8 @@ class Push
 		$queue = $this->getQueue();
 		$events = explode(',', $queue->decidedNotificationDispatchEventIdList);
 		
-		echo 'starting decidedNotificationDispatchEventIdList: ' . $queue->decidedNotificationDispatchEventIdList . PHP_EOL;
-		echo 'events count: ' . count($events) . PHP_EOL;
+// 		echo 'starting decidedNotificationDispatchEventIdList: ' . $queue->decidedNotificationDispatchEventIdList . PHP_EOL;
+// 		echo 'events count: ' . count($events) . PHP_EOL;
 		
 		/** @var $lookup Event */
 		$lookup = new Event();
