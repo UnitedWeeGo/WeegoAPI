@@ -47,7 +47,7 @@ class DecidedEmail extends ReqBase
 				</tr>
 EOT;
 		
-		if (!$needsPair) $pairHTML = '';
+		if (!$needsPair) $pairHTML = '<tr><td colspan="2" /></tr>';
 		
 		$aboutHTML =
 <<< EOT
@@ -75,7 +75,7 @@ EOT;
 		
 EOT;
 		
-		if (!$needsPair) $aboutHTML = '';
+		if (!$needsPair) $aboutHTML = '<tr><td colspan="2" /></tr>';
 		
 		$message = 
 <<< EOT
