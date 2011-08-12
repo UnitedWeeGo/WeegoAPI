@@ -41,7 +41,7 @@ class InviteEmail extends ReqBase
 		$votingIsOver = $this->eventVotingIsOver($event);
 		$votingStatus = '<span style="font-size:1.1em; color:#666; font-weight:bold">Voting is </span><span style="font-size:1.1em; color:#690; font-weight:bold">open</span><br /><br />';
 		
-		if ($votingIsOver) $votingStatus = '';
+		if ($votingIsOver) $votingStatus = '<br /><br />';
 		
 		$locationChangeInfo = 
 <<< EOT
