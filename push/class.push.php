@@ -418,7 +418,7 @@ class Push
 			{
 				unset($events[$i]);
 				echo 'unset index: ' . $i . PHP_EOL;
-				
+				echo 'after array count: ' . count($events) . PHP_EOL;
 				continue;
 			}
 			/** @var $event Event */
