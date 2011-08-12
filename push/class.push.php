@@ -411,9 +411,14 @@ class Push
 		$ts = date('Y-m-d H:i:s', microtime(true) - 60);
 		for ($i=0; $i<count($events); $i++)
 		{
+			echo 'index: ' . $i . PHP_EOL;
+			echo 'current array count: ' . count($events) . PHP_EOL;
+			
 			if (strlen($events[$i]) == 0) 
 			{
 				unset($events[$i]);
+				echo 'unset index: ' . $i . PHP_EOL;
+				
 				continue;
 			}
 			/** @var $event Event */
