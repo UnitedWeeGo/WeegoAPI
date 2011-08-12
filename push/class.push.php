@@ -402,9 +402,6 @@ class Push
 		$queue = $this->getQueue();
 		$events = explode(',', $queue->decidedNotificationDispatchEventIdList);
 		
-		echo 'starting decidedNotificationDispatchEventIdList: ' . $queue->decidedNotificationDispatchEventIdList . PHP_EOL;
-		echo 'events count: ' . count($events) . PHP_EOL;
-		
 		/** @var $lookup Event */
 		$lookup = new Event();
 		$didFindOneToDispatch = false;
@@ -413,14 +410,9 @@ class Push
 		
 		for ($i=0; $i<$indexCount; $i++)
 		{
-			echo 'index: ' . $i . PHP_EOL;
-			echo 'current array count: ' . count($events) . PHP_EOL;
-			
 			if (strlen($events[$i]) == 0) 
 			{
 				unset($events[$i]);
-				echo 'unset index: ' . $i . PHP_EOL;
-				echo 'after array count: ' . count($events) . PHP_EOL;
 				continue;
 			}
 			/** @var $event Event */
@@ -615,10 +607,6 @@ class Push
 		
 		$nowTs = $now->getTimestamp();
 		$eventExpireTs =  $eventExpireTime->getTimestamp();
-		
-		echo 'nowTs: ' . $nowTs . PHP_EOL;
-		echo 'eventExpireTs: ' . $eventExpireTs . PHP_EOL;
-		echo 'nowTs > eventExpireTs' . $nowTs > $eventExpireTs . PHP_EOL;
 		
 		return $nowTs > $eventExpireTs;
 	}
