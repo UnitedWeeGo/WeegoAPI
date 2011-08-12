@@ -73,6 +73,7 @@ class InviteService extends ReqBase
 
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
+				$mail->ClearReplyTos();
 				$mail->AddReplyTo('no-reply@unitedweego.com', 'Weego');
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($event->eventTitle) . ' has been cancelled';
@@ -147,6 +148,7 @@ class InviteService extends ReqBase
 
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
+				$mail->ClearReplyTos();
 				$mail->AddReplyTo('no-reply@unitedweego.com', 'Weego');
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going!';
@@ -196,6 +198,7 @@ class InviteService extends ReqBase
 
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
+				$mail->ClearReplyTos();
 				$mail->AddReplyTo('no-reply@unitedweego.com', 'Weego');
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = 'You have been invited to ' . urldecode($event->eventTitle);
