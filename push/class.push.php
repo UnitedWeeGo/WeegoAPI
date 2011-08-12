@@ -409,7 +409,9 @@ class Push
 		$lookup = new Event();
 		$didFindOneToDispatch = false;
 		$ts = date('Y-m-d H:i:s', microtime(true) - 60);
-		for ($i=0; $i<count($events); $i++)
+		$indexCount = count($events);
+		
+		for ($i=0; $i<$indexCount; $i++)
 		{
 			echo 'index: ' . $i . PHP_EOL;
 			echo 'current array count: ' . count($events) . PHP_EOL;
