@@ -609,6 +609,10 @@ class Push
 		$nowTs = $now->getTimestamp();
 		$eventExpireTs =  $eventExpireTime->getTimestamp();
 		
+		echo 'nowTs: ' . $nowTs . PHP_EOL;
+		echo 'eventExpireTs: ' . $eventExpireTs . PHP_EOL;
+		echo 'nowTs > eventExpireTs' . $nowTs > $eventExpireTs . PHP_EOL;
+		
 		return $nowTs > $eventExpireTs;
 	}
 	
