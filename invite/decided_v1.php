@@ -106,7 +106,7 @@ EOT;
 								<td valign="top">
 									<span style="font-size:1.2em; color:#666">$creatorFriendlyName</span><br />
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$eventTitle</span><br />
-									<span style="font-size:1.2em; color:#666">$eventDate</span><br />
+									<span style="font-size:1.2em; color:#666">$eventDate</span><br /><br />
 								</td>
 							</tr>
 						</table>
