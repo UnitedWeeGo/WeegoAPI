@@ -296,6 +296,22 @@ class ReqBase
 			die();
 		}
 	}
+	
+	/**
+	* Does the time calculation to determine if an event voting is over
+	* @param Event $event
+	* @return boolean
+	*/
+	function eventVotingIsOver(&$event)
+	{
+		$now = new DateTime();
+		$eventExpireTime = new DateTime($event->eventExpireDate);
+	
+		$nowTs = $now->getTimestamp();
+		$eventExpireTs =  $eventExpireTime->getTimestamp();
+	
+		return $nowTs > $eventExpireTs;
+	}
 
 	/**
 	* Checks to see if the event is expired, returns if changed
