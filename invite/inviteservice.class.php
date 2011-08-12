@@ -72,7 +72,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
-				$mail->SetFrom('beta@unitedweego.com', 'Weego Admin');
+				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($event->eventTitle) . ' has been cancelled';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
@@ -145,7 +145,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
-				$mail->SetFrom('beta@unitedweego.com', 'Weego Admin');
+				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going!';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
@@ -193,7 +193,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
-				$mail->SetFrom('beta@unitedweego.com', 'Weego Admin');
+				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = 'You have been invited to ' . urldecode($event->eventTitle);
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
@@ -265,13 +265,13 @@ class InviteService extends ReqBase
 		/** @var $lookup Event */
 		$lookup = new Event();
 		$didFindOneToDispatch = false;
-				
+
 		for ($i=0; $i<count($events); $i++)
 		{
 			if (strlen($events[$i]) == 0) continue;
 			$didFindOneToDispatch = true;
 			/** @var $event Event */
-			$event = $lookup->Get($events[$i]);			
+			$event = $lookup->Get($events[$i]);
 			$this->dispatchEventCancelledEmailForEvent($event);
 		}
 		if ($didFindOneToDispatch)
@@ -300,6 +300,35 @@ class InviteService extends ReqBase
 			$queue = $queueList[0];
 		}
 		return $queue;
+	}
+
+	/**
+	 * Returns a firendly name string
+	 * @param Participant $participant
+	 * @return string
+	 */
+	function getFriendlyName(&$participant)
+	{
+		$fName = $participant->firstName;
+		$lName = $participant->lastName;
+		$hasFName = strlen($fName) > 0;
+		$hasLName = strlen($lName) > 0;
+		if ($hasFName && $hasLName)
+		{
+			return $fName . " " . $lName;
+		}
+		else if ($hasFName)
+		{
+			return $fName;
+		}
+		else if ($hasLName)
+		{
+			return $lName;
+		}
+		else
+		{
+			return $participant->email;
+		}
 	}
 }
 
