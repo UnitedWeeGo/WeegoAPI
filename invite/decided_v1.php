@@ -51,28 +51,28 @@ EOT;
 		
 		$aboutHTML =
 <<< EOT
-		
+
 	<tr>
 		<td colspan="2">
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">What is Weego?</span><br />
 			<span style="font-size:1.4em; color:#666">Weego is the simple &amp; private way to decide where to go with your friends.</span><br />
-			<span style="font-size:1.4em; color:#666">In short it’s a group collaboration application that enables you and your friends to plan &amp; decide, as a private group, where to go.</span><br />
+			<span style="font-size:1.4em; color:#666">In short it%27s a group collaboration application that enables you and your friends to plan &amp; decide, as a private group, where to go.</span><br />
 			<span style="font-size:1.4em; color:#666">Private Group: Planning + Decision + Conversations</span><br />
 			<br />
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">Make plans as a group</span><br />
 			<span style="font-size:1.4em; color:#666">Add some of your friends and the places you would like to go to. And your friends can do the same.</span><br />
 			<br />
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">Decide as a group</span><br />
-			<span style="font-size:1.4em; color:#666">Everyone picks the place(s) they would like to &ldquo;Go&rdquo; to. Then Weego will let the group know the group's decision, including the event time and location.</span><br />
+			<span style="font-size:1.4em; color:#666">Everyone picks the place(s) they would like to &ldquo;Go&rdquo; to. Then Weego will let the group know the group%27s decision, including the event time and location.</span><br />
 			<br />
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">Group conversations &amp; alerts</span><br />
-			<span style="font-size:1.4em; color:#666">Stay in sync with your group. With group conversations &amp; alerts, you can rest assured that everyone will be in sync with the event. *No &ldquo;Text Messaging&ldquo; fees.</span><br />
+			<span style="font-size:1.4em; color:#666">Stay in sync with your group. With group conversations &amp; alerts, you can rest assured that everyone will be in sync with the event. *No &ldquo;Text Messaging&rdquo; fees.</span><br />
 			<br />
 			<span style="color:#666; font-size:1.8em; font-weight:bold;">Check-in as a group</span><br />
-			<span style="font-size:1.4em; color:#666">Right around the time of the event Weego will let your group know where you are and when you'll get there.</span></div>
+			<span style="font-size:1.4em; color:#666">Right around the time of the event Weego will let your group know where you are and when you%27ll get there.</span></div>
 		</td>
 	</tr>
-		
+
 EOT;
 		
 		if (!$needsPair) $aboutHTML = '';
