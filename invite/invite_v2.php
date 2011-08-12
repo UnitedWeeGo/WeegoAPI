@@ -39,7 +39,7 @@ class InviteEmail extends ReqBase
 		$inviteToken = $token;
 		
 		$votingIsOver = $this->eventVotingIsOver($event);
-		$votingStatus = '<span style="font-size:1.1em; color:#690>open</span>';
+		$votingStatus = '<span style="font-size:1.1em; color:#666; font-weight:bold">Voting is </span><span style="font-size:1.1em; color:#690; font-weight:bold">open</span><br /><br />';
 		
 		if ($votingIsOver) $votingStatus = '';
 		
@@ -130,7 +130,7 @@ EOT;
 									<span style="font-size:1.2em; color:#666">$creatorFriendlyName</span><br />
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$eventTitle</span><br />
 									<span style="font-size:1.2em; color:#666">$eventDate</span><br />
-									<span style="font-size:1.1em; color:#666; font-weight:bold">Voting is </span>$votingStatus<br /><br />
+									$votingStatus
 								</td>
 							</tr>
 						</table>
