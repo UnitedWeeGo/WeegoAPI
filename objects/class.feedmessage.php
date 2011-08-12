@@ -10,7 +10,7 @@
 	`imageurl` VARCHAR(255) NOT NULL,
 	`type` VARCHAR(255) NOT NULL,
 	`senderid` VARCHAR(255) NOT NULL,
-	`readparticipantlist` BLOB NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`feedmessageid`)) ENGINE=MyISAM;
+	`readparticipantlist` TEXT NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`feedmessageid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -19,7 +19,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=FeedMessage&attributeList=array+%28%0A++0+%3D%3E+%27timestamp%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27message%27%2C%0A++3+%3D%3E+%27imageURL%27%2C%0A++4+%3D%3E+%27type%27%2C%0A++5+%3D%3E+%27senderId%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27PushDispatch%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=FeedMessage&attributeList=array+%28%0A++0+%3D%3E+%27timestamp%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27message%27%2C%0A++3+%3D%3E+%27imageURL%27%2C%0A++4+%3D%3E+%27type%27%2C%0A++5+%3D%3E+%27senderId%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27PushDispatch%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.feedmessagepushdispatchmap.php');
@@ -58,7 +58,7 @@ class FeedMessage extends POG_Base
 	public $senderId;
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $readParticipantList;
 	
@@ -75,7 +75,7 @@ class FeedMessage extends POG_Base
 		"imageURL" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"type" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"senderId" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
-		"readParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"readParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
 		"PushDispatch" => array('db_attributes' => array("OBJECT", "JOIN")),
 		);
 	public $pog_query;

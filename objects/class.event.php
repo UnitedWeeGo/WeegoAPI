@@ -7,18 +7,18 @@
 	`eventtitle` VARCHAR(255) NOT NULL,
 	`eventdescription` VARCHAR(255) NOT NULL,
 	`creatorid` VARCHAR(255) NOT NULL,
-	`readparticipantlist` BLOB NOT NULL,
+	`readparticipantlist` TEXT NOT NULL,
 	`timestamp` TIMESTAMP NOT NULL,
 	`infotimestamp` TIMESTAMP NOT NULL,
 	`guestlistopen` TINYINT NOT NULL,
 	`locationlistopen` TINYINT NOT NULL,
-	`checkedinparticipantlist` BLOB NOT NULL,
+	`checkedinparticipantlist` TEXT NOT NULL,
 	`locationreordertimestamp` TIMESTAMP NOT NULL,
-	`acceptedparticipantlist` BLOB NOT NULL,
-	`declinedparticipantlist` BLOB NOT NULL,
+	`acceptedparticipantlist` TEXT NOT NULL,
+	`declinedparticipantlist` TEXT NOT NULL,
 	`eventdate` DATETIME NOT NULL,
 	`eventexpiredate` DATETIME NOT NULL,
-	`removedparticipantlist` BLOB NOT NULL,
+	`removedparticipantlist` TEXT NOT NULL,
 	`eventtimezone` VARCHAR(255) NOT NULL,
 	`cancelled` TINYINT NOT NULL, PRIMARY KEY  (`eventid`)) ENGINE=MyISAM;
 */
@@ -29,7 +29,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27guestListOpen%27%2C%0A++11+%3D%3E+%27locationListOpen%27%2C%0A++12+%3D%3E+%27PushDispatch%27%2C%0A++13+%3D%3E+%27FeedMessage%27%2C%0A++14+%3D%3E+%27checkedInParticipantList%27%2C%0A++15+%3D%3E+%27locationReorderTimestamp%27%2C%0A++16+%3D%3E+%27acceptedParticipantList%27%2C%0A++17+%3D%3E+%27declinedParticipantList%27%2C%0A++18+%3D%3E+%27eventDate%27%2C%0A++19+%3D%3E+%27eventExpireDate%27%2C%0A++20+%3D%3E+%27removedParticipantList%27%2C%0A++21+%3D%3E+%27SuggestedTime%27%2C%0A++22+%3D%3E+%27eventTimeZone%27%2C%0A++23+%3D%3E+%27cancelled%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B22%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B23%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27guestListOpen%27%2C%0A++11+%3D%3E+%27locationListOpen%27%2C%0A++12+%3D%3E+%27PushDispatch%27%2C%0A++13+%3D%3E+%27FeedMessage%27%2C%0A++14+%3D%3E+%27checkedInParticipantList%27%2C%0A++15+%3D%3E+%27locationReorderTimestamp%27%2C%0A++16+%3D%3E+%27acceptedParticipantList%27%2C%0A++17+%3D%3E+%27declinedParticipantList%27%2C%0A++18+%3D%3E+%27eventDate%27%2C%0A++19+%3D%3E+%27eventExpireDate%27%2C%0A++20+%3D%3E+%27removedParticipantList%27%2C%0A++21+%3D%3E+%27SuggestedTime%27%2C%0A++22+%3D%3E+%27eventTimeZone%27%2C%0A++23+%3D%3E+%27cancelled%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B22%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B23%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.eventparticipantmap.php');
@@ -69,7 +69,7 @@ class Event extends POG_Base
 	private $_voteList = array();
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $readParticipantList;
 	
@@ -109,7 +109,7 @@ class Event extends POG_Base
 	private $_feedmessageList = array();
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $checkedInParticipantList;
 	
@@ -119,12 +119,12 @@ class Event extends POG_Base
 	public $locationReorderTimestamp;
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $acceptedParticipantList;
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $declinedParticipantList;
 	
@@ -139,7 +139,7 @@ class Event extends POG_Base
 	public $eventExpireDate;
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $removedParticipantList;
 	
@@ -166,7 +166,7 @@ class Event extends POG_Base
 		"Location" => array('db_attributes' => array("OBJECT", "HASMANY")),
 		"Participant" => array('db_attributes' => array("OBJECT", "JOIN")),
 		"Vote" => array('db_attributes' => array("OBJECT", "HASMANY")),
-		"readParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"readParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
 		"timestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
 		"infoTimestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
 		"Invite" => array('db_attributes' => array("OBJECT", "HASMANY")),
@@ -174,13 +174,13 @@ class Event extends POG_Base
 		"locationListOpen" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		"PushDispatch" => array('db_attributes' => array("OBJECT", "JOIN")),
 		"FeedMessage" => array('db_attributes' => array("OBJECT", "HASMANY")),
-		"checkedInParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"checkedInParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
 		"locationReorderTimestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
-		"acceptedParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
-		"declinedParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"acceptedParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
+		"declinedParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
 		"eventDate" => array('db_attributes' => array("TEXT", "DATETIME")),
 		"eventExpireDate" => array('db_attributes' => array("TEXT", "DATETIME")),
-		"removedParticipantList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"removedParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
 		"SuggestedTime" => array('db_attributes' => array("OBJECT", "HASMANY")),
 		"eventTimeZone" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"cancelled" => array('db_attributes' => array("NUMERIC", "TINYINT")),

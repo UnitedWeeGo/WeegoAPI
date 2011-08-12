@@ -5,9 +5,9 @@
 	CREATE TABLE `pushdispatch` (
 	`pushdispatchid` int(11) NOT NULL auto_increment,
 	`lastdispatch` TIMESTAMP NOT NULL,
-	`generaleventupdateidlist` BLOB NOT NULL,
-	`decidednotificationdispatcheventidlist` BLOB NOT NULL,
-	`cancelledeventidlist` BLOB NOT NULL, PRIMARY KEY  (`pushdispatchid`)) ENGINE=MyISAM;
+	`generaleventupdateidlist` TEXT NOT NULL,
+	`decidednotificationdispatcheventidlist` TEXT NOT NULL,
+	`cancelledeventidlist` TEXT NOT NULL, PRIMARY KEY  (`pushdispatchid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -16,7 +16,7 @@
 * @version POG 3.0f / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=PushDispatch&attributeList=array+%28%0A++0+%3D%3E+%27Invite%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27lastDispatch%27%2C%0A++3+%3D%3E+%27FeedMessage%27%2C%0A++4+%3D%3E+%27generalEventUpdateIdList%27%2C%0A++5+%3D%3E+%27decidedNotificationDispatchEventIdList%27%2C%0A++6+%3D%3E+%27cancelledEventIdList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527BLOB%2527%252C%250A%2529
+* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=PushDispatch&attributeList=array+%28%0A++0+%3D%3E+%27Invite%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27lastDispatch%27%2C%0A++3+%3D%3E+%27FeedMessage%27%2C%0A++4+%3D%3E+%27generalEventUpdateIdList%27%2C%0A++5+%3D%3E+%27decidedNotificationDispatchEventIdList%27%2C%0A++6+%3D%3E+%27cancelledEventIdList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.invitepushdispatchmap.php');
@@ -47,17 +47,17 @@ class PushDispatch extends POG_Base
 	private $_feedmessageList = array();
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $generalEventUpdateIdList;
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $decidedNotificationDispatchEventIdList;
 	
 	/**
-	 * @var BLOB
+	 * @var TEXT
 	 */
 	public $cancelledEventIdList;
 	
@@ -67,9 +67,9 @@ class PushDispatch extends POG_Base
 		"Event" => array('db_attributes' => array("OBJECT", "JOIN")),
 		"lastDispatch" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
 		"FeedMessage" => array('db_attributes' => array("OBJECT", "JOIN")),
-		"generalEventUpdateIdList" => array('db_attributes' => array("TEXT", "BLOB")),
-		"decidedNotificationDispatchEventIdList" => array('db_attributes' => array("TEXT", "BLOB")),
-		"cancelledEventIdList" => array('db_attributes' => array("TEXT", "BLOB")),
+		"generalEventUpdateIdList" => array('db_attributes' => array("TEXT", "TEXT")),
+		"decidedNotificationDispatchEventIdList" => array('db_attributes' => array("TEXT", "TEXT")),
+		"cancelledEventIdList" => array('db_attributes' => array("TEXT", "TEXT")),
 		);
 	public $pog_query;
 	
