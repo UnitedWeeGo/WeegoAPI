@@ -46,7 +46,7 @@ class InviteEmail extends ReqBase
 		$thumbIconURL = '';
 		if ($votingIsOver && $winningLocation != null)
 		{
-			$thumbIconURL = 'http://maps.googleapis.com/maps/api/staticmap?size=50x50&markers=shadow:false|icon:http://bit.ly/oEdY95|' . $winningLocation->latitude . ',' . $winningLocation->longitude . '&sensor=false';
+			$thumbIconURL = 'http://maps.googleapis.com/maps/api/staticmap?size=50x50&zoom=10&markers=shadow:false|icon:http://bit.ly/oEdY95|' . $winningLocation->latitude . ',' . $winningLocation->longitude . '&sensor=false';
 		}
 		else 
 		{
