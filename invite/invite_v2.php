@@ -41,6 +41,18 @@ class InviteEmail extends ReqBase
 		$votingIsOver = $this->eventVotingIsOver($event);
 		$votingStatus = '<span style="font-size:1.1em; color:#666; font-weight:bold">Voting is </span><span style="font-size:1.1em; color:#690; font-weight:bold">open</span><br /><br />';
 		
+		
+		$defaultThumbIcon = 'http://www.unitedweego.com/email_images/button_like_default.png';
+		$thumbIconURL = '';
+		if ($votingIsOver && $winningLocation != null)
+		{
+			$thumbIconURL = 'http://maps.googleapis.com/maps/api/staticmap?size=50x50&markers=shadow:false|icon:http://bit.ly/oEdY95|' . $winningLocation->latitude . ',' . $winningLocation->longitude . '&sensor=false';
+		}
+		else 
+		{
+			$thumbIconURL = 'http://www.unitedweego.com/email_images/button_like_default.png';
+		}
+		
 		if ($votingIsOver) $votingStatus = '<br />';
 		
 		$locationChangeInfo = 
@@ -148,7 +160,7 @@ EOT;
 						<br />
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td valign="top" width="60"><img src="http://www.unitedweego.com/email_images/button_like_default.png" width="50" height="50"></td>
+								<td valign="top" width="60"><img src="$thumbIconURL" width="50" height="50"></td>
 								<td valign="top">
 									<span style="font-size:1.8em; color:#333; font-weight:bold">$name</span><br />
 									<span style="font-size:1.2em; color:#666">$formatted_address</span><br />
