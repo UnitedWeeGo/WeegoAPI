@@ -12,6 +12,7 @@ require_once '../util/request.base.php';
 require_once '../util/class.error.php';
 require_once '../util/class.success.php';
 require_once '../push/class.push.php';
+require_once '../util/TimeZoneUtil.php';
 
 class EventClass extends ReqBase
 {
@@ -105,10 +106,12 @@ class EventClass extends ReqBase
 			if ($eventTimeDidChange)
 			{
 				// Send out a feed message for the location addition
+				$eventDate = $this->getFormattedTime($event->eventDate, $event->eventTimeZone);
+				
 				$message = new FeedMessage();
 				$message->timestamp = $this->getTimeStamp();
-				$message->type = FeedMessageClass::TYPE_SYSTEM_EVENT_UPDATE;
-				$message->message = $event->eventTitle . ' time changed!';
+				$message->type = FeedMessageClass::TYPE_SYSTEM_EVENT_TIME_CHANGE;
+				$message->message = "\"" . $event->eventTitle . "\"" . ' time has changed to ' . $eventDate . ".";
 				$message->senderId = $me->email;
 				$message->readParticipantList = $me->participantId;
 				
@@ -133,6 +136,20 @@ class EventClass extends ReqBase
 		{
 			return $event;
 		}
+	}
+	/**
+	* Get the formatted event time
+	* @param string $eventDate
+	* @param string $eventTimeZone
+	* @return string
+	*/
+	function getFormattedTime($eventDate, $eventTimeZone=null)
+	{
+		$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
+		$eventTime = new DateTime($eventDate);
+		if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
+		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $eventTimeZone : 'GMT');
+		return $dateStr;
 	}
 }
 ?>

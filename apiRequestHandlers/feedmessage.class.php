@@ -23,6 +23,7 @@ class FeedMessageClass extends ReqBase
 	const TYPE_SYSTEM_LOCATION_ADDED = 'locationadd';
 	const TYPE_SYSTEM_INVITE = 'invite';
 	const TYPE_SYSTEM_EVENT_UPDATE = 'eventupdate';
+	const TYPE_SYSTEM_EVENT_TIME_CHANGE = 'timechange';
 	const TYPE_SYSTEM_EVENT_TIME_SUGGESTION = 'timesuggestion';
 	const TYPE_USER = 'user';
 	
