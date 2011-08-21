@@ -25,10 +25,10 @@
 /**
 * <b>Location</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Location&attributeList=array+%28%0A++0+%3D%3E+%27name%27%2C%0A++1+%3D%3E+%27vicinity%27%2C%0A++2+%3D%3E+%27icon%27%2C%0A++3+%3D%3E+%27latitude%27%2C%0A++4+%3D%3E+%27longitude%27%2C%0A++5+%3D%3E+%27Event%27%2C%0A++6+%3D%3E+%27timestamp%27%2C%0A++7+%3D%3E+%27addedByParticipantId%27%2C%0A++8+%3D%3E+%27formatted_phone_number%27%2C%0A++9+%3D%3E+%27formatted_address%27%2C%0A++10+%3D%3E+%27rating%27%2C%0A++11+%3D%3E+%27g_id%27%2C%0A++12+%3D%3E+%27voteCount%27%2C%0A++13+%3D%3E+%27location_type%27%2C%0A++14+%3D%3E+%27tempId%27%2C%0A++15+%3D%3E+%27hasBeenRemoved%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Location&attributeList=array+%28%0A++0+%3D%3E+%27name%27%2C%0A++1+%3D%3E+%27vicinity%27%2C%0A++2+%3D%3E+%27icon%27%2C%0A++3+%3D%3E+%27latitude%27%2C%0A++4+%3D%3E+%27longitude%27%2C%0A++5+%3D%3E+%27Event%27%2C%0A++6+%3D%3E+%27timestamp%27%2C%0A++7+%3D%3E+%27addedByParticipantId%27%2C%0A++8+%3D%3E+%27formatted_phone_number%27%2C%0A++9+%3D%3E+%27formatted_address%27%2C%0A++10+%3D%3E+%27rating%27%2C%0A++11+%3D%3E+%27g_id%27%2C%0A++12+%3D%3E+%27voteCount%27%2C%0A++13+%3D%3E+%27location_type%27%2C%0A++14+%3D%3E+%27tempId%27%2C%0A++15+%3D%3E+%27hasBeenRemoved%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 class Location extends POG_Base
@@ -135,6 +135,7 @@ class Location extends POG_Base
 		"hasBeenRemoved" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -181,27 +182,30 @@ class Location extends POG_Base
 	function Get($locationId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `location` where `locationid`='".intval($locationId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `location` where `locationid`=:locationId LIMIT 1";
+		$this->pog_bind = array(
+			':locationId' => intval($locationId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->locationId = $row['locationid'];
-			$this->name = $this->Unescape($row['name']);
-			$this->vicinity = $this->Unescape($row['vicinity']);
-			$this->icon = $this->Unescape($row['icon']);
-			$this->latitude = $this->Unescape($row['latitude']);
-			$this->longitude = $this->Unescape($row['longitude']);
+			$this->name = $this->Decode($row['name']);
+			$this->vicinity = $this->Decode($row['vicinity']);
+			$this->icon = $this->Decode($row['icon']);
+			$this->latitude = $this->Decode($row['latitude']);
+			$this->longitude = $this->Decode($row['longitude']);
 			$this->eventId = $row['eventid'];
 			$this->timestamp = $row['timestamp'];
-			$this->addedByParticipantId = $this->Unescape($row['addedbyparticipantid']);
-			$this->formatted_phone_number = $this->Unescape($row['formatted_phone_number']);
-			$this->formatted_address = $this->Unescape($row['formatted_address']);
-			$this->rating = $this->Unescape($row['rating']);
-			$this->g_id = $this->Unescape($row['g_id']);
-			$this->voteCount = $this->Unescape($row['votecount']);
-			$this->location_type = $this->Unescape($row['location_type']);
-			$this->tempId = $this->Unescape($row['tempid']);
-			$this->hasBeenRemoved = $this->Unescape($row['hasbeenremoved']);
+			$this->addedByParticipantId = $this->Decode($row['addedbyparticipantid']);
+			$this->formatted_phone_number = $this->Decode($row['formatted_phone_number']);
+			$this->formatted_address = $this->Decode($row['formatted_address']);
+			$this->rating = $this->Decode($row['rating']);
+			$this->g_id = $this->Decode($row['g_id']);
+			$this->voteCount = $this->Decode($row['votecount']);
+			$this->location_type = $this->Decode($row['location_type']);
+			$this->tempId = $this->Decode($row['tempid']);
+			$this->hasBeenRemoved = $this->Decode($row['hasbeenremoved']);
 		}
 		return $this;
 	}
@@ -241,18 +245,18 @@ class Location extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -282,7 +286,7 @@ class Location extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$location = new $thisObjectName();
@@ -316,49 +320,74 @@ class Location extends POG_Base
 	function Save()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `locationid` from `location` where `locationid`='".$this->locationId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->locationId))
+		{
+			$this->pog_query = "select `locationid` from `location` where `locationid`=".$this->Quote($this->locationId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `location` set 
-			`name`='".$this->Escape($this->name)."', 
-			`vicinity`='".$this->Escape($this->vicinity)."', 
-			`icon`='".$this->Escape($this->icon)."', 
-			`latitude`='".$this->Escape($this->latitude)."', 
-			`longitude`='".$this->Escape($this->longitude)."', 
-			`eventid`='".$this->eventId."', 
-			`timestamp`='".$this->timestamp."', 
-			`addedbyparticipantid`='".$this->Escape($this->addedByParticipantId)."', 
-			`formatted_phone_number`='".$this->Escape($this->formatted_phone_number)."', 
-			`formatted_address`='".$this->Escape($this->formatted_address)."', 
-			`rating`='".$this->Escape($this->rating)."', 
-			`g_id`='".$this->Escape($this->g_id)."', 
-			`votecount`='".$this->Escape($this->voteCount)."', 
-			`location_type`='".$this->Escape($this->location_type)."', 
-			`tempid`='".$this->Escape($this->tempId)."', 
-			`hasbeenremoved`='".$this->Escape($this->hasBeenRemoved)."' where `locationid`='".$this->locationId."'";
+			`name`=:name,
+			`vicinity`=:vicinity,
+			`icon`=:icon,
+			`latitude`=:latitude,
+			`longitude`=:longitude,
+			`eventid`=:eventId,
+			`timestamp`=:timestamp,
+			`addedbyparticipantid`=:addedbyparticipantid,
+			`formatted_phone_number`=:formatted_phone_number,
+			`formatted_address`=:formatted_address,
+			`rating`=:rating,
+			`g_id`=:g_id,
+			`votecount`=:votecount,
+			`location_type`=:location_type,
+			`tempid`=:tempid,
+			`hasbeenremoved`=:hasbeenremoved where `locationid`=:locationId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `location` (`name`, `vicinity`, `icon`, `latitude`, `longitude`, `eventid`, `timestamp`, `addedbyparticipantid`, `formatted_phone_number`, `formatted_address`, `rating`, `g_id`, `votecount`, `location_type`, `tempid`, `hasbeenremoved` ) values (
-			'".$this->Escape($this->name)."', 
-			'".$this->Escape($this->vicinity)."', 
-			'".$this->Escape($this->icon)."', 
-			'".$this->Escape($this->latitude)."', 
-			'".$this->Escape($this->longitude)."', 
-			'".$this->eventId."', 
-			'".$this->timestamp."', 
-			'".$this->Escape($this->addedByParticipantId)."', 
-			'".$this->Escape($this->formatted_phone_number)."', 
-			'".$this->Escape($this->formatted_address)."', 
-			'".$this->Escape($this->rating)."', 
-			'".$this->Escape($this->g_id)."', 
-			'".$this->Escape($this->voteCount)."', 
-			'".$this->Escape($this->location_type)."', 
-			'".$this->Escape($this->tempId)."', 
-			'".$this->Escape($this->hasBeenRemoved)."' )";
+			$this->locationId = "";
+			$this->pog_query = "insert into `location` (`name`,`vicinity`,`icon`,`latitude`,`longitude`,`eventid`,`timestamp`,`addedbyparticipantid`,`formatted_phone_number`,`formatted_address`,`rating`,`g_id`,`votecount`,`location_type`,`tempid`,`hasbeenremoved`,`locationid`) values (
+			:name,
+			:vicinity,
+			:icon,
+			:latitude,
+			:longitude,
+			:eventId,
+			:timestamp,
+			:addedbyparticipantid,
+			:formatted_phone_number,
+			:formatted_address,
+			:rating,
+			:g_id,
+			:votecount,
+			:location_type,
+			:tempid,
+			:hasbeenremoved,
+			:locationId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':name' => $this->Encode($this->name),
+			':vicinity' => $this->Encode($this->vicinity),
+			':icon' => $this->Encode($this->icon),
+			':latitude' => $this->Encode($this->latitude),
+			':longitude' => $this->Encode($this->longitude),
+			':eventId' => intval($this->eventId),
+			':timestamp' => $this->timestamp,
+			':addedbyparticipantid' => $this->Encode($this->addedByParticipantId),
+			':formatted_phone_number' => $this->Encode($this->formatted_phone_number),
+			':formatted_address' => $this->Encode($this->formatted_address),
+			':rating' => $this->Encode($this->rating),
+			':g_id' => $this->Encode($this->g_id),
+			':votecount' => $this->Encode($this->voteCount),
+			':location_type' => $this->Encode($this->location_type),
+			':tempid' => $this->Encode($this->tempId),
+			':hasbeenremoved' => $this->Encode($this->hasBeenRemoved),
+			':locationId' => intval($this->locationId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->locationId == "")
 		{
 			$this->locationId = $insertId;
@@ -385,8 +414,8 @@ class Location extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `location` where `locationid`='".$this->locationId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `location` where `locationid`=".$this->Quote($this->locationId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -401,31 +430,40 @@ class Location extends POG_Base
 		if (sizeof($fcv_array) > 0)
 		{
 			$connection = Database::Connect();
-			$pog_query = "delete from `location` where ";
+			$this->pog_query = "delete from `location` where ";
 			for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 			{
 				if (sizeof($fcv_array[$i]) == 1)
 				{
-					$pog_query .= " ".$fcv_array[$i][0]." ";
+					$this->pog_query .= " ".$fcv_array[$i][0]." ";
 					continue;
 				}
 				else
 				{
 					if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 					{
-						$pog_query .= " AND ";
+						$this->pog_query .= " AND ";
 					}
 					if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 					{
-						$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+						if ($GLOBALS['configuration']['db_encoding'] == 1)
+						{
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+						}
+						else
+						{
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+						}
 					}
 					else
 					{
-						$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 					}
 				}
 			}
-			return Database::NonQuery($pog_query, $connection);
+			return Database::NonQuery($this->pog_query);
 		}
 	}
 	

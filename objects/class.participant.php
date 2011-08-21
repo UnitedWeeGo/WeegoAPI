@@ -17,10 +17,10 @@
 /**
 * <b>Participant</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Participant&attributeList=array+%28%0A++0+%3D%3E+%27firstName%27%2C%0A++1+%3D%3E+%27lastName%27%2C%0A++2+%3D%3E+%27email%27%2C%0A++3+%3D%3E+%27Event%27%2C%0A++4+%3D%3E+%27registeredId%27%2C%0A++5+%3D%3E+%27timestamp%27%2C%0A++6+%3D%3E+%27avatarURL%27%2C%0A++7+%3D%3E+%27Device%27%2C%0A++8+%3D%3E+%27facebookId%27%2C%0A++9+%3D%3E+%27AltEmail%27%2C%0A++10+%3D%3E+%27facebookToken%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Participant&attributeList=array+%28%0A++0+%3D%3E+%27firstName%27%2C%0A++1+%3D%3E+%27lastName%27%2C%0A++2+%3D%3E+%27email%27%2C%0A++3+%3D%3E+%27Event%27%2C%0A++4+%3D%3E+%27registeredId%27%2C%0A++5+%3D%3E+%27timestamp%27%2C%0A++6+%3D%3E+%27avatarURL%27%2C%0A++7+%3D%3E+%27Device%27%2C%0A++8+%3D%3E+%27facebookId%27%2C%0A++9+%3D%3E+%27AltEmail%27%2C%0A++10+%3D%3E+%27facebookToken%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.eventparticipantmap.php');
@@ -98,6 +98,7 @@ class Participant extends POG_Base
 		"facebookToken" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -140,19 +141,22 @@ class Participant extends POG_Base
 	function Get($participantId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `participant` where `participantid`='".intval($participantId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `participant` where `participantid`=:participantId LIMIT 1";
+		$this->pog_bind = array(
+			':participantId' => intval($participantId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->participantId = $row['participantid'];
-			$this->firstName = $this->Unescape($row['firstname']);
-			$this->lastName = $this->Unescape($row['lastname']);
-			$this->email = $this->Unescape($row['email']);
-			$this->registeredId = $this->Unescape($row['registeredid']);
+			$this->firstName = $this->Decode($row['firstname']);
+			$this->lastName = $this->Decode($row['lastname']);
+			$this->email = $this->Decode($row['email']);
+			$this->registeredId = $this->Decode($row['registeredid']);
 			$this->timestamp = $row['timestamp'];
-			$this->avatarURL = $this->Unescape($row['avatarurl']);
-			$this->facebookId = $this->Unescape($row['facebookid']);
-			$this->facebookToken = $this->Unescape($row['facebooktoken']);
+			$this->avatarURL = $this->Decode($row['avatarurl']);
+			$this->facebookId = $this->Decode($row['facebookid']);
+			$this->facebookToken = $this->Decode($row['facebooktoken']);
 		}
 		return $this;
 	}
@@ -192,18 +196,18 @@ class Participant extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -233,7 +237,7 @@ class Participant extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$participant = new $thisObjectName();
@@ -259,33 +263,50 @@ class Participant extends POG_Base
 	function Save($deep = true)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `participantid` from `participant` where `participantid`='".$this->participantId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->participantId))
+		{
+			$this->pog_query = "select `participantid` from `participant` where `participantid`=".$this->Quote($this->participantId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `participant` set 
-			`firstname`='".$this->Escape($this->firstName)."', 
-			`lastname`='".$this->Escape($this->lastName)."', 
-			`email`='".$this->Escape($this->email)."', 
-			`registeredid`='".$this->Escape($this->registeredId)."', 
-			`timestamp`='".$this->timestamp."', 
-			`avatarurl`='".$this->Escape($this->avatarURL)."', 
-			`facebookid`='".$this->Escape($this->facebookId)."', 
-			`facebooktoken`='".$this->Escape($this->facebookToken)."' where `participantid`='".$this->participantId."'";
+			`firstname`=:firstname,
+			`lastname`=:lastname,
+			`email`=:email,
+			`registeredid`=:registeredid,
+			`timestamp`=:timestamp,
+			`avatarurl`=:avatarurl,
+			`facebookid`=:facebookid,
+			`facebooktoken`=:facebooktoken where `participantid`=:participantId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `participant` (`firstname`, `lastname`, `email`, `registeredid`, `timestamp`, `avatarurl`, `facebookid`, `facebooktoken` ) values (
-			'".$this->Escape($this->firstName)."', 
-			'".$this->Escape($this->lastName)."', 
-			'".$this->Escape($this->email)."', 
-			'".$this->Escape($this->registeredId)."', 
-			'".$this->timestamp."', 
-			'".$this->Escape($this->avatarURL)."', 
-			'".$this->Escape($this->facebookId)."', 
-			'".$this->Escape($this->facebookToken)."' )";
+			$this->participantId = "";
+			$this->pog_query = "insert into `participant` (`firstname`,`lastname`,`email`,`registeredid`,`timestamp`,`avatarurl`,`facebookid`,`facebooktoken`,`participantid`) values (
+			:firstname,
+			:lastname,
+			:email,
+			:registeredid,
+			:timestamp,
+			:avatarurl,
+			:facebookid,
+			:facebooktoken,
+			:participantId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':firstname' => $this->Encode($this->firstName),
+			':lastname' => $this->Encode($this->lastName),
+			':email' => $this->Encode($this->email),
+			':registeredid' => $this->Encode($this->registeredId),
+			':timestamp' => $this->timestamp,
+			':avatarurl' => $this->Encode($this->avatarURL),
+			':facebookid' => $this->Encode($this->facebookId),
+			':facebooktoken' => $this->Encode($this->facebookToken),
+			':participantId' => intval($this->participantId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->participantId == "")
 		{
 			$this->participantId = $insertId;
@@ -359,8 +380,8 @@ class Participant extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `participant` where `participantid`='".$this->participantId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `participant` where `participantid`=".$this->Quote($this->participantId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -385,31 +406,40 @@ class Participant extends POG_Base
 			else
 			{
 				$connection = Database::Connect();
-				$pog_query = "delete from `participant` where ";
+				$this->pog_query = "delete from `participant` where ";
 				for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 				{
 					if (sizeof($fcv_array[$i]) == 1)
 					{
-						$pog_query .= " ".$fcv_array[$i][0]." ";
+						$this->pog_query .= " ".$fcv_array[$i][0]." ";
 						continue;
 					}
 					else
 					{
 						if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 						{
-							$pog_query .= " AND ";
+							$this->pog_query .= " AND ";
 						}
 						if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+							if ($GLOBALS['configuration']['db_encoding'] == 1)
+							{
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+							}
+							else
+							{
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+							}
 						}
 						else
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 						}
 					}
 				}
-				return Database::NonQuery($pog_query, $connection);
+				return Database::NonQuery($this->pog_query);
 			}
 		}
 	}
@@ -462,18 +492,18 @@ class Participant extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -502,7 +532,7 @@ class Participant extends POG_Base
 			$sortBy = "a.eventid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$event = new Event();

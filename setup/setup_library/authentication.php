@@ -13,7 +13,7 @@ if ((!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) && $GLOB
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>Php Object Generator Setup <?php echo $GLOBALS['configuration']['versionNumber'].$GLOBALS['configuration']['revisionNumber']?></title>
+<title>Php Object Generator Setup <?=$GLOBALS['configuration']['versionNumber'].$GLOBALS['configuration']['revisionNumber']?></title>
 <link rel="stylesheet" href="./setup.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="./setup_library/xPandMenu.css"/>
 <div align="center">

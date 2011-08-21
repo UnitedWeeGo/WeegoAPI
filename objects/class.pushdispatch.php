@@ -13,10 +13,10 @@
 /**
 * <b>PushDispatch</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=PushDispatch&attributeList=array+%28%0A++0+%3D%3E+%27Invite%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27lastDispatch%27%2C%0A++3+%3D%3E+%27FeedMessage%27%2C%0A++4+%3D%3E+%27generalEventUpdateIdList%27%2C%0A++5+%3D%3E+%27decidedNotificationDispatchEventIdList%27%2C%0A++6+%3D%3E+%27cancelledEventIdList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=PushDispatch&attributeList=array+%28%0A++0+%3D%3E+%27Invite%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27lastDispatch%27%2C%0A++3+%3D%3E+%27FeedMessage%27%2C%0A++4+%3D%3E+%27generalEventUpdateIdList%27%2C%0A++5+%3D%3E+%27decidedNotificationDispatchEventIdList%27%2C%0A++6+%3D%3E+%27cancelledEventIdList%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.invitepushdispatchmap.php');
@@ -72,6 +72,7 @@ class PushDispatch extends POG_Base
 		"cancelledEventIdList" => array('db_attributes' => array("TEXT", "TEXT")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -110,15 +111,18 @@ class PushDispatch extends POG_Base
 	function Get($pushdispatchId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `pushdispatch` where `pushdispatchid`='".intval($pushdispatchId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `pushdispatch` where `pushdispatchid`=:pushdispatchId LIMIT 1";
+		$this->pog_bind = array(
+			':pushdispatchId' => intval($pushdispatchId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->pushdispatchId = $row['pushdispatchid'];
 			$this->lastDispatch = $row['lastdispatch'];
-			$this->generalEventUpdateIdList = $this->Unescape($row['generaleventupdateidlist']);
-			$this->decidedNotificationDispatchEventIdList = $this->Unescape($row['decidednotificationdispatcheventidlist']);
-			$this->cancelledEventIdList = $this->Unescape($row['cancelledeventidlist']);
+			$this->generalEventUpdateIdList = $this->Decode($row['generaleventupdateidlist']);
+			$this->decidedNotificationDispatchEventIdList = $this->Decode($row['decidednotificationdispatcheventidlist']);
+			$this->cancelledEventIdList = $this->Decode($row['cancelledeventidlist']);
 		}
 		return $this;
 	}
@@ -158,18 +162,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -199,7 +203,7 @@ class PushDispatch extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$pushdispatch = new $thisObjectName();
@@ -221,25 +225,38 @@ class PushDispatch extends POG_Base
 	function Save($deep = true)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `pushdispatchid` from `pushdispatch` where `pushdispatchid`='".$this->pushdispatchId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->pushdispatchId))
+		{
+			$this->pog_query = "select `pushdispatchid` from `pushdispatch` where `pushdispatchid`=".$this->Quote($this->pushdispatchId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `pushdispatch` set 
-			`lastdispatch`='".$this->lastDispatch."', 
-			`generaleventupdateidlist`='".$this->Escape($this->generalEventUpdateIdList)."', 
-			`decidednotificationdispatcheventidlist`='".$this->Escape($this->decidedNotificationDispatchEventIdList)."', 
-			`cancelledeventidlist`='".$this->Escape($this->cancelledEventIdList)."' where `pushdispatchid`='".$this->pushdispatchId."'";
+			`lastdispatch`=:lastdispatch,
+			`generaleventupdateidlist`=:generaleventupdateidlist,
+			`decidednotificationdispatcheventidlist`=:decidednotificationdispatcheventidlist,
+			`cancelledeventidlist`=:cancelledeventidlist where `pushdispatchid`=:pushdispatchId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `pushdispatch` (`lastdispatch`, `generaleventupdateidlist`, `decidednotificationdispatcheventidlist`, `cancelledeventidlist` ) values (
-			'".$this->lastDispatch."', 
-			'".$this->Escape($this->generalEventUpdateIdList)."', 
-			'".$this->Escape($this->decidedNotificationDispatchEventIdList)."', 
-			'".$this->Escape($this->cancelledEventIdList)."' )";
+			$this->pushdispatchId = "";
+			$this->pog_query = "insert into `pushdispatch` (`lastdispatch`,`generaleventupdateidlist`,`decidednotificationdispatcheventidlist`,`cancelledeventidlist`,`pushdispatchid`) values (
+			:lastdispatch,
+			:generaleventupdateidlist,
+			:decidednotificationdispatcheventidlist,
+			:cancelledeventidlist,
+			:pushdispatchId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':lastdispatch' => $this->lastDispatch,
+			':generaleventupdateidlist' => $this->Encode($this->generalEventUpdateIdList),
+			':decidednotificationdispatcheventidlist' => $this->Encode($this->decidedNotificationDispatchEventIdList),
+			':cancelledeventidlist' => $this->Encode($this->cancelledEventIdList),
+			':pushdispatchId' => intval($this->pushdispatchId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->pushdispatchId == "")
 		{
 			$this->pushdispatchId = $insertId;
@@ -320,8 +337,8 @@ class PushDispatch extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `pushdispatch` where `pushdispatchid`='".$this->pushdispatchId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `pushdispatch` where `pushdispatchid`=".$this->Quote($this->pushdispatchId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -346,31 +363,40 @@ class PushDispatch extends POG_Base
 			else
 			{
 				$connection = Database::Connect();
-				$pog_query = "delete from `pushdispatch` where ";
+				$this->pog_query = "delete from `pushdispatch` where ";
 				for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 				{
 					if (sizeof($fcv_array[$i]) == 1)
 					{
-						$pog_query .= " ".$fcv_array[$i][0]." ";
+						$this->pog_query .= " ".$fcv_array[$i][0]." ";
 						continue;
 					}
 					else
 					{
 						if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 						{
-							$pog_query .= " AND ";
+							$this->pog_query .= " AND ";
 						}
 						if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+							if ($GLOBALS['configuration']['db_encoding'] == 1)
+							{
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+							}
+							else
+							{
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+							}
 						}
 						else
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 						}
 					}
 				}
-				return Database::NonQuery($pog_query, $connection);
+				return Database::NonQuery($this->pog_query);
 			}
 		}
 	}
@@ -423,18 +449,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -463,7 +489,7 @@ class PushDispatch extends POG_Base
 			$sortBy = "a.inviteid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$invite = new Invite();
@@ -564,18 +590,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -604,7 +630,7 @@ class PushDispatch extends POG_Base
 			$sortBy = "a.eventid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$event = new Event();
@@ -705,18 +731,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -745,7 +771,7 @@ class PushDispatch extends POG_Base
 			$sortBy = "a.feedmessageid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$feedmessage = new FeedMessage();

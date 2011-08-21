@@ -14,10 +14,10 @@
 /**
 * <b>Vote</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Vote&attributeList=array+%28%0A++0+%3D%3E+%27Event%27%2C%0A++1+%3D%3E+%27locationId%27%2C%0A++2+%3D%3E+%27email%27%2C%0A++3+%3D%3E+%27timestamp%27%2C%0A++4+%3D%3E+%27hasBeenRemoved%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Vote&attributeList=array+%28%0A++0+%3D%3E+%27Event%27%2C%0A++1+%3D%3E+%27locationId%27%2C%0A++2+%3D%3E+%27email%27%2C%0A++3+%3D%3E+%27timestamp%27%2C%0A++4+%3D%3E+%27hasBeenRemoved%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 class Vote extends POG_Base
@@ -58,6 +58,7 @@ class Vote extends POG_Base
 		"hasBeenRemoved" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -93,16 +94,19 @@ class Vote extends POG_Base
 	function Get($voteId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `vote` where `voteid`='".intval($voteId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `vote` where `voteid`=:voteId LIMIT 1";
+		$this->pog_bind = array(
+			':voteId' => intval($voteId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->voteId = $row['voteid'];
 			$this->eventId = $row['eventid'];
-			$this->locationId = $this->Unescape($row['locationid']);
-			$this->email = $this->Unescape($row['email']);
+			$this->locationId = $this->Decode($row['locationid']);
+			$this->email = $this->Decode($row['email']);
 			$this->timestamp = $row['timestamp'];
-			$this->hasBeenRemoved = $this->Unescape($row['hasbeenremoved']);
+			$this->hasBeenRemoved = $this->Decode($row['hasbeenremoved']);
 		}
 		return $this;
 	}
@@ -142,18 +146,18 @@ class Vote extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -183,7 +187,7 @@ class Vote extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$vote = new $thisObjectName();
@@ -206,27 +210,41 @@ class Vote extends POG_Base
 	function Save()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `voteid` from `vote` where `voteid`='".$this->voteId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->voteId))
+		{
+			$this->pog_query = "select `voteid` from `vote` where `voteid`=".$this->Quote($this->voteId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `vote` set 
-			`eventid`='".$this->eventId."', 
-			`locationid`='".$this->Escape($this->locationId)."', 
-			`email`='".$this->Escape($this->email)."', 
-			`timestamp`='".$this->timestamp."', 
-			`hasbeenremoved`='".$this->Escape($this->hasBeenRemoved)."' where `voteid`='".$this->voteId."'";
+			`eventid`=:eventId,
+			`locationid`=:locationid,
+			`email`=:email,
+			`timestamp`=:timestamp,
+			`hasbeenremoved`=:hasbeenremoved where `voteid`=:voteId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `vote` (`eventid`, `locationid`, `email`, `timestamp`, `hasbeenremoved` ) values (
-			'".$this->eventId."', 
-			'".$this->Escape($this->locationId)."', 
-			'".$this->Escape($this->email)."', 
-			'".$this->timestamp."', 
-			'".$this->Escape($this->hasBeenRemoved)."' )";
+			$this->voteId = "";
+			$this->pog_query = "insert into `vote` (`eventid`,`locationid`,`email`,`timestamp`,`hasbeenremoved`,`voteid`) values (
+			:eventId,
+			:locationid,
+			:email,
+			:timestamp,
+			:hasbeenremoved,
+			:voteId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':eventId' => intval($this->eventId),
+			':locationid' => $this->Encode($this->locationId),
+			':email' => $this->Encode($this->email),
+			':timestamp' => $this->timestamp,
+			':hasbeenremoved' => $this->Encode($this->hasBeenRemoved),
+			':voteId' => intval($this->voteId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->voteId == "")
 		{
 			$this->voteId = $insertId;
@@ -253,8 +271,8 @@ class Vote extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `vote` where `voteid`='".$this->voteId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `vote` where `voteid`=".$this->Quote($this->voteId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -269,31 +287,40 @@ class Vote extends POG_Base
 		if (sizeof($fcv_array) > 0)
 		{
 			$connection = Database::Connect();
-			$pog_query = "delete from `vote` where ";
+			$this->pog_query = "delete from `vote` where ";
 			for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 			{
 				if (sizeof($fcv_array[$i]) == 1)
 				{
-					$pog_query .= " ".$fcv_array[$i][0]." ";
+					$this->pog_query .= " ".$fcv_array[$i][0]." ";
 					continue;
 				}
 				else
 				{
 					if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 					{
-						$pog_query .= " AND ";
+						$this->pog_query .= " AND ";
 					}
 					if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 					{
-						$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+						if ($GLOBALS['configuration']['db_encoding'] == 1)
+						{
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+						}
+						else
+						{
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+						}
 					}
 					else
 					{
-						$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 					}
 				}
 			}
-			return Database::NonQuery($pog_query, $connection);
+			return Database::NonQuery($this->pog_query);
 		}
 	}
 	

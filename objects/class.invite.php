@@ -17,10 +17,10 @@
 /**
 * <b>Invite</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Invite&attributeList=array+%28%0A++0+%3D%3E+%27inviterId%27%2C%0A++1+%3D%3E+%27inviteeId%27%2C%0A++2+%3D%3E+%27Event%27%2C%0A++3+%3D%3E+%27PushDispatch%27%2C%0A++4+%3D%3E+%27token%27%2C%0A++5+%3D%3E+%27pending%27%2C%0A++6+%3D%3E+%27hasBeenRemoved%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27sent%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Invite&attributeList=array+%28%0A++0+%3D%3E+%27inviterId%27%2C%0A++1+%3D%3E+%27inviteeId%27%2C%0A++2+%3D%3E+%27Event%27%2C%0A++3+%3D%3E+%27PushDispatch%27%2C%0A++4+%3D%3E+%27token%27%2C%0A++5+%3D%3E+%27pending%27%2C%0A++6+%3D%3E+%27hasBeenRemoved%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27sent%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.invitepushdispatchmap.php');
@@ -86,6 +86,7 @@ class Invite extends POG_Base
 		"sent" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -125,19 +126,22 @@ class Invite extends POG_Base
 	function Get($inviteId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `invite` where `inviteid`='".intval($inviteId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `invite` where `inviteid`=:inviteId LIMIT 1";
+		$this->pog_bind = array(
+			':inviteId' => intval($inviteId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->inviteId = $row['inviteid'];
-			$this->inviterId = $this->Unescape($row['inviterid']);
-			$this->inviteeId = $this->Unescape($row['inviteeid']);
+			$this->inviterId = $this->Decode($row['inviterid']);
+			$this->inviteeId = $this->Decode($row['inviteeid']);
 			$this->eventId = $row['eventid'];
-			$this->token = $this->Unescape($row['token']);
-			$this->pending = $this->Unescape($row['pending']);
-			$this->hasBeenRemoved = $this->Unescape($row['hasbeenremoved']);
+			$this->token = $this->Decode($row['token']);
+			$this->pending = $this->Decode($row['pending']);
+			$this->hasBeenRemoved = $this->Decode($row['hasbeenremoved']);
 			$this->timestamp = $row['timestamp'];
-			$this->sent = $this->Unescape($row['sent']);
+			$this->sent = $this->Decode($row['sent']);
 		}
 		return $this;
 	}
@@ -177,18 +181,18 @@ class Invite extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -218,7 +222,7 @@ class Invite extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$invite = new $thisObjectName();
@@ -244,33 +248,50 @@ class Invite extends POG_Base
 	function Save($deep = true)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `inviteid` from `invite` where `inviteid`='".$this->inviteId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->inviteId))
+		{
+			$this->pog_query = "select `inviteid` from `invite` where `inviteid`=".$this->Quote($this->inviteId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `invite` set 
-			`inviterid`='".$this->Escape($this->inviterId)."', 
-			`inviteeid`='".$this->Escape($this->inviteeId)."', 
-			`eventid`='".$this->eventId."', 
-			`token`='".$this->Escape($this->token)."', 
-			`pending`='".$this->Escape($this->pending)."', 
-			`hasbeenremoved`='".$this->Escape($this->hasBeenRemoved)."', 
-			`timestamp`='".$this->timestamp."', 
-			`sent`='".$this->Escape($this->sent)."' where `inviteid`='".$this->inviteId."'";
+			`inviterid`=:inviterid,
+			`inviteeid`=:inviteeid,
+			`eventid`=:eventId,
+			`token`=:token,
+			`pending`=:pending,
+			`hasbeenremoved`=:hasbeenremoved,
+			`timestamp`=:timestamp,
+			`sent`=:sent where `inviteid`=:inviteId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `invite` (`inviterid`, `inviteeid`, `eventid`, `token`, `pending`, `hasbeenremoved`, `timestamp`, `sent` ) values (
-			'".$this->Escape($this->inviterId)."', 
-			'".$this->Escape($this->inviteeId)."', 
-			'".$this->eventId."', 
-			'".$this->Escape($this->token)."', 
-			'".$this->Escape($this->pending)."', 
-			'".$this->Escape($this->hasBeenRemoved)."', 
-			'".$this->timestamp."', 
-			'".$this->Escape($this->sent)."' )";
+			$this->inviteId = "";
+			$this->pog_query = "insert into `invite` (`inviterid`,`inviteeid`,`eventid`,`token`,`pending`,`hasbeenremoved`,`timestamp`,`sent`,`inviteid`) values (
+			:inviterid,
+			:inviteeid,
+			:eventId,
+			:token,
+			:pending,
+			:hasbeenremoved,
+			:timestamp,
+			:sent,
+			:inviteId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':inviterid' => $this->Encode($this->inviterId),
+			':inviteeid' => $this->Encode($this->inviteeId),
+			':eventId' => intval($this->eventId),
+			':token' => $this->Encode($this->token),
+			':pending' => $this->Encode($this->pending),
+			':hasbeenremoved' => $this->Encode($this->hasBeenRemoved),
+			':timestamp' => $this->timestamp,
+			':sent' => $this->Encode($this->sent),
+			':inviteId' => intval($this->inviteId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->inviteId == "")
 		{
 			$this->inviteId = $insertId;
@@ -321,8 +342,8 @@ class Invite extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `invite` where `inviteid`='".$this->inviteId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `invite` where `inviteid`=".$this->Quote($this->inviteId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -347,31 +368,40 @@ class Invite extends POG_Base
 			else
 			{
 				$connection = Database::Connect();
-				$pog_query = "delete from `invite` where ";
+				$this->pog_query = "delete from `invite` where ";
 				for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 				{
 					if (sizeof($fcv_array[$i]) == 1)
 					{
-						$pog_query .= " ".$fcv_array[$i][0]." ";
+						$this->pog_query .= " ".$fcv_array[$i][0]." ";
 						continue;
 					}
 					else
 					{
 						if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 						{
-							$pog_query .= " AND ";
+							$this->pog_query .= " AND ";
 						}
 						if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+							if ($GLOBALS['configuration']['db_encoding'] == 1)
+							{
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+							}
+							else
+							{
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+							}
 						}
 						else
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 						}
 					}
 				}
-				return Database::NonQuery($pog_query, $connection);
+				return Database::NonQuery($this->pog_query);
 			}
 		}
 	}
@@ -445,18 +475,18 @@ class Invite extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -485,7 +515,7 @@ class Invite extends POG_Base
 			$sortBy = "a.pushdispatchid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$pushdispatch = new PushDispatch();

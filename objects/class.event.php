@@ -26,10 +26,10 @@
 /**
 * <b>Event</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27guestListOpen%27%2C%0A++11+%3D%3E+%27locationListOpen%27%2C%0A++12+%3D%3E+%27PushDispatch%27%2C%0A++13+%3D%3E+%27FeedMessage%27%2C%0A++14+%3D%3E+%27checkedInParticipantList%27%2C%0A++15+%3D%3E+%27locationReorderTimestamp%27%2C%0A++16+%3D%3E+%27acceptedParticipantList%27%2C%0A++17+%3D%3E+%27declinedParticipantList%27%2C%0A++18+%3D%3E+%27eventDate%27%2C%0A++19+%3D%3E+%27eventExpireDate%27%2C%0A++20+%3D%3E+%27removedParticipantList%27%2C%0A++21+%3D%3E+%27SuggestedTime%27%2C%0A++22+%3D%3E+%27eventTimeZone%27%2C%0A++23+%3D%3E+%27cancelled%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B22%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B23%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27guestListOpen%27%2C%0A++11+%3D%3E+%27locationListOpen%27%2C%0A++12+%3D%3E+%27PushDispatch%27%2C%0A++13+%3D%3E+%27FeedMessage%27%2C%0A++14+%3D%3E+%27checkedInParticipantList%27%2C%0A++15+%3D%3E+%27locationReorderTimestamp%27%2C%0A++16+%3D%3E+%27acceptedParticipantList%27%2C%0A++17+%3D%3E+%27declinedParticipantList%27%2C%0A++18+%3D%3E+%27eventDate%27%2C%0A++19+%3D%3E+%27eventExpireDate%27%2C%0A++20+%3D%3E+%27removedParticipantList%27%2C%0A++21+%3D%3E+%27SuggestedTime%27%2C%0A++22+%3D%3E+%27eventTimeZone%27%2C%0A++23+%3D%3E+%27cancelled%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B22%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B23%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.eventparticipantmap.php');
@@ -186,6 +186,7 @@ class Event extends POG_Base
 		"cancelled" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -241,28 +242,31 @@ class Event extends POG_Base
 	function Get($eventId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `event` where `eventid`='".intval($eventId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `event` where `eventid`=:eventId LIMIT 1";
+		$this->pog_bind = array(
+			':eventId' => intval($eventId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->eventId = $row['eventid'];
-			$this->eventTitle = $this->Unescape($row['eventtitle']);
-			$this->eventDescription = $this->Unescape($row['eventdescription']);
-			$this->creatorId = $this->Unescape($row['creatorid']);
-			$this->readParticipantList = $this->Unescape($row['readparticipantlist']);
+			$this->eventTitle = $this->Decode($row['eventtitle']);
+			$this->eventDescription = $this->Decode($row['eventdescription']);
+			$this->creatorId = $this->Decode($row['creatorid']);
+			$this->readParticipantList = $this->Decode($row['readparticipantlist']);
 			$this->timestamp = $row['timestamp'];
 			$this->infoTimestamp = $row['infotimestamp'];
-			$this->guestListOpen = $this->Unescape($row['guestlistopen']);
-			$this->locationListOpen = $this->Unescape($row['locationlistopen']);
-			$this->checkedInParticipantList = $this->Unescape($row['checkedinparticipantlist']);
+			$this->guestListOpen = $this->Decode($row['guestlistopen']);
+			$this->locationListOpen = $this->Decode($row['locationlistopen']);
+			$this->checkedInParticipantList = $this->Decode($row['checkedinparticipantlist']);
 			$this->locationReorderTimestamp = $row['locationreordertimestamp'];
-			$this->acceptedParticipantList = $this->Unescape($row['acceptedparticipantlist']);
-			$this->declinedParticipantList = $this->Unescape($row['declinedparticipantlist']);
+			$this->acceptedParticipantList = $this->Decode($row['acceptedparticipantlist']);
+			$this->declinedParticipantList = $this->Decode($row['declinedparticipantlist']);
 			$this->eventDate = $row['eventdate'];
 			$this->eventExpireDate = $row['eventexpiredate'];
-			$this->removedParticipantList = $this->Unescape($row['removedparticipantlist']);
-			$this->eventTimeZone = $this->Unescape($row['eventtimezone']);
-			$this->cancelled = $this->Unescape($row['cancelled']);
+			$this->removedParticipantList = $this->Decode($row['removedparticipantlist']);
+			$this->eventTimeZone = $this->Decode($row['eventtimezone']);
+			$this->cancelled = $this->Decode($row['cancelled']);
 		}
 		return $this;
 	}
@@ -302,18 +306,18 @@ class Event extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -343,7 +347,7 @@ class Event extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$event = new $thisObjectName();
@@ -378,51 +382,77 @@ class Event extends POG_Base
 	function Save($deep = true)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `eventid` from `event` where `eventid`='".$this->eventId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->eventId))
+		{
+			$this->pog_query = "select `eventid` from `event` where `eventid`=".$this->Quote($this->eventId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `event` set 
-			`eventtitle`='".$this->Escape($this->eventTitle)."', 
-			`eventdescription`='".$this->Escape($this->eventDescription)."', 
-			`creatorid`='".$this->Escape($this->creatorId)."', 
-			`readparticipantlist`='".$this->Escape($this->readParticipantList)."', 
-			`timestamp`='".$this->timestamp."', 
-			`infotimestamp`='".$this->infoTimestamp."', 
-			`guestlistopen`='".$this->Escape($this->guestListOpen)."', 
-			`locationlistopen`='".$this->Escape($this->locationListOpen)."', 
-			`checkedinparticipantlist`='".$this->Escape($this->checkedInParticipantList)."', 
-			`locationreordertimestamp`='".$this->locationReorderTimestamp."', 
-			`acceptedparticipantlist`='".$this->Escape($this->acceptedParticipantList)."', 
-			`declinedparticipantlist`='".$this->Escape($this->declinedParticipantList)."', 
-			`eventdate`='".$this->eventDate."', 
-			`eventexpiredate`='".$this->eventExpireDate."', 
-			`removedparticipantlist`='".$this->Escape($this->removedParticipantList)."', 
-			`eventtimezone`='".$this->Escape($this->eventTimeZone)."', 
-			`cancelled`='".$this->Escape($this->cancelled)."' where `eventid`='".$this->eventId."'";
+			`eventtitle`=:eventtitle,
+			`eventdescription`=:eventdescription,
+			`creatorid`=:creatorid,
+			`readparticipantlist`=:readparticipantlist,
+			`timestamp`=:timestamp,
+			`infotimestamp`=:infotimestamp,
+			`guestlistopen`=:guestlistopen,
+			`locationlistopen`=:locationlistopen,
+			`checkedinparticipantlist`=:checkedinparticipantlist,
+			`locationreordertimestamp`=:locationreordertimestamp,
+			`acceptedparticipantlist`=:acceptedparticipantlist,
+			`declinedparticipantlist`=:declinedparticipantlist,
+			`eventdate`=:eventdate,
+			`eventexpiredate`=:eventexpiredate,
+			`removedparticipantlist`=:removedparticipantlist,
+			`eventtimezone`=:eventtimezone,
+			`cancelled`=:cancelled where `eventid`=:eventId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `event` (`eventtitle`, `eventdescription`, `creatorid`, `readparticipantlist`, `timestamp`, `infotimestamp`, `guestlistopen`, `locationlistopen`, `checkedinparticipantlist`, `locationreordertimestamp`, `acceptedparticipantlist`, `declinedparticipantlist`, `eventdate`, `eventexpiredate`, `removedparticipantlist`, `eventtimezone`, `cancelled` ) values (
-			'".$this->Escape($this->eventTitle)."', 
-			'".$this->Escape($this->eventDescription)."', 
-			'".$this->Escape($this->creatorId)."', 
-			'".$this->Escape($this->readParticipantList)."', 
-			'".$this->timestamp."', 
-			'".$this->infoTimestamp."', 
-			'".$this->Escape($this->guestListOpen)."', 
-			'".$this->Escape($this->locationListOpen)."', 
-			'".$this->Escape($this->checkedInParticipantList)."', 
-			'".$this->locationReorderTimestamp."', 
-			'".$this->Escape($this->acceptedParticipantList)."', 
-			'".$this->Escape($this->declinedParticipantList)."', 
-			'".$this->eventDate."', 
-			'".$this->eventExpireDate."', 
-			'".$this->Escape($this->removedParticipantList)."', 
-			'".$this->Escape($this->eventTimeZone)."', 
-			'".$this->Escape($this->cancelled)."' )";
+			$this->eventId = "";
+			$this->pog_query = "insert into `event` (`eventtitle`,`eventdescription`,`creatorid`,`readparticipantlist`,`timestamp`,`infotimestamp`,`guestlistopen`,`locationlistopen`,`checkedinparticipantlist`,`locationreordertimestamp`,`acceptedparticipantlist`,`declinedparticipantlist`,`eventdate`,`eventexpiredate`,`removedparticipantlist`,`eventtimezone`,`cancelled`,`eventid`) values (
+			:eventtitle,
+			:eventdescription,
+			:creatorid,
+			:readparticipantlist,
+			:timestamp,
+			:infotimestamp,
+			:guestlistopen,
+			:locationlistopen,
+			:checkedinparticipantlist,
+			:locationreordertimestamp,
+			:acceptedparticipantlist,
+			:declinedparticipantlist,
+			:eventdate,
+			:eventexpiredate,
+			:removedparticipantlist,
+			:eventtimezone,
+			:cancelled,
+			:eventId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':eventtitle' => $this->Encode($this->eventTitle),
+			':eventdescription' => $this->Encode($this->eventDescription),
+			':creatorid' => $this->Encode($this->creatorId),
+			':readparticipantlist' => $this->Encode($this->readParticipantList),
+			':timestamp' => $this->timestamp,
+			':infotimestamp' => $this->infoTimestamp,
+			':guestlistopen' => $this->Encode($this->guestListOpen),
+			':locationlistopen' => $this->Encode($this->locationListOpen),
+			':checkedinparticipantlist' => $this->Encode($this->checkedInParticipantList),
+			':locationreordertimestamp' => $this->locationReorderTimestamp,
+			':acceptedparticipantlist' => $this->Encode($this->acceptedParticipantList),
+			':declinedparticipantlist' => $this->Encode($this->declinedParticipantList),
+			':eventdate' => $this->eventDate,
+			':eventexpiredate' => $this->eventExpireDate,
+			':removedparticipantlist' => $this->Encode($this->removedParticipantList),
+			':eventtimezone' => $this->Encode($this->eventTimeZone),
+			':cancelled' => $this->Encode($this->cancelled),
+			':eventId' => intval($this->eventId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->eventId == "")
 		{
 			$this->eventId = $insertId;
@@ -541,8 +571,8 @@ class Event extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `event` where `eventid`='".$this->eventId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `event` where `eventid`=".$this->Quote($this->eventId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -567,31 +597,40 @@ class Event extends POG_Base
 			else
 			{
 				$connection = Database::Connect();
-				$pog_query = "delete from `event` where ";
+				$this->pog_query = "delete from `event` where ";
 				for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 				{
 					if (sizeof($fcv_array[$i]) == 1)
 					{
-						$pog_query .= " ".$fcv_array[$i][0]." ";
+						$this->pog_query .= " ".$fcv_array[$i][0]." ";
 						continue;
 					}
 					else
 					{
 						if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 						{
-							$pog_query .= " AND ";
+							$this->pog_query .= " AND ";
 						}
 						if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+							if ($GLOBALS['configuration']['db_encoding'] == 1)
+							{
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+							}
+							else
+							{
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+							}
 						}
 						else
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 						}
 					}
 				}
-				return Database::NonQuery($pog_query, $connection);
+				return Database::NonQuery($this->pog_query);
 			}
 		}
 	}
@@ -701,18 +740,18 @@ class Event extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -741,7 +780,7 @@ class Event extends POG_Base
 			$sortBy = "a.participantid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$participant = new Participant();
@@ -956,18 +995,18 @@ class Event extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -996,7 +1035,7 @@ class Event extends POG_Base
 			$sortBy = "a.pushdispatchid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$pushdispatch = new PushDispatch();

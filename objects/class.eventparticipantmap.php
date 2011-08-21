@@ -10,7 +10,7 @@
 /**
 * <b>EventParticipantMap</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
 */
 class EventParticipantMap

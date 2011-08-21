@@ -16,10 +16,10 @@
 /**
 * <b>FeedMessage</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=FeedMessage&attributeList=array+%28%0A++0+%3D%3E+%27timestamp%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27message%27%2C%0A++3+%3D%3E+%27imageURL%27%2C%0A++4+%3D%3E+%27type%27%2C%0A++5+%3D%3E+%27senderId%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27PushDispatch%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=FeedMessage&attributeList=array+%28%0A++0+%3D%3E+%27timestamp%27%2C%0A++1+%3D%3E+%27Event%27%2C%0A++2+%3D%3E+%27message%27%2C%0A++3+%3D%3E+%27imageURL%27%2C%0A++4+%3D%3E+%27type%27%2C%0A++5+%3D%3E+%27senderId%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27PushDispatch%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.feedmessagepushdispatchmap.php');
@@ -79,6 +79,7 @@ class FeedMessage extends POG_Base
 		"PushDispatch" => array('db_attributes' => array("OBJECT", "JOIN")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -117,18 +118,21 @@ class FeedMessage extends POG_Base
 	function Get($feedmessageId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `feedmessage` where `feedmessageid`='".intval($feedmessageId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `feedmessage` where `feedmessageid`=:feedmessageId LIMIT 1";
+		$this->pog_bind = array(
+			':feedmessageId' => intval($feedmessageId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->feedmessageId = $row['feedmessageid'];
 			$this->timestamp = $row['timestamp'];
 			$this->eventId = $row['eventid'];
-			$this->message = $this->Unescape($row['message']);
-			$this->imageURL = $this->Unescape($row['imageurl']);
-			$this->type = $this->Unescape($row['type']);
-			$this->senderId = $this->Unescape($row['senderid']);
-			$this->readParticipantList = $this->Unescape($row['readparticipantlist']);
+			$this->message = $this->Decode($row['message']);
+			$this->imageURL = $this->Decode($row['imageurl']);
+			$this->type = $this->Decode($row['type']);
+			$this->senderId = $this->Decode($row['senderid']);
+			$this->readParticipantList = $this->Decode($row['readparticipantlist']);
 		}
 		return $this;
 	}
@@ -168,18 +172,18 @@ class FeedMessage extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -209,7 +213,7 @@ class FeedMessage extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$feedmessage = new $thisObjectName();
@@ -234,31 +238,47 @@ class FeedMessage extends POG_Base
 	function Save($deep = true)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `feedmessageid` from `feedmessage` where `feedmessageid`='".$this->feedmessageId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->feedmessageId))
+		{
+			$this->pog_query = "select `feedmessageid` from `feedmessage` where `feedmessageid`=".$this->Quote($this->feedmessageId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `feedmessage` set 
-			`timestamp`='".$this->timestamp."', 
-			`eventid`='".$this->eventId."', 
-			`message`='".$this->Escape($this->message)."', 
-			`imageurl`='".$this->Escape($this->imageURL)."', 
-			`type`='".$this->Escape($this->type)."', 
-			`senderid`='".$this->Escape($this->senderId)."', 
-			`readparticipantlist`='".$this->Escape($this->readParticipantList)."'where `feedmessageid`='".$this->feedmessageId."'";
+			`timestamp`=:timestamp,
+			`eventid`=:eventId,
+			`message`=:message,
+			`imageurl`=:imageurl,
+			`type`=:type,
+			`senderid`=:senderid,
+			`readparticipantlist`=:readparticipantlist where `feedmessageid`=:feedmessageId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `feedmessage` (`timestamp`, `eventid`, `message`, `imageurl`, `type`, `senderid`, `readparticipantlist`) values (
-			'".$this->timestamp."', 
-			'".$this->eventId."', 
-			'".$this->Escape($this->message)."', 
-			'".$this->Escape($this->imageURL)."', 
-			'".$this->Escape($this->type)."', 
-			'".$this->Escape($this->senderId)."', 
-			'".$this->Escape($this->readParticipantList)."')";
+			$this->feedmessageId = "";
+			$this->pog_query = "insert into `feedmessage` (`timestamp`,`eventid`,`message`,`imageurl`,`type`,`senderid`,`readparticipantlist`,`feedmessageid`) values (
+			:timestamp,
+			:eventId,
+			:message,
+			:imageurl,
+			:type,
+			:senderid,
+			:readparticipantlist,
+			:feedmessageId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':timestamp' => $this->timestamp,
+			':eventId' => intval($this->eventId),
+			':message' => $this->Encode($this->message),
+			':imageurl' => $this->Encode($this->imageURL),
+			':type' => $this->Encode($this->type),
+			':senderid' => $this->Encode($this->senderId),
+			':readparticipantlist' => $this->Encode($this->readParticipantList),
+			':feedmessageId' => intval($this->feedmessageId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->feedmessageId == "")
 		{
 			$this->feedmessageId = $insertId;
@@ -309,8 +329,8 @@ class FeedMessage extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `feedmessage` where `feedmessageid`='".$this->feedmessageId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `feedmessage` where `feedmessageid`=".$this->Quote($this->feedmessageId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -335,31 +355,40 @@ class FeedMessage extends POG_Base
 			else
 			{
 				$connection = Database::Connect();
-				$pog_query = "delete from `feedmessage` where ";
+				$this->pog_query = "delete from `feedmessage` where ";
 				for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 				{
 					if (sizeof($fcv_array[$i]) == 1)
 					{
-						$pog_query .= " ".$fcv_array[$i][0]." ";
+						$this->pog_query .= " ".$fcv_array[$i][0]." ";
 						continue;
 					}
 					else
 					{
 						if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 						{
-							$pog_query .= " AND ";
+							$this->pog_query .= " AND ";
 						}
 						if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+							if ($GLOBALS['configuration']['db_encoding'] == 1)
+							{
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+							}
+							else
+							{
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+							}
 						}
 						else
 						{
-							$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 						}
 					}
 				}
-				return Database::NonQuery($pog_query, $connection);
+				return Database::NonQuery($this->pog_query);
 			}
 		}
 	}
@@ -433,18 +462,18 @@ class FeedMessage extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -473,7 +502,7 @@ class FeedMessage extends POG_Base
 			$sortBy = "a.pushdispatchid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while($rows = Database::Read($cursor))
 		{
 			$pushdispatch = new PushDispatch();

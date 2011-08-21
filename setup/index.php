@@ -537,7 +537,7 @@ else if($_SESSION['diagnosticsSuccessful'] == true && (!isset($_GET['plugins']) 
 	</ul>
 	</div><!--header-->
 	</div><!--subtabs-->
-	<div class="toolbar"><div style="float:left;"><a href="<?php echo $_SESSION['links'][$_SESSION['objectName']]?>" target="_blank" title="modify and regenerate object"><img src="./setup_images/setup_regenerate.jpg" border="0"/></a><a href="#" title="Delete all objects" onclick="if (confirm('Are you sure you want to delete all objects in this table? TPress OK to Delete.')){window.location='./?thrashall=true';}else{alert('Phew, nothing was deleted ;)');}"><img src='./setup_images/setup_deleteall.jpg' alt='delete all' border="0"/></a><a href="#" onclick="javascript:expandAll();return false;" title="expand all nodes"><img src='./setup_images/setup_expandall.jpg' alt='expand all' border="0"/></a><a href="#" onclick="javascript:collapseAll();return false;" title="collapse all nodes"><img src='./setup_images/setup_collapseall.jpg' alt='collapse all' border="0"/></a><a href="#" title="update all objects to newest POG version" onclick="if (confirm('Setup will now attempt to upgrade your objects by contacting the POG SOAP server. Would you like to continue?')){window.location='./setup_library/upgrade.php';}else{alert('Upgrade aborted');}"><img src='./setup_images/setup_updateall.jpg' alt='update all objects' border='0'/></a></div><?php if ($count>0){?><div style="position:relative;float:left;height:20px;padding-top:10px;padding-left:15px;width:100px;"><input id='search_objects' type="text" name="Search" value="Search <?php echo ucfirst($_SESSION['objectName'])?>" style="color:#666;font-size:9px;" /></div><?php } ?></div><div class="middle3">
+	<div class="toolbar"><div style="float:left;"><a href="<?php echo $_SESSION['links'][$_SESSION['objectName']]?>" target="_blank" title="modify and regenerate object"><img src="./setup_images/setup_regenerate.jpg" border="0"/></a><a href="#" title="Delete all objects" onclick="if (confirm('Are you sure you want to delete all objects in this table? TPress OK to Delete.')){window.location='./?thrashall=true';}else{alert('Phew, nothing was deleted ;)');}"><img src='./setup_images/setup_deleteall.jpg' alt='delete all' border="0"/></a><a href="#" onclick="javascript:expandAll();return false;" title="expand all nodes"><img src='./setup_images/setup_expandall.jpg' alt='expand all' border="0"/></a><a href="#" onclick="javascript:collapseAll();return false;" title="collapse all nodes"><img src='./setup_images/setup_collapseall.jpg' alt='collapse all' border="0"/></a><a href="#" title="update all objects to newest POG version" onclick="if (confirm('Setup will now attempt to upgrade your objects by contacting the POG SOAP server. Would you like to continue?')){window.location='./setup_library/upgrade.php';}else{alert('Upgrade aborted');}"><img src='./setup_images/setup_updateall.jpg' alt='update all objects' border='0'/></a></div><?if ($count>0){?><div style="position:relative;float:left;height:20px;padding-top:10px;padding-left:15px;width:100px;"><input id='search_objects' type="text" name="Search" value="Search <?=ucfirst($_SESSION['objectName'])?>" style="color:#666;font-size:9px;" /></div><? } ?></div><div class="middle3">
 	<?php
 	//is there an action to perform?
 	if (isset($_GET['thrashall']))
@@ -635,7 +635,7 @@ else if ($_SESSION['diagnosticsSuccessful'] && $_GET['plugins'])
 	</div><!--header-->
 	</div><!--subtabs-->
 	<div class="toolbar"><img src="setup_images/button_toolbar_left.gif"/>
-		<a href='http://plugins.phpobjectgenerator.com/?id=<?php echo get_class($pluginInstance)?>' target="_blank"><img src="setup_images/button_toolbar_homepage.gif" border='0'/></a>
+		<a href='http://plugins.phpobjectgenerator.com/?id=<?=get_class($pluginInstance)?>' target="_blank"><img src="setup_images/button_toolbar_homepage.gif" border='0'/></a>
 
 		<img src="setup_images/toolbar_separator.gif"/>
 	<?php
@@ -647,7 +647,7 @@ else if ($_SESSION['diagnosticsSuccessful'] && $_GET['plugins'])
 	<?php
 	}
 	?>
-		<a href='http://plugins.phpobjectgenerator.com/?id=<?php echo get_class($pluginInstance)?>&help' target="_blank"><img src="setup_images/button_toolbar_help.gif" border='0'/></a>
+		<a href='http://plugins.phpobjectgenerator.com/?id=<?=get_class($pluginInstance)?>&help' target="_blank"><img src="setup_images/button_toolbar_help.gif" border='0'/></a>
 
 	</div><div class="middle3">
 	<?php

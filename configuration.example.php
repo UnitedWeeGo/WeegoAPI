@@ -2,10 +2,10 @@
 //IMPORTANT:
 //Rename this file to configuration.php after having inserted all the correct db information
 global $configuration;
-$configuration['soap'] = "http://www.phpobjectgenerator.com/services/pog.wsdl";
-$configuration['homepage'] = "http://www.phpobjectgenerator.com";
+$configuration['soap'] = "http://pog.weegoapp.com/services/pog.wsdl";
+$configuration['homepage'] = "http://pog.weegoapp.com";
 $configuration['revisionNumber'] = "";
-$configuration['versionNumber'] = "3.0f";
+$configuration['versionNumber'] = "3.0d";
 
 $configuration['pdoDriver']	= 'mysql';
 $configuration['setup_password'] = '';

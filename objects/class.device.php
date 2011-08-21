@@ -21,10 +21,10 @@
 /**
 * <b>Device</b> class with integrated CRUD methods.
 * @author Php Object Generator
-* @version POG 3.0f / PHP5.1 MYSQL
+* @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://www.phpobjectgenerator.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Device&attributeList=array+%28%0A++0+%3D%3E+%27deviceToken%27%2C%0A++1+%3D%3E+%27timestamp%27%2C%0A++2+%3D%3E+%27Participant%27%2C%0A++3+%3D%3E+%27deviceUuid%27%2C%0A++4+%3D%3E+%27deviceName%27%2C%0A++5+%3D%3E+%27deviceModel%27%2C%0A++6+%3D%3E+%27deviceSystemVersion%27%2C%0A++7+%3D%3E+%27pushBadge%27%2C%0A++8+%3D%3E+%27pushAlert%27%2C%0A++9+%3D%3E+%27pushSound%27%2C%0A++10+%3D%3E+%27isSandbox%27%2C%0A++11+%3D%3E+%27badgeCount%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527INT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Device&attributeList=array+%28%0A++0+%3D%3E+%27deviceToken%27%2C%0A++1+%3D%3E+%27timestamp%27%2C%0A++2+%3D%3E+%27Participant%27%2C%0A++3+%3D%3E+%27deviceUuid%27%2C%0A++4+%3D%3E+%27deviceName%27%2C%0A++5+%3D%3E+%27deviceModel%27%2C%0A++6+%3D%3E+%27deviceSystemVersion%27%2C%0A++7+%3D%3E+%27pushBadge%27%2C%0A++8+%3D%3E+%27pushAlert%27%2C%0A++9+%3D%3E+%27pushSound%27%2C%0A++10+%3D%3E+%27isSandbox%27%2C%0A++11+%3D%3E+%27badgeCount%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527INT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 class Device extends POG_Base
@@ -107,6 +107,7 @@ class Device extends POG_Base
 		"badgeCount" => array('db_attributes' => array("NUMERIC", "INT")),
 		);
 	public $pog_query;
+	public $pog_bind = array();
 	
 	
 	/**
@@ -149,23 +150,26 @@ class Device extends POG_Base
 	function Get($deviceId)
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select * from `device` where `deviceid`='".intval($deviceId)."' LIMIT 1";
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$this->pog_query = "select * from `device` where `deviceid`=:deviceId LIMIT 1";
+		$this->pog_bind = array(
+			':deviceId' => intval($deviceId)
+		);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
 		while ($row = Database::Read($cursor))
 		{
 			$this->deviceId = $row['deviceid'];
-			$this->deviceToken = $this->Unescape($row['devicetoken']);
+			$this->deviceToken = $this->Decode($row['devicetoken']);
 			$this->timestamp = $row['timestamp'];
 			$this->participantId = $row['participantid'];
-			$this->deviceUuid = $this->Unescape($row['deviceuuid']);
-			$this->deviceName = $this->Unescape($row['devicename']);
-			$this->deviceModel = $this->Unescape($row['devicemodel']);
-			$this->deviceSystemVersion = $this->Unescape($row['devicesystemversion']);
-			$this->pushBadge = $this->Unescape($row['pushbadge']);
-			$this->pushAlert = $this->Unescape($row['pushalert']);
-			$this->pushSound = $this->Unescape($row['pushsound']);
-			$this->isSandbox = $this->Unescape($row['issandbox']);
-			$this->badgeCount = $this->Unescape($row['badgecount']);
+			$this->deviceUuid = $this->Decode($row['deviceuuid']);
+			$this->deviceName = $this->Decode($row['devicename']);
+			$this->deviceModel = $this->Decode($row['devicemodel']);
+			$this->deviceSystemVersion = $this->Decode($row['devicesystemversion']);
+			$this->pushBadge = $this->Decode($row['pushbadge']);
+			$this->pushAlert = $this->Decode($row['pushalert']);
+			$this->pushSound = $this->Decode($row['pushsound']);
+			$this->isSandbox = $this->Decode($row['issandbox']);
+			$this->badgeCount = $this->Decode($row['badgecount']);
 		}
 		return $this;
 	}
@@ -205,18 +209,18 @@ class Device extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : "'".$fcv_array[$i][2]."'";
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$this->Escape($fcv_array[$i][2])."'";
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : "'".$fcv_array[$i][2]."'";
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -246,7 +250,7 @@ class Device extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query, $connection);
+		$cursor = Database::Reader($this->pog_query);
 		while ($row = Database::Read($cursor))
 		{
 			$device = new $thisObjectName();
@@ -276,41 +280,62 @@ class Device extends POG_Base
 	function Save()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "select `deviceid` from `device` where `deviceid`='".$this->deviceId."' LIMIT 1";
-		$rows = Database::Query($this->pog_query, $connection);
+		$rows = 0;
+		if (!empty($this->deviceId))
+		{
+			$this->pog_query = "select `deviceid` from `device` where `deviceid`=".$this->Quote($this->deviceId)." LIMIT 1";
+			$rows = Database::Query($this->pog_query);
+		}
 		if ($rows > 0)
 		{
 			$this->pog_query = "update `device` set 
-			`devicetoken`='".$this->Escape($this->deviceToken)."', 
-			`timestamp`='".$this->timestamp."', 
-			`participantid`='".$this->participantId."', 
-			`deviceuuid`='".$this->Escape($this->deviceUuid)."', 
-			`devicename`='".$this->Escape($this->deviceName)."', 
-			`devicemodel`='".$this->Escape($this->deviceModel)."', 
-			`devicesystemversion`='".$this->Escape($this->deviceSystemVersion)."', 
-			`pushbadge`='".$this->Escape($this->pushBadge)."', 
-			`pushalert`='".$this->Escape($this->pushAlert)."', 
-			`pushsound`='".$this->Escape($this->pushSound)."', 
-			`issandbox`='".$this->Escape($this->isSandbox)."', 
-			`badgecount`='".$this->Escape($this->badgeCount)."' where `deviceid`='".$this->deviceId."'";
+			`devicetoken`=:devicetoken,
+			`timestamp`=:timestamp,
+			`participantid`=:participantId,
+			`deviceuuid`=:deviceuuid,
+			`devicename`=:devicename,
+			`devicemodel`=:devicemodel,
+			`devicesystemversion`=:devicesystemversion,
+			`pushbadge`=:pushbadge,
+			`pushalert`=:pushalert,
+			`pushsound`=:pushsound,
+			`issandbox`=:issandbox,
+			`badgecount`=:badgecount where `deviceid`=:deviceId";
 		}
 		else
 		{
-			$this->pog_query = "insert into `device` (`devicetoken`, `timestamp`, `participantid`, `deviceuuid`, `devicename`, `devicemodel`, `devicesystemversion`, `pushbadge`, `pushalert`, `pushsound`, `issandbox`, `badgecount` ) values (
-			'".$this->Escape($this->deviceToken)."', 
-			'".$this->timestamp."', 
-			'".$this->participantId."', 
-			'".$this->Escape($this->deviceUuid)."', 
-			'".$this->Escape($this->deviceName)."', 
-			'".$this->Escape($this->deviceModel)."', 
-			'".$this->Escape($this->deviceSystemVersion)."', 
-			'".$this->Escape($this->pushBadge)."', 
-			'".$this->Escape($this->pushAlert)."', 
-			'".$this->Escape($this->pushSound)."', 
-			'".$this->Escape($this->isSandbox)."', 
-			'".$this->Escape($this->badgeCount)."' )";
+			$this->deviceId = "";
+			$this->pog_query = "insert into `device` (`devicetoken`,`timestamp`,`participantid`,`deviceuuid`,`devicename`,`devicemodel`,`devicesystemversion`,`pushbadge`,`pushalert`,`pushsound`,`issandbox`,`badgecount`,`deviceid`) values (
+			:devicetoken,
+			:timestamp,
+			:participantId,
+			:deviceuuid,
+			:devicename,
+			:devicemodel,
+			:devicesystemversion,
+			:pushbadge,
+			:pushalert,
+			:pushsound,
+			:issandbox,
+			:badgecount,
+			:deviceId)";
 		}
-		$insertId = Database::InsertOrUpdate($this->pog_query, $connection);
+		$this->pog_bind = array(
+			':devicetoken' => $this->Encode($this->deviceToken),
+			':timestamp' => $this->timestamp,
+			':participantId' => intval($this->participantId),
+			':deviceuuid' => $this->Encode($this->deviceUuid),
+			':devicename' => $this->Encode($this->deviceName),
+			':devicemodel' => $this->Encode($this->deviceModel),
+			':devicesystemversion' => $this->Encode($this->deviceSystemVersion),
+			':pushbadge' => $this->Encode($this->pushBadge),
+			':pushalert' => $this->Encode($this->pushAlert),
+			':pushsound' => $this->Encode($this->pushSound),
+			':issandbox' => $this->Encode($this->isSandbox),
+			':badgecount' => $this->Encode($this->badgeCount),
+			':deviceId' => intval($this->deviceId)
+		);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
 		if ($this->deviceId == "")
 		{
 			$this->deviceId = $insertId;
@@ -337,8 +362,8 @@ class Device extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `device` where `deviceid`='".$this->deviceId."'";
-		return Database::NonQuery($this->pog_query, $connection);
+		$this->pog_query = "delete from `device` where `deviceid`=".$this->Quote($this->deviceId);
+		return Database::NonQuery($this->pog_query);
 	}
 	
 	
@@ -353,31 +378,40 @@ class Device extends POG_Base
 		if (sizeof($fcv_array) > 0)
 		{
 			$connection = Database::Connect();
-			$pog_query = "delete from `device` where ";
+			$this->pog_query = "delete from `device` where ";
 			for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
 			{
 				if (sizeof($fcv_array[$i]) == 1)
 				{
-					$pog_query .= " ".$fcv_array[$i][0]." ";
+					$this->pog_query .= " ".$fcv_array[$i][0]." ";
 					continue;
 				}
 				else
 				{
 					if ($i > 0 && sizeof($fcv_array[$i-1]) !== 1)
 					{
-						$pog_query .= " AND ";
+						$this->pog_query .= " AND ";
 					}
 					if (isset($this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $this->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
 					{
-						$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$this->Escape($fcv_array[$i][2])."'";
+						if ($GLOBALS['configuration']['db_encoding'] == 1)
+						{
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
+						}
+						else
+						{
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
+						}
 					}
 					else
 					{
-						$pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." '".$fcv_array[$i][2]."'";
+						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
 					}
 				}
 			}
-			return Database::NonQuery($pog_query, $connection);
+			return Database::NonQuery($this->pog_query);
 		}
 	}
 	
