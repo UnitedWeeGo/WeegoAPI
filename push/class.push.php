@@ -99,7 +99,7 @@ class Push
 					//TODO test
 					else if ($device->pushAlert == 'enabled' && $feedMessage->type == 'timesuggestion')
 					{
-						if ($participant->email == $event->creatorId) // creator should get an alert
+						if ($participant->email == $event->creatorId && $feedMessage->senderId != $event->creatorId) // creator should get an alert
 						{
 							$senderLookup = new Participant();
 							$senderList = $senderLookup->GetList( array(array("email", "=", $feedMessage->senderId) ) );
