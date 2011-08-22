@@ -154,7 +154,7 @@ class Device extends POG_Base
 		$this->pog_bind = array(
 			':deviceId' => intval($deviceId)
 		);
-		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$this->deviceId = $row['deviceid'];
@@ -209,18 +209,18 @@ class Device extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -250,7 +250,7 @@ class Device extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$device = new $thisObjectName();
@@ -283,8 +283,8 @@ class Device extends POG_Base
 		$rows = 0;
 		if (!empty($this->deviceId))
 		{
-			$this->pog_query = "select `deviceid` from `device` where `deviceid`=".$this->Quote($this->deviceId)." LIMIT 1";
-			$rows = Database::Query($this->pog_query);
+			$this->pog_query = "select `deviceid` from `device` where `deviceid`=".$this->Quote($this->deviceId, $connection)." LIMIT 1";
+			$rows = Database::Query($this->pog_query, $connection);
 		}
 		if ($rows > 0)
 		{
@@ -335,7 +335,7 @@ class Device extends POG_Base
 			':badgecount' => $this->Encode($this->badgeCount),
 			':deviceId' => intval($this->deviceId)
 		);
-		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);
 		if ($this->deviceId == "")
 		{
 			$this->deviceId = $insertId;
@@ -362,8 +362,8 @@ class Device extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `device` where `deviceid`=".$this->Quote($this->deviceId);
-		return Database::NonQuery($this->pog_query);
+		$this->pog_query = "delete from `device` where `deviceid`=".$this->Quote($this->deviceId, $connection);
+		return Database::NonQuery($this->pog_query, $connection);
 	}
 	
 	
@@ -396,22 +396,22 @@ class Device extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
+						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2], $connection);
 					}
 				}
 			}
-			return Database::NonQuery($this->pog_query);
+			return Database::NonQuery($this->pog_query, $connection);
 		}
 	}
 	

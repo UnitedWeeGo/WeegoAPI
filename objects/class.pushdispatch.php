@@ -115,7 +115,7 @@ class PushDispatch extends POG_Base
 		$this->pog_bind = array(
 			':pushdispatchId' => intval($pushdispatchId)
 		);
-		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$this->pushdispatchId = $row['pushdispatchid'];
@@ -162,18 +162,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -203,7 +203,7 @@ class PushDispatch extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$pushdispatch = new $thisObjectName();
@@ -228,8 +228,8 @@ class PushDispatch extends POG_Base
 		$rows = 0;
 		if (!empty($this->pushdispatchId))
 		{
-			$this->pog_query = "select `pushdispatchid` from `pushdispatch` where `pushdispatchid`=".$this->Quote($this->pushdispatchId)." LIMIT 1";
-			$rows = Database::Query($this->pog_query);
+			$this->pog_query = "select `pushdispatchid` from `pushdispatch` where `pushdispatchid`=".$this->Quote($this->pushdispatchId, $connection)." LIMIT 1";
+			$rows = Database::Query($this->pog_query, $connection);
 		}
 		if ($rows > 0)
 		{
@@ -256,7 +256,7 @@ class PushDispatch extends POG_Base
 			':cancelledeventidlist' => $this->Encode($this->cancelledEventIdList),
 			':pushdispatchId' => intval($this->pushdispatchId)
 		);
-		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);
 		if ($this->pushdispatchId == "")
 		{
 			$this->pushdispatchId = $insertId;
@@ -337,8 +337,8 @@ class PushDispatch extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `pushdispatch` where `pushdispatchid`=".$this->Quote($this->pushdispatchId);
-		return Database::NonQuery($this->pog_query);
+		$this->pog_query = "delete from `pushdispatch` where `pushdispatchid`=".$this->Quote($this->pushdispatchId, $connection);
+		return Database::NonQuery($this->pog_query, $connection);
 	}
 	
 	
@@ -381,22 +381,22 @@ class PushDispatch extends POG_Base
 						{
 							if ($GLOBALS['configuration']['db_encoding'] == 1)
 							{
-								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 							}
 							else
 							{
-								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 							}
 						}
 						else
 						{
-							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2], $connection);
 						}
 					}
 				}
-				return Database::NonQuery($this->pog_query);
+				return Database::NonQuery($this->pog_query, $connection);
 			}
 		}
 	}
@@ -449,18 +449,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -489,7 +489,7 @@ class PushDispatch extends POG_Base
 			$sortBy = "a.inviteid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while($rows = Database::Read($cursor))
 		{
 			$invite = new Invite();
@@ -590,18 +590,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -630,7 +630,7 @@ class PushDispatch extends POG_Base
 			$sortBy = "a.eventid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while($rows = Database::Read($cursor))
 		{
 			$event = new Event();
@@ -731,18 +731,18 @@ class PushDispatch extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -771,7 +771,7 @@ class PushDispatch extends POG_Base
 			$sortBy = "a.feedmessageid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while($rows = Database::Read($cursor))
 		{
 			$feedmessage = new FeedMessage();

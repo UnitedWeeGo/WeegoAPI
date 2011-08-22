@@ -90,7 +90,7 @@ class SuggestedTime extends POG_Base
 		$this->pog_bind = array(
 			':suggestedtimeId' => intval($suggestedtimeId)
 		);
-		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$this->suggestedtimeId = $row['suggestedtimeid'];
@@ -137,18 +137,18 @@ class SuggestedTime extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -178,7 +178,7 @@ class SuggestedTime extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$suggestedtime = new $thisObjectName();
@@ -203,8 +203,8 @@ class SuggestedTime extends POG_Base
 		$rows = 0;
 		if (!empty($this->suggestedtimeId))
 		{
-			$this->pog_query = "select `suggestedtimeid` from `suggestedtime` where `suggestedtimeid`=".$this->Quote($this->suggestedtimeId)." LIMIT 1";
-			$rows = Database::Query($this->pog_query);
+			$this->pog_query = "select `suggestedtimeid` from `suggestedtime` where `suggestedtimeid`=".$this->Quote($this->suggestedtimeId, $connection)." LIMIT 1";
+			$rows = Database::Query($this->pog_query, $connection);
 		}
 		if ($rows > 0)
 		{
@@ -231,7 +231,7 @@ class SuggestedTime extends POG_Base
 			':email' => $this->Encode($this->email),
 			':suggestedtimeId' => intval($this->suggestedtimeId)
 		);
-		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);
 		if ($this->suggestedtimeId == "")
 		{
 			$this->suggestedtimeId = $insertId;
@@ -258,8 +258,8 @@ class SuggestedTime extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `suggestedtime` where `suggestedtimeid`=".$this->Quote($this->suggestedtimeId);
-		return Database::NonQuery($this->pog_query);
+		$this->pog_query = "delete from `suggestedtime` where `suggestedtimeid`=".$this->Quote($this->suggestedtimeId, $connection);
+		return Database::NonQuery($this->pog_query, $connection);
 	}
 	
 	
@@ -292,22 +292,22 @@ class SuggestedTime extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
+						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2], $connection);
 					}
 				}
 			}
-			return Database::NonQuery($this->pog_query);
+			return Database::NonQuery($this->pog_query, $connection);
 		}
 	}
 	

@@ -67,7 +67,7 @@ class Deal extends POG_Base
 		$this->pog_bind = array(
 			':dealId' => intval($dealId)
 		);
-		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$this->dealId = $row['dealid'];
@@ -111,18 +111,18 @@ class Deal extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -152,7 +152,7 @@ class Deal extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$deal = new $thisObjectName();
@@ -174,8 +174,8 @@ class Deal extends POG_Base
 		$rows = 0;
 		if (!empty($this->dealId))
 		{
-			$this->pog_query = "select `dealid` from `deal` where `dealid`=".$this->Quote($this->dealId)." LIMIT 1";
-			$rows = Database::Query($this->pog_query);
+			$this->pog_query = "select `dealid` from `deal` where `dealid`=".$this->Quote($this->dealId, $connection)." LIMIT 1";
+			$rows = Database::Query($this->pog_query, $connection);
 		}
 		if ($rows > 0)
 		{
@@ -193,7 +193,7 @@ class Deal extends POG_Base
 			':featureid' => $this->Encode($this->featureId),
 			':dealId' => intval($this->dealId)
 		);
-		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);
 		if ($this->dealId == "")
 		{
 			$this->dealId = $insertId;
@@ -220,8 +220,8 @@ class Deal extends POG_Base
 	function Delete()
 	{
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `deal` where `dealid`=".$this->Quote($this->dealId);
-		return Database::NonQuery($this->pog_query);
+		$this->pog_query = "delete from `deal` where `dealid`=".$this->Quote($this->dealId, $connection);
+		return Database::NonQuery($this->pog_query, $connection);
 	}
 	
 	
@@ -254,22 +254,22 @@ class Deal extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
+						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2], $connection);
 					}
 				}
 			}
-			return Database::NonQuery($this->pog_query);
+			return Database::NonQuery($this->pog_query, $connection);
 		}
 	}
 }

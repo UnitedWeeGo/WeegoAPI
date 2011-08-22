@@ -145,7 +145,7 @@ class Participant extends POG_Base
 		$this->pog_bind = array(
 			':participantId' => intval($participantId)
 		);
-		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind);
+		$cursor = Database::ReaderPrepared($this->pog_query, $this->pog_bind, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$this->participantId = $row['participantid'];
@@ -196,18 +196,18 @@ class Participant extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -237,7 +237,7 @@ class Participant extends POG_Base
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
 		$thisObjectName = get_class($this);
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while ($row = Database::Read($cursor))
 		{
 			$participant = new $thisObjectName();
@@ -266,8 +266,8 @@ class Participant extends POG_Base
 		$rows = 0;
 		if (!empty($this->participantId))
 		{
-			$this->pog_query = "select `participantid` from `participant` where `participantid`=".$this->Quote($this->participantId)." LIMIT 1";
-			$rows = Database::Query($this->pog_query);
+			$this->pog_query = "select `participantid` from `participant` where `participantid`=".$this->Quote($this->participantId, $connection)." LIMIT 1";
+			$rows = Database::Query($this->pog_query, $connection);
 		}
 		if ($rows > 0)
 		{
@@ -306,7 +306,7 @@ class Participant extends POG_Base
 			':facebooktoken' => $this->Encode($this->facebookToken),
 			':participantId' => intval($this->participantId)
 		);
-		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind);
+		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);
 		if ($this->participantId == "")
 		{
 			$this->participantId = $insertId;
@@ -380,8 +380,8 @@ class Participant extends POG_Base
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
-		$this->pog_query = "delete from `participant` where `participantid`=".$this->Quote($this->participantId);
-		return Database::NonQuery($this->pog_query);
+		$this->pog_query = "delete from `participant` where `participantid`=".$this->Quote($this->participantId, $connection);
+		return Database::NonQuery($this->pog_query, $connection);
 	}
 	
 	
@@ -424,22 +424,22 @@ class Participant extends POG_Base
 						{
 							if ($GLOBALS['configuration']['db_encoding'] == 1)
 							{
-								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+								$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 								$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 							}
 							else
 							{
-								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+								$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 								$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 							}
 						}
 						else
 						{
-							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2]);
+							$this->pog_query .= "`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$this->Quote($fcv_array[$i][2], $connection);
 						}
 					}
 				}
-				return Database::NonQuery($this->pog_query);
+				return Database::NonQuery($this->pog_query, $connection);
 			}
 		}
 	}
@@ -492,18 +492,18 @@ class Participant extends POG_Base
 					{
 						if ($GLOBALS['configuration']['db_encoding'] == 1)
 						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2]);
+							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
 						}
 						else
 						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 						}
 					}
 					else
 					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2]);
+						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
 						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
 					}
 				}
@@ -532,7 +532,7 @@ class Participant extends POG_Base
 			$sortBy = "a.eventid";
 		}
 		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query);
+		$cursor = Database::Reader($this->pog_query, $connection);
 		while($rows = Database::Read($cursor))
 		{
 			$event = new Event();
