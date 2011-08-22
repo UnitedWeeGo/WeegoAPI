@@ -96,6 +96,21 @@ class Push
 					{
 						$message->setText($feedMessage->message);
 					}
+					//TODO test
+					else if ($device->pushAlert == 'enabled' && $feedMessage->type == 'timesuggestion')
+					{
+						if ($participant->email == $event->creatorId) // creator should get an alert
+						{
+							$senderLookup = new Participant();
+							$senderList = $senderLookup->GetList( array(array("email", "=", $feedMessage->senderId) ) );
+							if (count($senderList) > 0)
+							{
+								$sender = $senderList[0];
+								$senderName = $this->getFriendlyName($sender);
+								$message->setText($senderName . ' suggests ' . $this->getFormattedTime($feedMessage->message) . ' as an alternate event time.');
+							}
+						}
+					}
 					
 					$message->setCustomProperty('messageType', 'feed');
 					
@@ -762,6 +777,21 @@ class Push
 		$hasRemoved = in_array($email, $removedParticipantList);
 	
 		return $hasRemoved;
+	}
+	
+	/**
+	* Get the formatted event time
+	* @param string $eventDate
+	* @param string $eventTimeZone
+	* @return string
+	*/
+	function getFormattedTime($eventDate, $eventTimeZone=null)
+	{
+		$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
+		$eventTime = new DateTime($eventDate);
+		if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
+		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $eventTimeZone : 'GMT');
+		return $dateStr;
 	}
 }
 

@@ -9,6 +9,7 @@ foreach(glob("../objects/*.php") as $class_filename) {
 
 require_once 'class.error.php';
 require_once 'class.success.php';
+require_once 'TimeZoneUtil.php';
 
 date_default_timezone_set('GMT');
 
@@ -34,6 +35,21 @@ class ReqBase
    	function getTimeStamp()
    	{
    		return date('Y-m-d H:i:s', $this->timestamp);
+   	}
+   	
+   	/**
+   	* Get the formatted event time
+   	* @param string $eventDate
+   	* @param string $eventTimeZone
+   	* @return string
+   	*/
+   	function getFormattedTime($eventDate, $eventTimeZone=null)
+   	{
+   		$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
+   		$eventTime = new DateTime($eventDate);
+   		if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
+   		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $eventTimeZone : 'GMT');
+   		return $dateStr;
    	}
 
 	/**

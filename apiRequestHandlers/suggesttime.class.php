@@ -84,6 +84,9 @@ class SuggestTimeClass extends ReqBase
 		$event->timestamp = $this->getTimeStamp();
 		$event->Save(true);
 		
+		$push = new Push();
+		$push->addFeedMessageToQueue($message);
+		
 		$userTs = null;
 		if (isset($this->dataObj['timestamp'])) // hit the method to only do timestamp stuff
 		{
