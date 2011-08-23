@@ -62,7 +62,7 @@ class Push
 				$participant = $participants[$j];
 				
 				// skip user if they have removed the event
-				if ($this->getHasRemovedEvent($event, $participant->email)) continue;
+				if ($this->getHasRemovedEvent($event, $participant->participantId)) continue;
 				
 				// skip user if they are in queue to receive an invite, so they do not get over messaged
 				if (in_array($participant->email, $this->queuedUpUserIDCollection)) continue;
@@ -772,13 +772,13 @@ class Push
 	/**
 	* Determines if the user has removed the event
 	* @param Event $event
-	* @param string $email
+	* @param string $id
 	* @return Boolean
 	*/
-	function getHasRemovedEvent(&$event, $email)
+	function getHasRemovedEvent(&$event, $id)
 	{
 		$removedParticipantList = explode(',', $event->removedParticipantList);
-		$hasRemoved = in_array($email, $removedParticipantList);
+		$hasRemoved = in_array($id, $removedParticipantList);
 	
 		return $hasRemoved;
 	}
