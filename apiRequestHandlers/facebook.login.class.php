@@ -61,9 +61,17 @@ class FacebookLogin extends ReqBase
 		else 
 		{
 			$e = new ErrorResponse();
-			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook lookup failed.');
+			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook connect failed, please try again.');
 			die();
 		}
+		
+		if ($user_profile == null)
+		{
+			$e = new ErrorResponse();
+			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook connect failed, please try again.');
+			die();
+		}
+		
 		$email = $user_profile['email'];
 		$fb_id = $user_profile['id'];
 		$avatarURL = 'http://graph.facebook.com/' . $fb_id . '/picture';
