@@ -5,7 +5,8 @@
 		// user generated errors
 		const DuplicateParticipantError = '500';
 		const InvalidEmailError = '500';
-		const InvalidCredentialsError = '500';
+		const InvalidCredentialsError = '501'; // Facebook get friends lookup failed
+		const FacebookLoginFailed = '502'; // Facebook login failed
 		
 		// debug related errors
 		const MissingParamError = '600';

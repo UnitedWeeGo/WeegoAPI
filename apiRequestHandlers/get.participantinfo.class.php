@@ -82,14 +82,14 @@ class GetParticipantInfo extends ReqBase
 				
 			} catch (FacebookApiException $e) {
 				$e = new ErrorResponse();
-				echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook lookup failed.');
+				echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook connect failed, please try again.');
 				die();
 			}
 		}
 		else
 		{
 			$e = new ErrorResponse();
-			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook lookup failed.');
+			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook connect failed, please try again.');
 			die();
 		}
 	}

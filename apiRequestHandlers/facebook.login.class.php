@@ -61,14 +61,20 @@ class FacebookLogin extends ReqBase
 		else 
 		{
 			$e = new ErrorResponse();
-			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook connect failed, please try again.');
+			echo $e->genError(ErrorResponse::FacebookLoginFailed, 'Facebook connect failed, please try again.');
 			die();
 		}
+		
+		/* TEST FORCE ERROR ON CLIENT
+		$e = new ErrorResponse();
+		echo $e->genError(ErrorResponse::FacebookLoginFailed, 'Facebook connect failed, please try again.');
+		die();
+		*/
 		
 		if ($user_profile == null)
 		{
 			$e = new ErrorResponse();
-			echo $e->genError(ErrorResponse::InvalidCredentialsError, 'Facebook connect failed, please try again.');
+			echo $e->genError(ErrorResponse::FacebookLoginFailed, 'Facebook connect failed, please try again.');
 			die();
 		}
 		
