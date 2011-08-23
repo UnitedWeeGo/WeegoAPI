@@ -107,7 +107,7 @@ class Push
 							{
 								$sender = $senderList[0];
 								$senderName = $this->getFriendlyName($sender);
-								$message->setText($senderName . ' suggests ' . $this->getFormattedTime($feedMessage->message) . ' as an alternate event time.');
+								$message->setText($senderName . ' suggests ' . $this->getFormattedTime($feedMessage->message, $event->eventTimeZone) . ' as an alternate event time.');
 							}
 						}
 					}
