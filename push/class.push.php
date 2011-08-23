@@ -325,7 +325,11 @@ class Push
 			
 			for($k=0; $k<count($participants); $k++)
 			{
+				/** @var $targetedUser Participant */
 				$targetedUser = $participants[$k];
+				
+				if ($targetedUser->email == $event->creatorId) continue; // skip creator
+				
 				$isInvitee = $targetedUser->email == $invite->inviteeId;
 				if ($isInvitee) {
 					array_push($this->queuedUpUserIDCollection, $invite->inviteeId);
