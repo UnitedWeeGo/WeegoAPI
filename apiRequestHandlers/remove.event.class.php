@@ -63,7 +63,7 @@ class RemoveEventClass extends ReqBase
 			$aec = new AcceptEventClass(); // not setting didAccept in data obj will default to false
 			$aec->dataObj = $this->dataObj;
 			$aec->dataObj['didAccept'] = 'false';
-			$aec->AcceptEventGo();
+			$event = $aec->AcceptEventGo();
 		}
 		
 		$eventShouldBeCancelled = false;
