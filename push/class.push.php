@@ -195,6 +195,9 @@ class Push
 				/** @var $participant Participant */
 				$participant = $participants[$j];
 				
+				// skip user if they have removed the event
+				if ($this->getHasRemovedEvent($event, $participant->participantId)) continue;
+				
 				// skip user if they have not accepted the event
 				if (!$this->getHasAcceptedEvent($event, $participant->email)) continue;
 				
