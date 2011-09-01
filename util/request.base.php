@@ -231,8 +231,10 @@ class ReqBase
 	*/
 	function checkValidEmail($email)
 	{
-		$isValid = preg_match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$', $email);
-
+		//$isValid = preg_match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$', $email);
+		
+		$isValid = true;
+		
 		if (!$isValid)
 		{
 			$e = new ErrorResponse();
