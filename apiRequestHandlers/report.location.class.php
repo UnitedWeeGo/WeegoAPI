@@ -42,8 +42,10 @@ class ReportLocationClass extends ReqBase
 		$lookup = new ReportLocation();
 		$reportlocations = $lookup->GetList( array( array("email", "=", $me->email) ) );
 		
+		$hasPrevReportedLoc = false;
 		if ( count($reportlocations) > 0 )
 		{
+			$hasPrevReportedLoc = true;
 			$reportlocation = $reportlocations[0];
 		}
 		else 
@@ -53,15 +55,29 @@ class ReportLocationClass extends ReqBase
 		}
 		
 		$reportlocation->timestamp = $this->getTimeStamp();
-		$reportlocation->latitude = $this->dataObj['latitude'];
-		$reportlocation->longitude = $this->dataObj['longitude'];
+		
+		$hasDisabledTracking = false;
 		
 		if ( isset($this->dataObj['disableLocationReporting']) )
 		{
-			$reportlocation->hasDisabledTracking = $this->dataObj['disableLocationReporting'] == 'true';
+			$hasDisabledTracking = $this->dataObj['disableLocationReporting'] == 'true';
+			$reportlocation->hasDisabledTracking = $hasDisabledTracking;
 		}
 		
-		$reportlocation->Save();
+		if (!$hasDisabledTracking)
+		{
+			$reportlocation->latitude = $this->dataObj['latitude'];
+			$reportlocation->longitude = $this->dataObj['longitude'];
+		}
+		
+		if (!$hasPrevReportedLoc && $hasDisabledTracking)
+		{
+			// skip save
+		}
+		else
+		{
+			$reportlocation->Save();
+		}
 		
 		if (!$doSkipResult) // only give success and kill if not called by http
 		{
