@@ -7,7 +7,8 @@
 	`email` VARCHAR(255) NOT NULL,
 	`latitude` VARCHAR(255) NOT NULL,
 	`longitude` VARCHAR(255) NOT NULL,
-	`timestamp` TIMESTAMP NOT NULL, PRIMARY KEY  (`reportlocationid`)) ENGINE=MyISAM;
+	`timestamp` TIMESTAMP NOT NULL,
+	`hasdisabledtracking` TINYINT NOT NULL, PRIMARY KEY  (`reportlocationid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -16,7 +17,7 @@
 * @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=ReportLocation&attributeList=array+%28%0A++0+%3D%3E+%27email%27%2C%0A++1+%3D%3E+%27latitude%27%2C%0A++2+%3D%3E+%27longitude%27%2C%0A++3+%3D%3E+%27timestamp%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=ReportLocation&attributeList=array+%28%0A++0+%3D%3E+%27email%27%2C%0A++1+%3D%3E+%27latitude%27%2C%0A++2+%3D%3E+%27longitude%27%2C%0A++3+%3D%3E+%27timestamp%27%2C%0A++4+%3D%3E+%27hasDisabledTracking%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 class ReportLocation extends POG_Base
@@ -43,12 +44,18 @@ class ReportLocation extends POG_Base
 	 */
 	public $timestamp;
 	
+	/**
+	 * @var TINYINT
+	 */
+	public $hasDisabledTracking;
+	
 	public $pog_attribute_type = array(
 		"reportlocationId" => array('db_attributes' => array("NUMERIC", "INT")),
 		"email" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"latitude" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"longitude" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"timestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
+		"hasDisabledTracking" => array('db_attributes' => array("NUMERIC", "TINYINT")),
 		);
 	public $pog_query;
 	public $pog_bind = array();
@@ -70,12 +77,13 @@ class ReportLocation extends POG_Base
 		}
 	}
 	
-	function ReportLocation($email='', $latitude='', $longitude='', $timestamp='')
+	function ReportLocation($email='', $latitude='', $longitude='', $timestamp='', $hasDisabledTracking='')
 	{
 		$this->email = $email;
 		$this->latitude = $latitude;
 		$this->longitude = $longitude;
 		$this->timestamp = $timestamp;
+		$this->hasDisabledTracking = $hasDisabledTracking;
 	}
 	
 	
@@ -99,6 +107,7 @@ class ReportLocation extends POG_Base
 			$this->latitude = $this->Decode($row['latitude']);
 			$this->longitude = $this->Decode($row['longitude']);
 			$this->timestamp = $row['timestamp'];
+			$this->hasDisabledTracking = $this->Decode($row['hasdisabledtracking']);
 		}
 		return $this;
 	}
@@ -188,6 +197,7 @@ class ReportLocation extends POG_Base
 			$reportlocation->latitude = $this->Unescape($row['latitude']);
 			$reportlocation->longitude = $this->Unescape($row['longitude']);
 			$reportlocation->timestamp = $row['timestamp'];
+			$reportlocation->hasDisabledTracking = $this->Unescape($row['hasdisabledtracking']);
 			$reportlocationList[] = $reportlocation;
 		}
 		return $reportlocationList;
@@ -213,16 +223,18 @@ class ReportLocation extends POG_Base
 			`email`=:email,
 			`latitude`=:latitude,
 			`longitude`=:longitude,
-			`timestamp`=:timestamp where `reportlocationid`=:reportlocationId";
+			`timestamp`=:timestamp,
+			`hasdisabledtracking`=:hasdisabledtracking where `reportlocationid`=:reportlocationId";
 		}
 		else
 		{
 			$this->reportlocationId = "";
-			$this->pog_query = "insert into `reportlocation` (`email`,`latitude`,`longitude`,`timestamp`,`reportlocationid`) values (
+			$this->pog_query = "insert into `reportlocation` (`email`,`latitude`,`longitude`,`timestamp`,`hasdisabledtracking`,`reportlocationid`) values (
 			:email,
 			:latitude,
 			:longitude,
 			:timestamp,
+			:hasdisabledtracking,
 			:reportlocationId)";
 		}
 		$this->pog_bind = array(
@@ -230,6 +242,7 @@ class ReportLocation extends POG_Base
 			':latitude' => $this->Encode($this->latitude),
 			':longitude' => $this->Encode($this->longitude),
 			':timestamp' => $this->timestamp,
+			':hasdisabledtracking' => $this->Encode($this->hasDisabledTracking),
 			':reportlocationId' => intval($this->reportlocationId)
 		);
 		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);

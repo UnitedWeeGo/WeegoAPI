@@ -56,6 +56,11 @@ class ReportLocationClass extends ReqBase
 		$reportlocation->latitude = $this->dataObj['latitude'];
 		$reportlocation->longitude = $this->dataObj['longitude'];
 		
+		if ( isset($this->dataObj['disableLocationReporting']) )
+		{
+			$reportlocation->hasDisabledTracking = $this->dataObj['disableLocationReporting'] == 'true';
+		}
+		
 		$reportlocation->Save();
 		
 		if (!$doSkipResult) // only give success and kill if not called by http

@@ -270,6 +270,7 @@ class XMLUtil extends ReqBase
 			$root->setAttribute('latitude', $reportlocation->latitude);
 			$root->setAttribute('email', $reportlocation->email);
 	   		$root->setAttribute('reportTime', $reportlocation->timestamp);
+	   		$root->setAttribute('disableLocationReporting', $reportlocation->hasDisabledTracking ? 'true' : 'false');
 	   		
 	   		return $doc;
 		}
