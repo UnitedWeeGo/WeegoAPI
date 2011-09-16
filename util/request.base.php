@@ -344,6 +344,7 @@ class ReqBase
 
 		$nowTs = $now->getTimestamp();
 		$eventTs =  $eventTime->getTimestamp();
+		
 		$timeUntilStart = ceil( ($eventTs - $nowTs) / 60);
 
 		$minTime = 10;
@@ -352,8 +353,15 @@ class ReqBase
 
 		$timeLeftToVote = ceil($timeLeftToVote);
 		$timeAfterDecided = ($timeUntilStart * 60) - min($timeLeftToVote * 60, $maxTimeAfterDecided * 60);
+		
+		if ($timeUntilStart >= 10080) // seven days in minutes
+		{
+			$timeAfterDecided = $maxTimeAfterDecided * 60;
+		}
+		
 		$eventExpireTime = date('Y-m-d H:i:s', $eventTs - $timeAfterDecided);
-
+		
+		
 		if ($event->eventExpireDate != $eventExpireTime)
 		{
 			$event->eventExpireDate = $eventExpireTime;
