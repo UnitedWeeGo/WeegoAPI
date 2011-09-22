@@ -74,7 +74,7 @@ class InviteService extends ReqBase
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->ClearReplyTos();
-				$mail->AddReplyTo('no-reply@unitedweego.com', 'Weego');
+				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($event->eventTitle) . ' has been cancelled';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
@@ -149,7 +149,7 @@ class InviteService extends ReqBase
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->ClearReplyTos();
-				$mail->AddReplyTo('no-reply@unitedweego.com', 'Weego');
+				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going!';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
@@ -199,7 +199,7 @@ class InviteService extends ReqBase
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->ClearReplyTos();
-				$mail->AddReplyTo('no-reply@unitedweego.com', 'Weego');
+				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = 'You have been invited to ' . urldecode($event->eventTitle);
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
