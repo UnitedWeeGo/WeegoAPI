@@ -114,6 +114,8 @@ EOT;
 
 		$message = 
 <<< EOT
+<html>
+
 <body bgcolor="#F3F3F3">
 <div align="center" style="width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 10px;">
 <div align="center"><img src="images/email_header_01.png" style="height: 170px; width: 600px"></div>
@@ -186,11 +188,11 @@ EOT;
 			<div style="font-size:1.2em; color: #999;">
 				<br />
 				<br />
-				Copyright &copy; 2011 UnitedWego LLC, All rights reserved.<br />
+				Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
 				You are receiving this email because one of your friends has invited you to an event. You have not been added to any email lists or promotions.&nbsp;<br />
 				<br />
 				<strong>Our mailing address is:</strong><br />
-				UnitedWego LLC<br />
+				UnitedWeego, Inc.<br />
 				665 3rd St. Suite 521<br />
 				San Francisco,&nbsp;CA&nbsp;94103
 			</div>
@@ -202,6 +204,8 @@ EOT;
 
 </div>
 </body>
+
+</html>
 
 EOT;
 		return $message;

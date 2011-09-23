@@ -151,7 +151,7 @@ class InviteService extends ReqBase
 				$mail->ClearReplyTos();
 				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
-				$mail->Subject = 'Weego to ' . urldecode($winningLocation->name) . ', see you there';
+				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 				$mail->MsgHTML( $body );
 				$mail->AddAttachment('images/email_header_01.png');      // attachment
