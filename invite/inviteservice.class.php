@@ -72,7 +72,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
-				$mail->SetFrom($creator->email, $this->getFriendlyName($creator));
+				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->ClearReplyTos();
 				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
@@ -147,7 +147,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
-				$mail->SetFrom($creator->email, $this->getFriendlyName($creator));
+				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->ClearReplyTos();
 				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
@@ -197,7 +197,7 @@ class InviteService extends ReqBase
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
-				$mail->SetFrom($creator->email, $this->getFriendlyName($creator));
+				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
 				$mail->ClearReplyTos();
 				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
