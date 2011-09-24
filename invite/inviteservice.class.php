@@ -140,24 +140,21 @@ class InviteService extends ReqBase
 				$needsPair = 1;
 			}
 
-			//$bodyGen = new DecidedEmail();
-			//$body = $bodyGen->getDecidedHTMLBody($creator, $event, $token, $needsPair);
+			$bodyGen = new DecidedEmail();
+			$body = $bodyGen->getDecidedHTMLBody($creator, $event, $token, $needsPair);
 
 			$mail             = new PHPMailerLite(); // defaults to using php "Sendmail" (or Qmail, depending on availability)
 			$mail->IsMail(); // telling the class to use native PHP mail()
 
 			try {
 				$mail->SetFrom('events@unitedweego.com', $this->getFriendlyName($creator));
-				//$mail->ClearReplyTos();
-				//$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
+				$mail->ClearReplyTos();
+				$mail->AddReplyTo($creator->email, $this->getFriendlyName($creator));
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going';
-				//$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
-				//$mail->MsgHTML( $body );
-				//$mail->AddAttachment('images/email_header_01.png');      // attachment
-				
-				$mail->Body = 'Meet up with us at ' . urldecode($winningLocation->name);
-				
+				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+				$mail->MsgHTML( $body );
+				$mail->AddAttachment('images/email_header_01.png');      // attachment
 				$mail->Send();
 				//echo "Message Sent OK" . PHP_EOL;
 			} catch (phpmailerException $e) {
