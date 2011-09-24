@@ -153,12 +153,9 @@ class InviteService extends ReqBase
 				$mail->AddAddress($receiverEmail);
 				$mail->Subject = urldecode($winningLocation->name) . ' is where we are going';
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
-				
-				$mail->Body = 'Meet us all out at ' . urldecode($event->eventTitle);
-				
-				//$mail->MsgHTML( $body );
-				//$mail->AddAttachment('images/email_header_01.png');      // attachment
-				
+								
+				$mail->MsgHTML( $body );
+				$mail->AddAttachment('images/email_header_01.png');      // attachment
 				
 				$mail->Send();
 				//echo "Message Sent OK" . PHP_EOL;

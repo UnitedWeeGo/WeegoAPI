@@ -47,6 +47,21 @@ class DecidedEmail extends ReqBase
 			$thumbIconURL = 'http://www.unitedweego.com/email_images/button_like_default.png';
 		}
 		
+		$generalInfo =
+<<< EOT
+		
+				<td valign="top">
+					<span style="font-size:1.2em; color:#666">*The location shown has been decided.</span><br />
+					<br />
+					<span style="font-size:1.2em; color:#666">Log into Weego to communicate with the group.</span><br />
+					<br />
+					<span style="font-size:1.2em; color:#666; font-weight:bold">AND</span><br />
+					<br />
+					<span style="font-size:1.2em; color:#666">Ask some more friends to meet up. See them arriving within Weego.</span>
+				</td>
+		
+EOT;
+		
 		$pairHTML =
 <<< EOT
 				<tr>
@@ -155,6 +170,7 @@ EOT;
 				</tr>
 			</table>
 		</td>
+		$generalInfo
 	</tr>
 	$pairHTML
 	$aboutHTML
