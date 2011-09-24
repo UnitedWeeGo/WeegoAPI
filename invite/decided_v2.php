@@ -103,10 +103,6 @@ EOT;
 		
 		if (!$needsPair) $aboutHTML = '<tr><td colspan="2" /></tr>';
 		
-		$headerHTML = '';
-		$showHeader = false;
-		if($showHeader) $headerHTML = '<div align="center"><img src="images/email_header_01.png" style="height: 170px; width: 600px"></div>';
-		
 		$message = 
 <<< EOT
 
@@ -114,13 +110,89 @@ EOT;
 
 <body bgcolor="#F3F3F3">
 <div align="center" style="width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 10px;">
-	$creatorAvatarURL <br />
-	$creatorFriendlyName <br />
-	$eventTitle <br />
-	$eventDate <br />
-	$eventExpireDate <br />
-	$name <br />
-	$formatted_address <br />
+<div align="center"><img src="images/email_header_01.png" style="height: 170px; width: 600px"></div>
+<table width="600" border="0" cellspacing="5" cellpadding="10" bgcolor="#FFF">
+	<tr>
+		<td colspan="2">
+			<br />
+			<span style="font-size:32px; color:#666;">Join the group at $name</span>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<table width="310" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="13" height="13"><img src="http://www.unitedweego.com/email_images/event_bg_1_tl.png" width="13" height="13"></td>
+					<td width="*" height="13"><img src="http://www.unitedweego.com/email_images/event_bg_1_tm.png" width="100%" height="13"></td>
+					<td width="13" height="13"><img src="http://www.unitedweego.com/email_images/event_bg_1_tr.png" width="13" height="13"></td>
+				</tr>
+				<tr>
+					
+					<td bgcolor="#F3F3F3">
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td valign="top" width="60"><img src="$creatorAvatarURL" border="1" style="border-color:#CCC"></td>
+								<td valign="top">
+									<span style="font-size:1.2em; color:#666">$creatorFriendlyName</span><br />
+									<span style="font-size:1.8em; color:#333; font-weight:bold">$eventTitle</span><br />
+									<span style="font-size:1.2em; color:#666">$eventDate</span><br /><br />
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td width="13" height="*"><img src="http://www.unitedweego.com/email_images/event_bg_1_mr.png" width="13" height="100%"></td>
+				</tr>
+				<tr>
+					<td width="13" height="1"><img src="http://www.unitedweego.com/email_images/event_bg_2_ml.png" width="13" height="1"></td>
+					<td bgcolor="#DEDEDE" height="1"><img src="http://www.unitedweego.com/email_images/spacer.gif" width="100%" height="1"></td>
+					<td width="13" height="1"><img src="http://www.unitedweego.com/email_images/event_bg_2_mr.png" width="13" height="1"></td>
+				</tr>
+				<tr>
+					<td width="13" height="*"><img src="http://www.unitedweego.com/email_images/event_bg_3_ml.png" width="13" height="100%"></td>
+					<td bgcolor="#F9F9F9">
+						<br />
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td valign="top" width="60"><img src="$thumbIconURL" width="50" height="50"></td>
+								<td valign="top">
+									<span style="font-size:1.8em; color:#333; font-weight:bold">$name</span><br />
+									<span style="font-size:1.2em; color:#666">$formatted_address</span><br />
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td width="13" height="*"><img src="http://www.unitedweego.com/email_images/event_bg_3_mr.png" width="13" height="100%"></td>
+				</tr>
+				<tr>
+					<td width="13" height="14"><img src="http://www.unitedweego.com/email_images/event_bg_3_bl.png" width="13" height="14"></td>
+					<td width="*" height="14"><img src="http://www.unitedweego.com/email_images/event_bg_3_bm.png" width="100%" height="14"></td>
+					<td width="13" height="14"><img src="http://www.unitedweego.com/email_images/event_bg_3_br.png" width="13" height="14"></td>
+				</tr>
+			</table>
+		</td>
+		$generalInfo
+	</tr>
+	$pairHTML
+	$aboutHTML
+	<tr>
+		<td colspan="2">
+			<div style="font-size:1.2em; color: #999;">
+				<br />
+				<br />
+				Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
+				You are receiving this email because one of your friends has invited you to an event. You have not been added to any email lists or promotions.&nbsp;<br />
+				<br />
+				<strong>Our mailing address is:</strong><br />
+				UnitedWeego, Inc.<br />
+				665 3rd St. Suite 521<br />
+				San Francisco,&nbsp;CA&nbsp;94107
+			</div>
+		</td>
+	</tr>
+</table>
+
+<br />
+
 </div>
 </body>
 
