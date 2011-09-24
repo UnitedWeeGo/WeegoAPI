@@ -112,7 +112,7 @@ EOT;
 				<div style="font-size:1em; color: #000;">
 					<br />
 					Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
-					You are receiving this email because you were invied to an event hosed by $creatorFriendlyName.<br />
+					You are receiving this email because you were invied to an event hosted by $creatorFriendlyName.<br />
 					<br />
 					Our mailing address is:<br />
 					UnitedWeego, Inc.<br />
