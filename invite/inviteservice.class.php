@@ -155,7 +155,7 @@ class InviteService extends ReqBase
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 								
 				$mail->MsgHTML( $body );
-				//$mail->AddAttachment('images/email_header_01.png');      // attachment
+				$mail->AddAttachment('images/email_header_01.png');      // attachment
 				
 				$mail->Send();
 				//echo "Message Sent OK" . PHP_EOL;

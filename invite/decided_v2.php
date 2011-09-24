@@ -103,6 +103,27 @@ EOT;
 		
 		if (!$needsPair) $aboutHTML = '<tr><td colspan="2" /></tr>';
 		
+		$disclaimerHTML = '';
+		$showDisclaimer = false;
+		if ($showDisclaimer) $disclaimerHTML = 
+<<< EOT
+		<tr>
+			<td colspan="2">
+				<div style="font-size:1.2em; color: #999;">
+					<br />
+					<br />
+					Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
+					You are receiving this email because one of your friends has invited you to an event. You have not been added to any email lists or promotions.&nbsp;<br />
+					<br />
+					<strong>Our mailing address is:</strong><br />
+					UnitedWeego, Inc.<br />
+					665 3rd St. Suite 521<br />
+					San Francisco,&nbsp;CA&nbsp;94107
+				</div>
+			</td>
+		</tr>
+EOT;
+		
 		$message = 
 <<< EOT
 
@@ -110,7 +131,7 @@ EOT;
 
 <body bgcolor="#F3F3F3">
 <div align="center" style="width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 10px;">
-<div align="center">Weego</div>
+<div align="center"><img src="images/email_header_01.png" style="height: 170px; width: 600px"></div>
 <table width="600" border="0" cellspacing="5" cellpadding="10" bgcolor="#FFF">
 	<tr>
 		<td colspan="2">
@@ -174,21 +195,7 @@ EOT;
 	</tr>
 	$pairHTML
 	$aboutHTML
-	<tr>
-		<td colspan="2">
-			<div style="font-size:1.2em; color: #999;">
-				<br />
-				<br />
-				Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
-				You are receiving this email because one of your friends has invited you to an event. You have not been added to any email lists or promotions.&nbsp;<br />
-				<br />
-				<strong>Our mailing address is:</strong><br />
-				UnitedWeego, Inc.<br />
-				665 3rd St. Suite 521<br />
-				San Francisco,&nbsp;CA&nbsp;94107
-			</div>
-		</td>
-	</tr>
+	$disclaimerHTML
 </table>
 
 <br />
