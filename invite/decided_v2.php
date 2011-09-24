@@ -110,7 +110,7 @@ EOT;
 
 <body bgcolor="#F3F3F3">
 <div align="center" style="width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 10px;">
-<div align="center"><img src="images/email_header_01.png" style="height: 170px; width: 600px"></div>
+<div align="center">Weego</div>
 <table width="600" border="0" cellspacing="5" cellpadding="10" bgcolor="#FFF">
 	<tr>
 		<td colspan="2">
@@ -127,7 +127,7 @@ EOT;
 					<td width="13" height="13"><img src="http://www.unitedweego.com/email_images/event_bg_1_tr.png" width="13" height="13"></td>
 				</tr>
 				<tr>
-					
+					<td width="13" height="*"><img src="http://www.unitedweego.com/email_images/event_bg_1_ml.png" width="13" height="100%"></td>
 					<td bgcolor="#F3F3F3">
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
