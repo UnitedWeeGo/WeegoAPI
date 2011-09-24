@@ -112,6 +112,26 @@ EOT;
 		
 		if (!$needsPair) $aboutHTML = '<tr><td colspan="2" /></tr>';
 
+		$disclaimerHTML = '';
+		$showDisclaimer = true;
+		if ($showDisclaimer) $disclaimerHTML =
+<<< EOT
+	<tr>
+		<td colspan="2">
+			<div style="font-size:1em; color: #000;">
+				<br />
+				Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
+				You are receiving this email because you were invied to an event hosted by $creatorFriendlyName.<br />
+				<br />
+				Our mailing address is:<br />
+				UnitedWeego, Inc.<br />
+				665 3rd St. Suite 521<br />
+				San Francisco, CA 94107
+			</div>
+		</td>
+	</tr>
+EOT;
+		
 		$message = 
 <<< EOT
 <html>
@@ -183,21 +203,7 @@ EOT;
 	</tr>
 	$pairHTML
 	$aboutHTML
-	<tr>
-		<td colspan="2">
-			<div style="font-size:1.2em; color: #999;">
-				<br />
-				<br />
-				Copyright &copy; 2011 UnitedWeego, Inc., All rights reserved.<br />
-				You are receiving this email because one of your friends has invited you to an event. You have not been added to any email lists or promotions.&nbsp;<br />
-				<br />
-				<strong>Our mailing address is:</strong><br />
-				UnitedWeego, Inc.<br />
-				665 3rd St. Suite 521<br />
-				San Francisco,&nbsp;CA&nbsp;94107
-			</div>
-		</td>
-	</tr>
+	$disclaimerHTML
 </table>
 
 <br />
