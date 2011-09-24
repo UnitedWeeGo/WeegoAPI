@@ -12,7 +12,7 @@ require_once('../PHPMailer-Lite_v5.1/class.phpmailer-lite.php');
 require_once '../util/request.base.php';
 
 require_once 'invite_v2.php';
-require_once 'decided_v1.php';
+require_once 'decided_v2.php';
 require_once 'cancelled_v1.php';
 
 date_default_timezone_set('GMT');
@@ -155,7 +155,7 @@ class InviteService extends ReqBase
 				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 								
 				$mail->MsgHTML( $body );
-				$mail->AddAttachment('images/email_header_01.png');      // attachment
+				//$mail->AddAttachment('images/email_header_01.png');      // attachment
 				
 				$mail->Send();
 				//echo "Message Sent OK" . PHP_EOL;
