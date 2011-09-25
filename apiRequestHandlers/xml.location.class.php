@@ -24,7 +24,36 @@ class XMLLocationClass extends ReqBase
 	{
 		parent::__construct();
 	}
-	
+	/* ADD
+	 * <event id="1575">
+	 * <locations>
+	 * <location tempId="2702DC5F-8816-4389-92F9-4D90BDBC323F" latitude="37.331650" longitude="-122.026192">
+	 * <name>Time To Travel</name>
+	 * <vicinity></vicinity>
+	 * <g_id>SG_0msKdoPmcoLlb2D0t4PAuC_37.331651_-122.026195@1294081369</g_id>
+	 * <g_reference></g_reference>
+	 * <location_type>place</location_type>
+	 * <formatted_address>10685 Randy Ln, Cupertino, CA 95014</formatted_address>
+	 * <formatted_phone_number> 1 408 253 9448</formatted_phone_number>
+	 * </location>
+	 * </locations>
+	 * </event>
+	 */
+	/* UPDATE
+	 * <event id="1575">
+	 * <locations>
+	 * <location locationId="1189" latitude="37.331692" longitude="-122.030739">
+	 * <name>Update</name>
+	 * <vicinity></vicinity>
+	 * <g_id>97 Infinite Loop, Cupertino, CA 95014</g_id>
+	 * <g_reference></g_reference>
+	 * <location_type>address</location_type>
+	 * <formatted_address>97 Infinite Loop, Cupertino, CA 95014</formatted_address>
+	 * <formatted_phone_number></formatted_phone_number>
+	 * </location>
+	 * </locations>
+	 * </event>
+	 */
 	function XMLLocationGo()
 	{
 		if ($this->dataObj == null) // called from http
@@ -68,6 +97,9 @@ class XMLLocationClass extends ReqBase
 		$locationObj;
 		$locations = $eventXML->getElementsByTagName( "location" );
 		$nodeListLength = $locations->length;
+		
+		$isUpdate = false;
+		
 		for ($i = 0; $i < $nodeListLength; $i++)
 		{
 			$locationObj = array();
@@ -79,14 +111,20 @@ class XMLLocationClass extends ReqBase
 			$locationGenerator->dataObj = $locationObj;
 			$savedLocation = $locationGenerator->LocationGo();
 			
-			$voteObj = array();
-			$voteObj['registeredId'] = $this->dataObj['registeredId'];
-			$voteObj['eventId'] = $savedEvent->eventId;
-			$voteObj['locationId'] = $savedLocation->locationId;
+			if (isset($locationObj['locationId'])) $isUpdate = true; // location updated
 			
-			$voteGenerator = new VoteClass();
-			$voteGenerator->dataObj = $voteObj;
-			$voteGenerator->VoteGo();
+			if (!$isUpdate)
+			{
+				$voteObj = array();
+				$voteObj['registeredId'] = $this->dataObj['registeredId'];
+				$voteObj['eventId'] = $savedEvent->eventId;
+				$voteObj['locationId'] = $savedLocation->locationId;
+				
+				$voteGenerator = new VoteClass();
+				$voteGenerator->dataObj = $voteObj;
+				$voteGenerator->VoteGo();
+			}
+			
 		}
 		
 		$userTs = null;
@@ -104,16 +142,20 @@ class XMLLocationClass extends ReqBase
 		$savedEvent = $eventLookup->Get($eventId);
 		
 		// Send out a feed message for the location addition
-		$message = new FeedMessage();
-		$message->timestamp = $this->getTimeStamp();
-		$message->type = FeedMessageClass::TYPE_SYSTEM_LOCATION_ADDED;
-		$message->message = 'Added "' . $savedLocation->name . '"';
-		$message->senderId = $me->email;
-		$message->readParticipantList = $me->participantId;
 		
-		$savedEvent->AddFeedmessage($message);
-		$savedEvent->timestamp = $this->getTimeStamp();
-		$savedEvent->Save(true);
+		if (!$isUpdate)
+		{
+			$message = new FeedMessage();
+			$message->timestamp = $this->getTimeStamp();
+			$message->type = FeedMessageClass::TYPE_SYSTEM_LOCATION_ADDED;
+			$message->message = 'Added "' . $savedLocation->name . '"';
+			$message->senderId = $me->email;
+			$message->readParticipantList = $me->participantId;
+			
+			$savedEvent->AddFeedmessage($message);
+			$savedEvent->timestamp = $this->getTimeStamp();
+			$savedEvent->Save(true);
+		}
 		
 		$push = new Push();
 		$push->triggerClientUpdateForEvent($savedEvent);
