@@ -68,10 +68,10 @@ class Checkin extends ReqBase
 		// check to see if I have checked in, if not check me in to the event		
 		$checkedInParticipantList = preg_split('/,/', $event->checkedInParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		
-		$hasCheckedIn = in_array($me->participantId, $checkedInParticipantList);
+		$hasCheckedIn = in_array($me->participantId, $checkedInParticipantList) || in_array($me->email, $checkedInParticipantList);
 		if (!$hasCheckedIn)	
 		{
-			array_push($checkedInParticipantList, $me->participantId);
+			array_push($checkedInParticipantList, $me->email);
 			$event->checkedInParticipantList = implode(",", $checkedInParticipantList);
 			
 			// need to send a feed message that will alert the users that the participant has arrived

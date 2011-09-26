@@ -518,7 +518,7 @@ class XMLUtil extends ReqBase
 			$eventInfoNode->setAttribute('eventDate', $event->eventDate);
 			$eventInfoNode->setAttribute('eventExpireDate', $event->eventExpireDate);
 			$eventInfoNode->setAttribute('hasBeenRead', $this->participantHasRead($event, $participant->participantId) ? 'true':'false');
-			$eventInfoNode->setAttribute('hasCheckedIn', $this->getCheckedIn($event, $participant->participantId) ? 'true':'false');
+			$eventInfoNode->setAttribute('hasCheckedIn', $this->getCheckedIn($event, $participant) ? 'true':'false');
 			if ($event->cancelled == 1) $eventInfoNode->setAttribute('hasBeenCancelled', 'true');
 			
 			$eventTitleNode = $doc->createElement('eventTitle');
@@ -634,13 +634,13 @@ class XMLUtil extends ReqBase
 	/**
 	* Determines if the user has checked into the event
 	* @param Event $event
-	* @param string $participantId
+	* @param Participant $participant
 	* @return Boolean
 	*/
-	function getCheckedIn(&$event, $participantId)
+	function getCheckedIn(&$event, $participant)
 	{
 		$checkedInParticipantList = preg_split('/,/', $event->checkedInParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
-		$hasCheckedIn = in_array($participantId, $checkedInParticipantList);
+		$hasCheckedIn = in_array($participant->participantId, $checkedInParticipantList) || in_array($participant->email, $checkedInParticipantList);
 		
 		return $hasCheckedIn;
 	}
