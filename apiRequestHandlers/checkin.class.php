@@ -72,7 +72,7 @@ class Checkin extends ReqBase
 		if (!$hasCheckedIn)	
 		{
 			array_push($checkedInParticipantList, $me->participantId);
-			$event->checkedInParticipantList = implode(",", $checkedInParticipantList);
+			$event->checkedInParticipantList = implode("/,/", $checkedInParticipantList);
 			
 			// need to send a feed message that will alert the users that the participant has arrived
 			$message = new FeedMessageClass();
