@@ -142,7 +142,7 @@ class GetEvents extends ReqBase
 	function markEventReadByParticipant(&$event, $participantId)
 	{
 		// adding only if user has not previously read
-		$readParticipantList = explode(',', $event->readParticipantList);
+		$readParticipantList = preg_split('/,/', $event->readParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasRead = in_array($participantId, $readParticipantList);
 		if (!$hasRead)	
 		{

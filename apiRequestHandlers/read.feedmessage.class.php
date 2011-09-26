@@ -62,7 +62,7 @@ class ReadFeedMessages extends ReqBase
 			die();
 		}
 		$feedMessage = $foundMessages[0];
-		$unreadParticipantList = explode(',', $feedMessage->readParticipantList);
+		$unreadParticipantList = preg_split('/,/', $feedMessage->readParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasRead = in_array($me->participantId, $unreadParticipantList);
 		if (!$hasRead)	
 		{

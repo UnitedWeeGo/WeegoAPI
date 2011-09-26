@@ -134,7 +134,7 @@ class RemoveEventClass extends ReqBase
 	function markEventRemovedByParticipant(&$event, $participantId)
 	{
 		// adding only if user has not previously read
-		$removedParticipantList = explode(',', $event->removedParticipantList);
+		$removedParticipantList = preg_split('/,/', $event->removedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasRemoved = in_array($participantId, $removedParticipantList);
 		if (!$hasRemoved)
 		{

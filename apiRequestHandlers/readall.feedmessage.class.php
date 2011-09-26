@@ -60,7 +60,7 @@ class ReadAllFeedMessages extends ReqBase
 		for ($i=0; $i<count($foundMessages); $i++)
 		{
 			$feedMessage = $foundMessages[$i];
-			$readParticipantList = explode(',', $feedMessage->readParticipantList);
+			$readParticipantList = preg_split('/,/', $feedMessage->readParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 			$hasRead = in_array($me->participantId, $readParticipantList);
 			if (!$hasRead)	
 			{

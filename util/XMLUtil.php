@@ -328,7 +328,6 @@ class XMLUtil extends ReqBase
 				$root->appendChild($eventInfoNode);
 				$eventInfoNode->setAttribute('eventDate', $event->eventDate);
 				$eventInfoNode->setAttribute('eventExpireDate', $event->eventExpireDate);
-				$eventInfoNode->setAttribute('checkedInParticipantList', $event->checkedInParticipantList);
 				if ($event->cancelled == 1) $eventInfoNode->setAttribute('hasBeenCancelled', 'true');
 				
 				$eventTitleNode = $doc->createElement('eventTitle');
@@ -350,6 +349,11 @@ class XMLUtil extends ReqBase
 				$eventInfoNode->appendChild($acceptedParticipantListNode);
 				$acceptedParticipantList = $doc->createCDATASection($event->acceptedParticipantList);
 				$acceptedParticipantListNode->appendChild($acceptedParticipantList);
+				
+				$checkedInParticipantListNode = $doc->createElement('checkedInParticipantList');
+				$eventInfoNode->appendChild($checkedInParticipantListNode);
+				$checkedInParticipantList = $doc->createCDATASection($event->checkedInParticipantList);
+				$checkedInParticipantListNode->appendChild($checkedInParticipantList);
 				
 				$declinedParticipantListNode = $doc->createElement('declinedParticipantList');
 				$eventInfoNode->appendChild($declinedParticipantListNode);
@@ -515,7 +519,6 @@ class XMLUtil extends ReqBase
 			$eventInfoNode->setAttribute('eventExpireDate', $event->eventExpireDate);
 			$eventInfoNode->setAttribute('hasBeenRead', $this->participantHasRead($event, $participant->participantId) ? 'true':'false');
 			$eventInfoNode->setAttribute('hasCheckedIn', $this->getCheckedIn($event, $participant->participantId) ? 'true':'false');
-			$eventInfoNode->setAttribute('checkedInParticipantList', $event->checkedInParticipantList);
 			if ($event->cancelled == 1) $eventInfoNode->setAttribute('hasBeenCancelled', 'true');
 			
 			$eventTitleNode = $doc->createElement('eventTitle');
@@ -532,6 +535,11 @@ class XMLUtil extends ReqBase
 			$eventInfoNode->appendChild($acceptedParticipantListNode);
 			$acceptedParticipantList = $doc->createCDATASection($event->acceptedParticipantList);
 			$acceptedParticipantListNode->appendChild($acceptedParticipantList);
+			
+			$checkedInParticipantListNode = $doc->createElement('checkedInParticipantList');
+			$eventInfoNode->appendChild($checkedInParticipantListNode);
+			$checkedInParticipantList = $doc->createCDATASection($event->checkedInParticipantList);
+			$checkedInParticipantListNode->appendChild($checkedInParticipantList);
 			
 			$declinedParticipantListNode = $doc->createElement('declinedParticipantList');
 			$eventInfoNode->appendChild($declinedParticipantListNode);
@@ -602,7 +610,7 @@ class XMLUtil extends ReqBase
 		for ($i=0; $i<count($feedMessageArray); $i++)
 		{
 			$feedMessage = $feedMessageArray[$i];
-			$readParticipantList = explode(',', $feedMessage->readParticipantList);
+			$readParticipantList = preg_split('/,/', $feedMessage->readParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 			$hasRead = in_array($participantId, $readParticipantList);
 			if (!$hasRead) $count++;
 		}
@@ -617,7 +625,7 @@ class XMLUtil extends ReqBase
 	*/
 	function participantHasRead(&$object, $participantId)
 	{
-		$readParticipantList = explode(',', $object->readParticipantList);
+		$readParticipantList = preg_split('/,/', $object->readParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasRead = in_array($participantId, $readParticipantList);
 		
 		return $hasRead;
@@ -631,7 +639,7 @@ class XMLUtil extends ReqBase
 	*/
 	function getCheckedIn(&$event, $participantId)
 	{
-		$checkedInParticipantList = explode(',', $event->checkedInParticipantList);
+		$checkedInParticipantList = preg_split('/,/', $event->checkedInParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasCheckedIn = in_array($participantId, $checkedInParticipantList);
 		
 		return $hasCheckedIn;

@@ -422,7 +422,7 @@ class Push
 	{
 		/** @var $lookup PushDispatch */
 		$queue = $this->getQueue();
-		$events = explode(',', $queue->decidedNotificationDispatchEventIdList);
+		$events = preg_split('/,/', $queue->decidedNotificationDispatchEventIdList, NULL, PREG_SPLIT_NO_EMPTY);
 		
 		/** @var $lookup Event */
 		$lookup = new Event();
@@ -490,7 +490,7 @@ class Push
 	{
 		/** @var $lookup PushDispatch */
 		$queue = $this->getQueue();
-		$events = explode(',', $queue->generalEventUpdateIdList);
+		$events = preg_split('/,/', $queue->generalEventUpdateIdList, NULL, PREG_SPLIT_NO_EMPTY);
 		$queue->generalEventUpdateIdList = '';
 		$queue->Save();
 		
@@ -689,7 +689,7 @@ class Push
 	function triggerClientUpdateForEvent(&$event)
 	{
 		$queue = $this->getQueue();
-		$generalEventUpdateIdList = explode(',', $queue->generalEventUpdateIdList);
+		$generalEventUpdateIdList = preg_split('/,/', $queue->generalEventUpdateIdList, NULL, PREG_SPLIT_NO_EMPTY);
 		array_push($generalEventUpdateIdList, $event->eventId);
 		$queue->generalEventUpdateIdList = implode(',', $generalEventUpdateIdList);
 		$queue->Save();
@@ -718,7 +718,7 @@ class Push
 		$queue->AddEvent($event);
 		
 		// add the event to dispatch the decided notification
-		$decidedNotificationDispatchEventIdList = explode(',', $queue->decidedNotificationDispatchEventIdList);
+		$decidedNotificationDispatchEventIdList = preg_split('/,/', $queue->decidedNotificationDispatchEventIdList, NULL, PREG_SPLIT_NO_EMPTY);
 		array_push($decidedNotificationDispatchEventIdList, $event->eventId);
 		$queue->decidedNotificationDispatchEventIdList = implode(',', $decidedNotificationDispatchEventIdList);
 		
@@ -766,7 +766,7 @@ class Push
 	*/
 	function getHasAcceptedEvent(&$event, $email)
 	{
-		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$acceptedParticipantList = preg_split('/,/', $queue->acceptedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasAccepted = in_array($email, $acceptedParticipantList);
 	
 		return $hasAccepted;
@@ -780,7 +780,7 @@ class Push
 	*/
 	function getHasRemovedEvent(&$event, $id)
 	{
-		$removedParticipantList = explode(',', $event->removedParticipantList);
+		$removedParticipantList = preg_split('/,/', $queue->removedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasRemoved = in_array($id, $removedParticipantList);
 	
 		return $hasRemoved;

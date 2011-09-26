@@ -115,8 +115,8 @@ class GetFeedMessages extends ReqBase
 	*/
 	function getMessageRead(&$feedMessage, $participantId)
 	{
-		$unreadParticipantList = explode(',', $feedMessage->readParticipantList);
-		$hasRead = in_array($participantId, $unreadParticipantList);
+		$readParticipantList = preg_split('/,/', $feedMessage->readParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
+		$hasRead = in_array($participantId, $readParticipantList);
 		/* this will handle being explicitly handled by another call to mark it read
 		if (!$hasRead) 
 		{

@@ -227,7 +227,7 @@ class InviteService extends ReqBase
 	 */
 	function getHasAcceptedEvent(&$event, $email)
 	{
-		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$acceptedParticipantList = preg_split('/,/', $event->acceptedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasAccepted = in_array($email, $acceptedParticipantList);
 
 		return $hasAccepted;
@@ -241,7 +241,7 @@ class InviteService extends ReqBase
 	 */
 	function getHasDeclinedEvent(&$event, $email)
 	{
-		$declinedParticipantList = explode(',', $event->declinedParticipantList);
+		$declinedParticipantList = preg_split('/,/', $event->declinedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasDeclined = in_array($email, $declinedParticipantList);
 
 		return $hasDeclined;
@@ -255,7 +255,7 @@ class InviteService extends ReqBase
 	function sendCancelledEmailForEvent(&$event)
 	{
 		$queue = $this->getQueue();
-		$cancelledEventIdList = explode(',', $queue->cancelledEventIdList);
+		$cancelledEventIdList = preg_split('/,/', $queue->cancelledEventIdList, NULL, PREG_SPLIT_NO_EMPTY);
 		array_push($cancelledEventIdList, $event->eventId);
 		$queue->cancelledEventIdList = implode(',', $cancelledEventIdList);
 		$queue->Save();
@@ -268,7 +268,7 @@ class InviteService extends ReqBase
 	{
 		/** @var $lookup PushDispatch */
 		$queue = $this->getQueue();
-		$events = explode(',', $queue->cancelledEventIdList);
+		$events = preg_split('/,/', $queue->cancelledEventIdList, NULL, PREG_SPLIT_NO_EMPTY);
 
 		/** @var $lookup Event */
 		$lookup = new Event();

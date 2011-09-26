@@ -83,8 +83,8 @@ class AcceptEventClass extends ReqBase
 	*/
 	function setEventAcceptedByParticipant(&$event, $email, $didAccept)
 	{
-		$declinedParticipantList = explode(',', $event->declinedParticipantList);
-		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$declinedParticipantList = preg_split('/,/', $event->declinedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
+		$acceptedParticipantList = preg_split('/,/', $event->acceptedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		
 		$hasAccepted = in_array($email, $acceptedParticipantList);
 		$hasDeclined = in_array($email, $declinedParticipantList);

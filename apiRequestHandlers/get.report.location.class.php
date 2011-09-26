@@ -160,7 +160,7 @@ class GetReportLocations extends ReqBase
 	*/
 	function getHasAcceptedEvent(&$event, $email)
 	{
-		$acceptedParticipantList = explode(',', $event->acceptedParticipantList);
+		$acceptedParticipantList = preg_split('/,/', $event->acceptedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasAccepted = in_array($email, $acceptedParticipantList);
 	
 		return $hasAccepted;
