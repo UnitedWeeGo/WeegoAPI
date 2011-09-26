@@ -81,6 +81,7 @@ class Checkin extends ReqBase
 			$message->FeedMessageGo();
 			
 			$event->timestamp = $this->getTimeStamp();
+			$event->infoTimestamp = $this->getTimeStamp();
 			$event->Save();
 		}
 
