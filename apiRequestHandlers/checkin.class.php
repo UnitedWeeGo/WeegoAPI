@@ -65,8 +65,9 @@ class Checkin extends ReqBase
 		// check to ensure I am part of this event. I must be a participant of the event to mark a message.
 		$this->validateUserPartOfEvent($event, $me->email);
 		
-		// check to see if I have checked in, if not check me in to the event
-		$checkedInParticipantList = explode(',', $event->checkedInParticipantList);
+		// check to see if I have checked in, if not check me in to the event		
+		$checkedInParticipantList = preg_split(',', $event->checkedInParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
+		
 		$hasCheckedIn = in_array($me->participantId, $checkedInParticipantList);
 		if (!$hasCheckedIn)	
 		{
