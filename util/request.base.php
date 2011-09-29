@@ -332,7 +332,7 @@ class ReqBase
 	}
 
 	/**
-	* Checks to see if the event is expired, returns if changed
+	* Checks to see if the event is expired, returns true if changed
 	* @param Event $event
 	* @param string $eventStartTime
 	* @return boolean

@@ -16,6 +16,8 @@ require_once 'acceptevent.class.php';
 require_once '../push/class.push.php';
 require_once '../invite/inviteservice.class.php';
 
+date_default_timezone_set('GMT');
+
 class ToggleDecidedClass extends ReqBase
 {
 	public $dataObj = null;	
@@ -58,9 +60,28 @@ class ToggleDecidedClass extends ReqBase
 		
 		$eventVotingCurrentlyDisabled = $event->forcedDecided || $this->checkForEventDecidedState($event);
 		
-		$event->forcedDecided = !$eventVotingCurrentlyDisabled;
+		$event->forcedDecided = $eventVotingCurrentlyDisabled ? 0 : 1;
 		$event->timestamp = $this->getTimeStamp();
 		$event->infoTimestamp = $this->getTimeStamp();
+		
+		$now = new DateTime();
+		$eventTime = new DateTime($event->eventDate);
+		$nowTs = $now->getTimestamp();
+		$eventTs =  $eventTime->getTimestamp();
+		
+		if (!$event->forcedDecided)
+		{
+			if ($nowTs >= $eventTs)
+			{
+				$newEventStartTime = date('Y-m-d H:i:s', $nowTs + 900);
+				$event->eventDate = $newEventStartTime;
+				$this->populateExpirationForEvent($event, $newEventStartTime); // add 10 minutes in seconds
+			}
+			else {
+				$this->populateExpirationForEvent($event, $event->eventDate);
+			}
+		}
+		
 		$event->Save();
 		
 		$userTs = null;
