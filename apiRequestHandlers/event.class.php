@@ -18,13 +18,12 @@ class EventClass extends ReqBase
 {
 	public $dataObj;	
 	private $requiredFields = array('registeredId');
-	private $allFields = array('eventTitle', 'eventDate', 'eventDescription', 'guestListOpen', 'locationListOpen', 'eventTimeZone');
+	private $allFields = array('eventTitle', 'eventDate', 'eventDescription', 'forcedDecided', 'eventTimeZone');
 	
 	function EventClass()
 	{
 		parent::__construct();
 	}
-	
 	function EventGo()
 	{
 		$doSkipResult = true;
@@ -40,12 +39,12 @@ class EventClass extends ReqBase
 		
 		// check if you are a registered user
 		$me = $this->checkRegUserId($this->dataObj);
-			
+		
 		// determine if this is an update or new event
 		$isAnUpdate = isset($this->dataObj['eventId']);
 		if ($isAnUpdate) $eventId = $this->dataObj['eventId'];
 			
-		$event;
+		$event = null;
 		if ($isAnUpdate)
 		{
 			$lookup = new Event();

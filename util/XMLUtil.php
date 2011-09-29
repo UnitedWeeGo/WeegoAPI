@@ -360,15 +360,11 @@ class XMLUtil extends ReqBase
 				$declinedParticipantList = $doc->createCDATASection($event->declinedParticipantList);
 				$declinedParticipantListNode->appendChild($declinedParticipantList);
 				
-				$guestListOpenNode = $doc->createElement('guestListOpen');
-				$eventInfoNode->appendChild($guestListOpenNode);
-				$guestListOpen = $doc->createCDATASection($event->guestListOpen?'true':'false');
-				$guestListOpenNode->appendChild($guestListOpen);
+				$forcedDecidedNode = $doc->createElement('forcedDecided');
+				$eventInfoNode->appendChild($forcedDecidedNode);
+				$forcedDecided = $doc->createCDATASection($event->forcedDecided?'true':'false');
+				$forcedDecidedNode->appendChild($forcedDecided);
 				
-				$locationListOpenNode = $doc->createElement('locationListOpen');
-				$eventInfoNode->appendChild($locationListOpenNode);
-				$locationListOpen = $doc->createCDATASection($event->locationListOpen?'true':'false');
-				$locationListOpenNode->appendChild($locationListOpen);
 			}
 			
 			$objTimestampNumber = $event->locationReorderTimestamp;
@@ -545,6 +541,11 @@ class XMLUtil extends ReqBase
 			$eventInfoNode->appendChild($declinedParticipantListNode);
 			$declinedParticipantList = $doc->createCDATASection($event->declinedParticipantList);
 			$declinedParticipantListNode->appendChild($declinedParticipantList);
+			
+			$forcedDecidedNode = $doc->createElement('forcedDecided');
+			$eventInfoNode->appendChild($forcedDecidedNode);
+			$forcedDecided = $doc->createCDATASection($event->forcedDecided?'true':'false');
+			$forcedDecidedNode->appendChild($forcedDecided);
 			
 			// get the top voted for location
 			// sort by locationId, decending order, one result
