@@ -113,6 +113,34 @@ class GetParticipantInfo extends ReqBase
 	*/
 	function populateResultWithRecentParticipants($me)
 	{
+		$lookupInvite = new Invite();
+		$lookupParticipant = new Participant();
+		$all_recents = $lookupInvite->GetList( array( array("inviterId", "=", $me->email ),  array("pending", "=", 0 ),  array("hasBeenRemoved", "=", 0 ) ) );
+		$acceptedInvites = array();
+		foreach ($all_recents as $i => $value)
+		{
+			$invite = $all_recents[$i];
+			$c_participant = $lookupParticipant->GetList( array( array("email", "=", $invite->email ) ) );
+			if (strlen($c_participant->registeredId) > 0) // user is registered
+			{
+				$alreadyAdded = key_exists($c_participant->email, $this->foundParticipantDict);
+			
+				if (!$alreadyAdded)
+				{
+					$this->foundParticipantDict[$c_participant->email] = '';
+					array_push($this->xmResultArray, $xmlUtil->GetParticipantXML($c_participant, null, 'recent'));
+				}
+			}
+		}
+	}
+	
+	/**
+	* Populates the result array with participants from my events, no dupes
+	* @param Participant $me
+	* @return DOMDocument
+	
+	function populateResultWithRecentParticipants($me)
+	{
 		// get all of my events
 		$eventArray = $me->GetEventList();
 		$xmlUtil = new XMLUtil();
@@ -139,5 +167,6 @@ class GetParticipantInfo extends ReqBase
 				
 		}
 	}
+	*/
 	
 }
