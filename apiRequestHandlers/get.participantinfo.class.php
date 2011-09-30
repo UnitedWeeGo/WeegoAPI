@@ -120,7 +120,8 @@ class GetParticipantInfo extends ReqBase
 		foreach ($all_recents as $i => $value)
 		{
 			$invite = $all_recents[$i];
-			$c_participant = $lookupParticipant->GetList( array( array("email", "=", $invite->inviteeId ) ) );
+			$c_participant_list = $lookupParticipant->GetList( array( array("email", "=", $invite->inviteeId ) ) );
+			$c_participant = $c_participant_list[0];
 			if (strlen($c_participant->registeredId) > 0) // user is registered
 			{
 				$alreadyAdded = key_exists($c_participant->email, $this->foundParticipantDict);
