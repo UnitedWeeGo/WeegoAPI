@@ -113,6 +113,7 @@ class GetParticipantInfo extends ReqBase
 	*/
 	function populateResultWithRecentParticipants($me)
 	{
+		$xmlUtil = new XMLUtil();
 		$lookupInvite = new Invite();
 		$lookupParticipant = new Participant();
 		$all_recents = $lookupInvite->GetList( array( array("inviterId", "=", $me->email ),  array("pending", "=", 0 ),  array("hasBeenRemoved", "=", 0 ) ) );
