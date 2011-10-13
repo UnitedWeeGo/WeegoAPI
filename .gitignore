@@ -10,3 +10,5 @@ configuration.php
 .settings/org.eclipse.php.core.prefs
 
 .settings/org.eclipse.wst.html.core.prefs
+
+_dev/library/Zend/
