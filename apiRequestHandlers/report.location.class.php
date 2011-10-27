@@ -81,8 +81,13 @@ class ReportLocationClass extends ReqBase
 		
 		if (!$doSkipResult) // only give success and kill if not called by http
 		{
+			$xmlUtil = new XMLUtil();
+			$xmlArray = array();
+			$reportedLocationXML= $xmlUtil->GetReportLocationXML($reportlocation);
+			$xmlArray[0] = $reportedLocationXML;
+			
 			$s = new SuccessResponse();
-			echo $s->genSuccess(SuccessResponse::ReportLocationSuccess);
+			echo $s->genSuccessWithXMLArray(SuccessResponse::ReportLocationSuccess, $xmlArray);
 			die();
 		}
 		else 
