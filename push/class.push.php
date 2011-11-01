@@ -261,8 +261,8 @@ class Push
 				
 			if (!$this->eventShouldDispatch($event)) continue; // skips to the next if event does not meet time requirement
 			$didFindOneToDispatch = true;
-			
-			echo 'event dispatch start notification: ' . $event->eventTitle;
+			unset($events[$i]);
+			echo 'event dispatch start notification: ' . $event->eventTitle . PHP_EOL;;
 				
 			// for each participant...
 			$participants = $event->GetParticipantList();
