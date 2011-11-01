@@ -28,11 +28,10 @@
 * @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27forcedDecided%27%2C%0A++11+%3D%3E+%27PushDispatch%27%2C%0A++12+%3D%3E+%27FeedMessage%27%2C%0A++13+%3D%3E+%27checkedInParticipantList%27%2C%0A++14+%3D%3E+%27locationReorderTimestamp%27%2C%0A++15+%3D%3E+%27acceptedParticipantList%27%2C%0A++16+%3D%3E+%27declinedParticipantList%27%2C%0A++17+%3D%3E+%27eventDate%27%2C%0A++18+%3D%3E+%27eventExpireDate%27%2C%0A++19+%3D%3E+%27removedParticipantList%27%2C%0A++20+%3D%3E+%27SuggestedTime%27%2C%0A++21+%3D%3E+%27eventTimeZone%27%2C%0A++22+%3D%3E+%27cancelled%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B22%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Event&attributeList=array+%28%0A++0+%3D%3E+%27eventTitle%27%2C%0A++1+%3D%3E+%27eventDescription%27%2C%0A++2+%3D%3E+%27creatorId%27%2C%0A++3+%3D%3E+%27Location%27%2C%0A++4+%3D%3E+%27Participant%27%2C%0A++5+%3D%3E+%27Vote%27%2C%0A++6+%3D%3E+%27readParticipantList%27%2C%0A++7+%3D%3E+%27timestamp%27%2C%0A++8+%3D%3E+%27infoTimestamp%27%2C%0A++9+%3D%3E+%27Invite%27%2C%0A++10+%3D%3E+%27forcedDecided%27%2C%0A++11+%3D%3E+%27FeedMessage%27%2C%0A++12+%3D%3E+%27checkedInParticipantList%27%2C%0A++13+%3D%3E+%27locationReorderTimestamp%27%2C%0A++14+%3D%3E+%27acceptedParticipantList%27%2C%0A++15+%3D%3E+%27declinedParticipantList%27%2C%0A++16+%3D%3E+%27eventDate%27%2C%0A++17+%3D%3E+%27eventExpireDate%27%2C%0A++18+%3D%3E+%27removedParticipantList%27%2C%0A++19+%3D%3E+%27SuggestedTime%27%2C%0A++20+%3D%3E+%27eventTimeZone%27%2C%0A++21+%3D%3E+%27cancelled%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527JOIN%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527DATETIME%2527%252C%250A%2B%2B18%2B%253D%253E%2B%2527TEXT%2527%252C%250A%2B%2B19%2B%253D%253E%2B%2527HASMANY%2527%252C%250A%2B%2B20%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B21%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 include_once('class.eventparticipantmap.php');
-include_once('class.eventpushdispatchmap.php');
 class Event extends POG_Base
 {
 	public $eventId = '';
@@ -91,11 +90,6 @@ class Event extends POG_Base
 	 * @var TINYINT
 	 */
 	public $forcedDecided;
-	
-	/**
-	 * @var private array of PushDispatch objects
-	 */
-	private $_pushdispatchList = array();
 	
 	/**
 	 * @var private array of FeedMessage objects
@@ -165,7 +159,6 @@ class Event extends POG_Base
 		"infoTimestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
 		"Invite" => array('db_attributes' => array("OBJECT", "HASMANY")),
 		"forcedDecided" => array('db_attributes' => array("NUMERIC", "TINYINT")),
-		"PushDispatch" => array('db_attributes' => array("OBJECT", "JOIN")),
 		"FeedMessage" => array('db_attributes' => array("OBJECT", "HASMANY")),
 		"checkedInParticipantList" => array('db_attributes' => array("TEXT", "TEXT")),
 		"locationReorderTimestamp" => array('db_attributes' => array("NUMERIC", "TIMESTAMP")),
@@ -211,7 +204,6 @@ class Event extends POG_Base
 		$this->infoTimestamp = $infoTimestamp;
 		$this->_inviteList = array();
 		$this->forcedDecided = $forcedDecided;
-		$this->_pushdispatchList = array();
 		$this->_feedmessageList = array();
 		$this->checkedInParticipantList = $checkedInParticipantList;
 		$this->locationReorderTimestamp = $locationReorderTimestamp;
@@ -467,12 +459,6 @@ class Event extends POG_Base
 				$invite->eventId = $this->eventId;
 				$invite->Save($deep);
 			}
-			foreach ($this->_pushdispatchList as $pushdispatch)
-			{
-				$pushdispatch->Save();
-				$map = new EventPushDispatchMap();
-				$map->AddMapping($this, $pushdispatch);
-			}
 			foreach ($this->_feedmessageList as $feedmessage)
 			{
 				$feedmessage->eventId = $this->eventId;
@@ -542,19 +528,10 @@ class Event extends POG_Base
 			{
 				$participant->Delete($deep, $across);
 			}
-			$pushdispatchList = $this->GetPushdispatchList();
-			$map = new EventPushDispatchMap();
-			$map->RemoveMapping($this);
-			foreach ($pushdispatchList as $pushdispatch)
-			{
-				$pushdispatch->Delete($deep, $across);
-			}
 		}
 		else
 		{
 			$map = new EventParticipantMap();
-			$map->RemoveMapping($this);
-			$map = new EventPushDispatchMap();
 			$map->RemoveMapping($this);
 		}
 		$connection = Database::Connect();
@@ -931,147 +908,6 @@ class Event extends POG_Base
 		if (!$found)
 		{
 			$this->_inviteList[] = $invite;
-		}
-	}
-	
-	
-	/**
-	* Creates mappings between this and all objects in the PushDispatch List array. Any existing mapping will become orphan(s)
-	* @return null
-	*/
-	function SetPushdispatchList(&$pushdispatchList)
-	{
-		$map = new EventPushDispatchMap();
-		$map->RemoveMapping($this);
-		$this->_pushdispatchList = $pushdispatchList;
-	}
-	
-	
-	/**
-	* Returns a sorted array of objects that match given conditions
-	* @param multidimensional array {("field", "comparator", "value"), ("field", "comparator", "value"), ...} 
-	* @param string $sortBy 
-	* @param boolean $ascending 
-	* @param int limit 
-	* @return array $eventList
-	*/
-	function GetPushdispatchList($fcv_array = array(), $sortBy='', $ascending=true, $limit='')
-	{
-		$sqlLimit = ($limit != '' ? "LIMIT $limit" : '');
-		$connection = Database::Connect();
-		$pushdispatch = new PushDispatch();
-		$pushdispatchList = Array();
-		$this->pog_query = "select distinct * from `pushdispatch` a INNER JOIN `eventpushdispatchmap` m ON m.pushdispatchid = a.pushdispatchid where m.eventid = '$this->eventId' ";
-		if (sizeof($fcv_array) > 0)
-		{
-			$this->pog_query .= " AND ";
-			for ($i=0, $c=sizeof($fcv_array); $i<$c; $i++)
-			{
-				if (sizeof($fcv_array[$i]) == 1)
-				{
-					$this->pog_query .= " ".$fcv_array[$i][0]." ";
-					continue;
-				}
-				else
-				{
-					if ($i > 0 && sizeof($fcv_array[$i-1]) != 1)
-					{
-						$this->pog_query .= " AND ";
-					}
-					if (isset($pushdispatch->pog_attribute_type[$fcv_array[$i][0]]['db_attributes']) && $pushdispatch->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'NUMERIC' && $pushdispatch->pog_attribute_type[$fcv_array[$i][0]]['db_attributes'][0] != 'SET')
-					{
-						if ($GLOBALS['configuration']['db_encoding'] == 1)
-						{
-							$value = POG_Base::IsColumn($fcv_array[$i][2]) ? "BASE64_DECODE(".$fcv_array[$i][2].")" : $this->Quote($fcv_array[$i][2], $connection);
-							$this->pog_query .= "BASE64_DECODE(`".$fcv_array[$i][0]."`) ".$fcv_array[$i][1]." ".$value;
-						}
-						else
-						{
-							$value =  POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
-							$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
-						}
-					}
-					else
-					{
-						$value = POG_Base::IsColumn($fcv_array[$i][2]) ? $fcv_array[$i][2] : $this->Quote($fcv_array[$i][2], $connection);
-						$this->pog_query .= "a.`".$fcv_array[$i][0]."` ".$fcv_array[$i][1]." ".$value;
-					}
-				}
-			}
-		}
-		if ($sortBy != '')
-		{
-			if (isset($pushdispatch->pog_attribute_type[$sortBy]['db_attributes']) && $pushdispatch->pog_attribute_type[$sortBy]['db_attributes'][0] != 'NUMERIC' && $pushdispatch->pog_attribute_type[$sortBy]['db_attributes'][0] != 'SET')
-			{
-				if ($GLOBALS['configuration']['db_encoding'] == 1)
-				{
-					$sortBy = "BASE64_DECODE(a.$sortBy) ";
-				}
-				else
-				{
-					$sortBy = "a.$sortBy ";
-				}
-			}
-			else
-			{
-				$sortBy = "a.$sortBy ";
-			}
-		}
-		else
-		{
-			$sortBy = "a.pushdispatchid";
-		}
-		$this->pog_query .= " order by ".$sortBy." ".($ascending ? "asc" : "desc")." $sqlLimit";
-		$cursor = Database::Reader($this->pog_query, $connection);
-		while($rows = Database::Read($cursor))
-		{
-			$pushdispatch = new PushDispatch();
-			foreach ($pushdispatch->pog_attribute_type as $attribute_name => $attrubute_type)
-			{
-				if ($attrubute_type['db_attributes'][1] != "HASMANY" && $attrubute_type['db_attributes'][1] != "JOIN")
-				{
-					if ($attrubute_type['db_attributes'][1] == "BELONGSTO")
-					{
-						$pushdispatch->{strtolower($attribute_name).'Id'} = $rows[strtolower($attribute_name).'id'];
-						continue;
-					}
-					$pushdispatch->{$attribute_name} = $this->Unescape($rows[strtolower($attribute_name)]);
-				}
-			}
-			$pushdispatchList[] = $pushdispatch;
-		}
-		return $pushdispatchList;
-	}
-	
-	
-	/**
-	* Associates the PushDispatch object to this one
-	* @return 
-	*/
-	function AddPushdispatch(&$pushdispatch)
-	{
-		if ($pushdispatch instanceof PushDispatch)
-		{
-			if (in_array($this, $pushdispatch->eventList, true))
-			{
-				return false;
-			}
-			else
-			{
-				$found = false;
-				foreach ($this->_pushdispatchList as $pushdispatch2)
-				{
-					if ($pushdispatch->pushdispatchId > 0 && $pushdispatch->pushdispatchId == $pushdispatch2->pushdispatchId)
-					{
-						$found = true;
-						break;
-					}
-				}
-				if (!$found)
-				{
-					$this->_pushdispatchList[] = $pushdispatch;
-				}
-			}
 		}
 	}
 	
