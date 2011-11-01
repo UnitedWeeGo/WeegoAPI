@@ -262,21 +262,32 @@ class Push
 			if (!$this->eventShouldDispatch($event)) continue; // skips to the next if event does not meet time requirement
 			$didFindOneToDispatch = true;
 			unset($events[$i]);
-			echo 'event dispatch start notification: ' . $event->eventTitle . PHP_EOL;;
+			echo 'event dispatch start notification: ' . $event->eventTitle . PHP_EOL;
 				
 			// for each participant...
 			$participants = $event->GetParticipantList();
+			
+			echo 'event participants count: ' . count($participants) . PHP_EOL;
+			
 			for ($j=0; $j<count($participants); $j++)
 			{
 				/** @var $participant Participant */
 				$participant = $participants[$j];
 
 				// skip user if they have removed the event
-				if ($this->getHasRemovedEvent($event, $participant->participantId)) continue;
+				if ($this->getHasRemovedEvent($event, $participant->participantId)) 
+				{
+					echo 'participant: ' . $participant->email . ' removed the event, continue.' . PHP_EOL;
+					continue;
+				}
 
 				// skip user if they have not accepted the event
-				if (!$this->getHasAcceptedEvent($event, $participant->email)) continue;
-
+				if (!$this->getHasAcceptedEvent($event, $participant->email)) 
+				{
+					echo 'participant: ' . $participant->email . ' did not accept event, continue.' . PHP_EOL;
+					continue;
+				}
+				
 				// add the user to the queue so any other messages get ignored and this one is delivered
 				array_push($this->queuedUpUserIDCollection, $participant->email);
 
