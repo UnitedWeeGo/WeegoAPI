@@ -282,6 +282,7 @@ class Push
 				}
 
 				// skip user if they have not accepted the event
+				echo 'participant accepted event : ' . $event->eventTitle . ' -- ' . $this->getHasAcceptedEvent($event, $participant->email) . PHP_EOL;
 				if (!$this->getHasAcceptedEvent($event, $participant->email)) 
 				{
 					echo 'participant: ' . $participant->email . ' did not accept event, continue.' . PHP_EOL;
@@ -790,7 +791,13 @@ class Push
 	{
 		$queue = $this->getQueue();
 		$acceptedParticipantList = preg_split('/,/', $queue->acceptedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
+		
+		echo 'acceptedParticipantList :' . $acceptedParticipantList . PHP_EOL;
+		echo 'checking for email :' . $email . PHP_EOL;
+		
 		$hasAccepted = in_array($email, $acceptedParticipantList);
+		
+		echo 'hasAccepted :' . $hasAccepted . PHP_EOL;
 
 		return $hasAccepted;
 	}
