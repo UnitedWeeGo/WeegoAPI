@@ -304,7 +304,7 @@ class Push
 					if ($device->pushAlert == 'enabled')
 					{
 						// construct the message content
-						$messageString = $event->eventTitle . " is starting. Are you coming?";
+						$messageString = $event->eventTitle . " is starting.";
 
 						// construct the message
 						$message = new ApnsPHP_Message_Custom($device->deviceToken);
@@ -312,7 +312,7 @@ class Push
 						// Play the default sound
 						if ($device->pushSound == 'enabled') $message->setSound();
 						// Set the "View" button title.
-						$message->setActionLocKey('Yes!');
+						$message->setActionLocKey('View');
 						$message->setCustomProperty('messageType', 'upcoming');
 
 						if ($device->pushBadge == 'enabled')
