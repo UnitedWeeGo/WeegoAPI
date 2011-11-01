@@ -777,6 +777,7 @@ class Push
 	 */
 	function getHasAcceptedEvent(&$event, $email)
 	{
+		$queue = $this->getQueue();
 		$acceptedParticipantList = preg_split('/,/', $queue->acceptedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasAccepted = in_array($email, $acceptedParticipantList);
 
@@ -791,6 +792,7 @@ class Push
 	 */
 	function getHasRemovedEvent(&$event, $id)
 	{
+		$queue = $this->getQueue();
 		$removedParticipantList = preg_split('/,/', $queue->removedParticipantList, NULL, PREG_SPLIT_NO_EMPTY);
 		$hasRemoved = in_array($id, $removedParticipantList);
 
