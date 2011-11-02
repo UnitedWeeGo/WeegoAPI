@@ -103,7 +103,10 @@
 			$root = $doc->createElement('response');
 			$doc->appendChild($root);
 			$root->setAttribute('code', $code);
-			$root->setAttribute('timestamp', date( 'Y-m-d H:i:s', microtime(true) ) );
+			
+			// setting timestamp -2 minutes to compensate for any connection lag in client
+			$root->setAttribute('timestamp', date( 'Y-m-d H:i:s', microtime(true) - 120 ) );
+			
 			if ($requestId != '')
 			{
 				$root->setAttribute('requestId', $requestId);

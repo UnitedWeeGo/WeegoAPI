@@ -74,8 +74,6 @@ class RemoveEventClass extends ReqBase
 			$event->cancelled = 1;
 			$event->timestamp = $this->getTimeStamp();
 			$event->infoTimestamp = $this->getTimeStamp();
-			$pushdispatchList = array();
-			$event->SetPushdispatchList($pushdispatchList); // remove from push dispatch list so notifications don't go out
 			$event->Save(true);
 			
 			$inviteService = new InviteService();
