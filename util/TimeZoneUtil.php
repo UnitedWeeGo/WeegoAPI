@@ -2,21 +2,6 @@
 
 class TimeZoneUtil
 {
-	/*
-	static $aTimeZones = array(
-	  'America/Puerto_Rico'=>'AST', 
-	  'America/New_York'=>'EDT', 
-	  'America/Chicago'=>'CDT', 
-	  'America/Boise'=>'MDT', 
-	  'America/Phoenix'=>'MST', 
-	  'America/Los_Angeles'=>'PDT', 
-	  'America/Juneau'=>'AKDT', 
-	  'Pacific/Honolulu'=>'HST', 
-	  'Pacific/Guam'=>'ChST', 
-	  'Pacific/Samoa'=>'SST', 
-	  'Pacific/Wake'=>'WAKT', 
-	);
-	*/
 	private static $aTimeZones = array(
 		  'AST'=>'America/Puerto_Ric', 
 		  'EDT'=>'America/New_York', 
@@ -31,12 +16,25 @@ class TimeZoneUtil
 		  'WAKT'=>'Pacific/Wake', 
 	);
 	
+	private static $aTimeOffsets = array(
+			  '-1000'=>'HST',				// Hawaii Time 
+			  '-0800'=>'AKDT',				// Alaska Time
+			  '-0700'=>'PDT', 				// Pacific Time 
+			  '-0600'=>'MDT', 				// Mountain Time 
+			  '-0500'=>'CDT', 				// Central Time 
+			  '-0400'=>'EDT'				// Eastern Time 
+	);
+	
 	static function getPHPTimeZoneStampForAbbreviation($abbreviation)
 	{
 		if (key_exists($abbreviation, self::$aTimeZones))return self::$aTimeZones[$abbreviation];
 		return null;
 	}
-	
+	static function getPHPTimeZoneNameForOffset($offset)
+	{
+		if (key_exists($offset, self::$aTimeOffsets))return self::$aTimeOffsets[$offset];
+		return null;
+	}
 }
 
 ?>
