@@ -61,7 +61,9 @@ class ReqBase
 			$diff1 = $ts1 - $ts2;
 			$d2 = $ts1 + $diff1;
 			
-			$tz = TimeZoneUtil::getPHPTimeZoneNameForOffset($eventTimeZone);
+			$isDaylightSavings = $eventTimeTZ->format('I');
+			$tz = TimeZoneUtil::getPHPTimeZoneNameForOffset($eventTimeZone, $isDaylightSavings);
+			
 			$formattedDate = date('D, M j g:i A', $d2) . ' ' . (($tz) ? $tz : $eventTimeZone);
 			
 			return $formattedDate;

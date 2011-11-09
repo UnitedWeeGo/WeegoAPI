@@ -22,10 +22,11 @@ function getFormattedTime($eventDate, $eventTimeZone=null)
 			
 		$diff1 = $ts1 - $ts2;
 		$d2 = $ts1 + $diff1;
-			
-		$tz = TimeZoneUtil::getPHPTimeZoneNameForOffset($eventTimeZone);
+		
+		$isDaylightSavings = $eventTimeTZ->format('I');
+		$tz = TimeZoneUtil::getPHPTimeZoneNameForOffset($eventTimeZone, $isDaylightSavings);
 		$formattedDate = date('D, M j g:i A', $d2) . ' ' . (($tz) ? $tz : $eventTimeZone);
-			
+		
 		return $formattedDate;
 	}
 	else
@@ -38,6 +39,7 @@ function getFormattedTime($eventDate, $eventTimeZone=null)
 	}
 }
 
+echo getFormattedTime('2011-11-05 01:30:00', '-0800') . PHP_EOL;
 echo getFormattedTime('2011-11-05 01:30:00', '-0700') . PHP_EOL;
 echo getFormattedTime('2011-11-05 01:30:00', '-0400') . PHP_EOL;
 echo getFormattedTime('2011-11-05 01:30:00', '+0800') . PHP_EOL;
