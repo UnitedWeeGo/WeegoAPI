@@ -504,8 +504,12 @@ class Push
 			$sandPush->send();
 			// Disconnect from the Apple Push Notification Service
 			$sandPush->disconnect();
+			
+			$aErrorQueue = $sandPush->getErrors();
+			if (!empty($aErrorQueue)) {
+				var_dump($aErrorQueue);
 		}
-
+		
 	}
 
 	/**
