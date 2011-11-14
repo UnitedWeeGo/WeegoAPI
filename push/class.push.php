@@ -508,6 +508,7 @@ class Push
 			$aErrorQueue = $sandPush->getErrors();
 			if (!empty($aErrorQueue)) {
 				var_dump($aErrorQueue);
+			}
 		}
 		
 	}
