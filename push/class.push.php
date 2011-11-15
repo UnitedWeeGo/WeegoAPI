@@ -140,15 +140,12 @@ class Push
 			$prodPush->send();
 			// Disconnect from the Apple Push Notification Service
 			$prodPush->disconnect();
+			
+			$aErrorQueue = $prodPush->getErrors();
+			if (!empty($aErrorQueue)) {
+				var_dump($aErrorQueue);
+			}
 		}
-
-		// Examine the error message container
-		/* this is how we could log errors
-		$aErrorQueue = $prodPush->getErrors();
-		if (!empty($aErrorQueue)) {
-		var_dump($aErrorQueue);
-		}
-		*/
 
 		// Send all messages in the message queue
 		if ($doSendSandMessages)
@@ -159,6 +156,11 @@ class Push
 			$sandPush->send();
 			// Disconnect from the Apple Push Notification Service
 			$sandPush->disconnect();
+			
+			$aErrorQueue = $sandPush->getErrors();
+			if (!empty($aErrorQueue)) {
+				var_dump($aErrorQueue);
+			}
 		}
 	}
 
