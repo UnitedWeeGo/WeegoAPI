@@ -40,9 +40,9 @@ class DeviceClass extends ReqBase
 		$lookup = new Device();
 		$existingDevices = $lookup->GetList( array( array("deviceUuid", "=", $this->dataObj['deviceUuid'] ) ) );
 		
-		if( count($existingDevices) > 0) // device has been added, so delete it
+		for ($i=0; $i < count($existingDevices); $i++) // delete all devices with that uuid
 		{
-			$device = $existingDevices[0]; // should only be one device with a unique uuid
+			$device = $existingDevices[$i];
 			$device->Delete();
 		}
 		
