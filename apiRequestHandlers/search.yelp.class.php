@@ -3,7 +3,7 @@
 //
 // From http://non-diligent.com/articles/yelp-apiv2-php-example/
 //
-header ("Content-Type:text/xml");
+header ("Content-Type:text/javascript");
 
 // Enter the path that the oauth library is in relation to the php file
 require_once ('../lib/OAuth.php');
