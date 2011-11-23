@@ -802,19 +802,45 @@ class Push
 	}
 
 	/**
-	 * Get the formatted event time
-	 * @param string $eventDate
-	 * @param string $eventTimeZone
-	 * @return string
-	 */
-	function getFormattedTime($eventDate, $eventTimeZone=null)
-	{
-		$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
-		$eventTime = new DateTime($eventDate);
-		if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
-		$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $eventTimeZone : 'GMT');
-		return $dateStr;
-	}
+   	* Get the formatted event time
+   	* @param string $eventDate
+   	* @param string $eventTimeZone
+   	* @return string
+   	*/
+   	function getFormattedTime($eventDate, $eventTimeZone=null)
+   	{
+   		$isRFC822Timezone = intval($eventTimeZone) != 0;
+   		if ($isRFC822Timezone) // new style, RFC 822 Timezone
+   		{
+   			// for php to properly parse the timezone, a + must be added to positive values
+   			$char0 = substr($eventTimeZone, 0, 1);
+   			if ($char0 != '+' && $char0 != '-') $eventTimeZone = '+' . $eventTimeZone;
+   			// now apply the timezone offset to the event date
+   			$eventTimeGMT = new DateTime($eventDate . ' GMT');
+   			$eventTimeTZ = new DateTime($eventDate . ' ' . $eventTimeZone);
+   			
+   			$ts1 = $eventTimeGMT->getTimestamp();
+			$ts2 = $eventTimeTZ->getTimestamp();
+			
+			$diff1 = $ts1 - $ts2;
+			$d2 = $ts1 + $diff1;
+			
+			$isDaylightSavings = $eventTimeTZ->format('I');
+			$tz = TimeZoneUtil::getPHPTimeZoneNameForOffset($eventTimeZone, $isDaylightSavings);
+			
+			$formattedDate = date('D, M j g:i A', $d2) . ' ' . (($tz) ? $tz : $eventTimeZone);
+			
+			return $formattedDate;
+   		}
+   		else
+   		{
+   			$tz = TimeZoneUtil::getPHPTimeZoneStampForAbbreviation($eventTimeZone);
+   			$eventTime = new DateTime($eventDate);
+   			if ($tz) $eventTime->setTimezone(new DateTimeZone($tz));
+   			$dateStr = $eventTime->format('D, M j g:i A') . ' ' . (($tz) ? $eventTimeZone : 'GMT');
+   			return $dateStr;
+   		}
+   	}
 }
 
 ?>
