@@ -243,6 +243,16 @@ class XMLUtil extends ReqBase
 			$rating = $doc->createCDATASection($location->rating);
 			$ratingNode->appendChild($rating);
 			
+			$review_countNode = $doc->createElement('review_count');
+			$root->appendChild($review_countNode);
+			$review_count = $doc->createCDATASection($location->review_count);
+			$review_countNode->appendChild($review_count);
+			
+			$mobile_yelp_urlNode = $doc->createElement('mobile_yelp_url');
+			$root->appendChild($mobile_yelp_urlNode);
+			$mobile_yelp_url = $doc->createCDATASection($location->mobile_yelp_url);
+			$mobile_yelp_urlNode->appendChild($mobile_yelp_url);
+			
 			$typeNode = $doc->createElement('location_type');
 			$root->appendChild($typeNode);
 			$type = $doc->createCDATASection($location->location_type);

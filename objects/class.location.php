@@ -19,7 +19,9 @@
 	`votecount` INT NOT NULL,
 	`location_type` VARCHAR(255) NOT NULL,
 	`tempid` VARCHAR(255) NOT NULL,
-	`hasbeenremoved` TINYINT NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`locationid`)) ENGINE=MyISAM;
+	`hasbeenremoved` TINYINT NOT NULL,
+	`mobile_yelp_url` VARCHAR(255) NOT NULL,
+	`review_count` VARCHAR(255) NOT NULL, INDEX(`eventid`), PRIMARY KEY  (`locationid`)) ENGINE=MyISAM;
 */
 
 /**
@@ -28,7 +30,7 @@
 * @version POG 3.0d / PHP5.1 MYSQL
 * @see http://www.phpobjectgenerator.com/plog/tutorials/45/pdo-mysql
 * @copyright Free for personal & commercial use. (Offered under the BSD license)
-* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Location&attributeList=array+%28%0A++0+%3D%3E+%27name%27%2C%0A++1+%3D%3E+%27vicinity%27%2C%0A++2+%3D%3E+%27icon%27%2C%0A++3+%3D%3E+%27latitude%27%2C%0A++4+%3D%3E+%27longitude%27%2C%0A++5+%3D%3E+%27Event%27%2C%0A++6+%3D%3E+%27timestamp%27%2C%0A++7+%3D%3E+%27addedByParticipantId%27%2C%0A++8+%3D%3E+%27formatted_phone_number%27%2C%0A++9+%3D%3E+%27formatted_address%27%2C%0A++10+%3D%3E+%27rating%27%2C%0A++11+%3D%3E+%27g_id%27%2C%0A++12+%3D%3E+%27voteCount%27%2C%0A++13+%3D%3E+%27location_type%27%2C%0A++14+%3D%3E+%27tempId%27%2C%0A++15+%3D%3E+%27hasBeenRemoved%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2529
+* @link http://pog.weegoapp.com/?language=php5.1&wrapper=pdo&pdoDriver=mysql&objectName=Location&attributeList=array+%28%0A++0+%3D%3E+%27name%27%2C%0A++1+%3D%3E+%27vicinity%27%2C%0A++2+%3D%3E+%27icon%27%2C%0A++3+%3D%3E+%27latitude%27%2C%0A++4+%3D%3E+%27longitude%27%2C%0A++5+%3D%3E+%27Event%27%2C%0A++6+%3D%3E+%27timestamp%27%2C%0A++7+%3D%3E+%27addedByParticipantId%27%2C%0A++8+%3D%3E+%27formatted_phone_number%27%2C%0A++9+%3D%3E+%27formatted_address%27%2C%0A++10+%3D%3E+%27rating%27%2C%0A++11+%3D%3E+%27g_id%27%2C%0A++12+%3D%3E+%27voteCount%27%2C%0A++13+%3D%3E+%27location_type%27%2C%0A++14+%3D%3E+%27tempId%27%2C%0A++15+%3D%3E+%27hasBeenRemoved%27%2C%0A++16+%3D%3E+%27mobile_yelp_url%27%2C%0A++17+%3D%3E+%27review_count%27%2C%0A%29&typeList=array%2B%2528%250A%2B%2B0%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B1%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B2%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B3%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B4%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B5%2B%253D%253E%2B%2527BELONGSTO%2527%252C%250A%2B%2B6%2B%253D%253E%2B%2527TIMESTAMP%2527%252C%250A%2B%2B7%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B8%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B9%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B10%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B11%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B12%2B%253D%253E%2B%2527INT%2527%252C%250A%2B%2B13%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B14%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B15%2B%253D%253E%2B%2527TINYINT%2527%252C%250A%2B%2B16%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2B%2B17%2B%253D%253E%2B%2527VARCHAR%2528255%2529%2527%252C%250A%2529
 */
 include_once('class.pog_base.php');
 class Location extends POG_Base
@@ -115,6 +117,16 @@ class Location extends POG_Base
 	 */
 	public $hasBeenRemoved;
 	
+	/**
+	 * @var VARCHAR(255)
+	 */
+	public $mobile_yelp_url;
+	
+	/**
+	 * @var VARCHAR(255)
+	 */
+	public $review_count;
+	
 	public $pog_attribute_type = array(
 		"locationId" => array('db_attributes' => array("NUMERIC", "INT")),
 		"name" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
@@ -133,6 +145,8 @@ class Location extends POG_Base
 		"location_type" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"tempId" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		"hasBeenRemoved" => array('db_attributes' => array("NUMERIC", "TINYINT")),
+		"mobile_yelp_url" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
+		"review_count" => array('db_attributes' => array("TEXT", "VARCHAR", "255")),
 		);
 	public $pog_query;
 	public $pog_bind = array();
@@ -154,7 +168,7 @@ class Location extends POG_Base
 		}
 	}
 	
-	function Location($name='', $vicinity='', $icon='', $latitude='', $longitude='', $timestamp='', $addedByParticipantId='', $formatted_phone_number='', $formatted_address='', $rating='', $g_id='', $voteCount='', $location_type='', $tempId='', $hasBeenRemoved='')
+	function Location($name='', $vicinity='', $icon='', $latitude='', $longitude='', $timestamp='', $addedByParticipantId='', $formatted_phone_number='', $formatted_address='', $rating='', $g_id='', $voteCount='', $location_type='', $tempId='', $hasBeenRemoved='', $mobile_yelp_url='', $review_count='')
 	{
 		$this->name = $name;
 		$this->vicinity = $vicinity;
@@ -171,6 +185,8 @@ class Location extends POG_Base
 		$this->location_type = $location_type;
 		$this->tempId = $tempId;
 		$this->hasBeenRemoved = $hasBeenRemoved;
+		$this->mobile_yelp_url = $mobile_yelp_url;
+		$this->review_count = $review_count;
 	}
 	
 	
@@ -206,6 +222,8 @@ class Location extends POG_Base
 			$this->location_type = $this->Decode($row['location_type']);
 			$this->tempId = $this->Decode($row['tempid']);
 			$this->hasBeenRemoved = $this->Decode($row['hasbeenremoved']);
+			$this->mobile_yelp_url = $this->Decode($row['mobile_yelp_url']);
+			$this->review_count = $this->Decode($row['review_count']);
 		}
 		return $this;
 	}
@@ -307,6 +325,8 @@ class Location extends POG_Base
 			$location->location_type = $this->Unescape($row['location_type']);
 			$location->tempId = $this->Unescape($row['tempid']);
 			$location->hasBeenRemoved = $this->Unescape($row['hasbeenremoved']);
+			$location->mobile_yelp_url = $this->Unescape($row['mobile_yelp_url']);
+			$location->review_count = $this->Unescape($row['review_count']);
 			$locationList[] = $location;
 		}
 		return $locationList;
@@ -344,12 +364,14 @@ class Location extends POG_Base
 			`votecount`=:votecount,
 			`location_type`=:location_type,
 			`tempid`=:tempid,
-			`hasbeenremoved`=:hasbeenremoved where `locationid`=:locationId";
+			`hasbeenremoved`=:hasbeenremoved,
+			`mobile_yelp_url`=:mobile_yelp_url,
+			`review_count`=:review_count where `locationid`=:locationId";
 		}
 		else
 		{
 			$this->locationId = "";
-			$this->pog_query = "insert into `location` (`name`,`vicinity`,`icon`,`latitude`,`longitude`,`eventid`,`timestamp`,`addedbyparticipantid`,`formatted_phone_number`,`formatted_address`,`rating`,`g_id`,`votecount`,`location_type`,`tempid`,`hasbeenremoved`,`locationid`) values (
+			$this->pog_query = "insert into `location` (`name`,`vicinity`,`icon`,`latitude`,`longitude`,`eventid`,`timestamp`,`addedbyparticipantid`,`formatted_phone_number`,`formatted_address`,`rating`,`g_id`,`votecount`,`location_type`,`tempid`,`hasbeenremoved`,`mobile_yelp_url`,`review_count`,`locationid`) values (
 			:name,
 			:vicinity,
 			:icon,
@@ -366,6 +388,8 @@ class Location extends POG_Base
 			:location_type,
 			:tempid,
 			:hasbeenremoved,
+			:mobile_yelp_url,
+			:review_count,
 			:locationId)";
 		}
 		$this->pog_bind = array(
@@ -385,6 +409,8 @@ class Location extends POG_Base
 			':location_type' => $this->Encode($this->location_type),
 			':tempid' => $this->Encode($this->tempId),
 			':hasbeenremoved' => $this->Encode($this->hasBeenRemoved),
+			':mobile_yelp_url' => $this->Encode($this->mobile_yelp_url),
+			':review_count' => $this->Encode($this->review_count),
 			':locationId' => intval($this->locationId)
 		);
 		$insertId = Database::InsertOrUpdatePrepared($this->pog_query, $this->pog_bind, $connection);

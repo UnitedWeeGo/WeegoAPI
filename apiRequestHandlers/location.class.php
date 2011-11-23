@@ -21,7 +21,7 @@ class LocationClass extends ReqBase
 	
 	public $dataObj;	
 	private $requiredFields = array('registeredId', 'latitude', 'longitude', 'eventId', 'location_type');
-	private $allFields = array('latitude', 'longitude', 'name', 'vicinity', 'requestId', 'g_id', 'g_reference', 'location_type', 'formatted_address', 'formatted_phone_number', 'tempId');
+	private $allFields = array('latitude', 'longitude', 'name', 'vicinity', 'requestId', 'g_id', 'g_reference', 'location_type', 'formatted_address', 'formatted_phone_number', 'tempId', 'rating', 'review_count', 'mobile_yelp_url');
 	
 	//g_reference look for this to populate object with google detail data
 	
