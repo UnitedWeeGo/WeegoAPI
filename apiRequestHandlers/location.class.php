@@ -12,7 +12,7 @@ require_once '../util/request.base.php';
 require_once '../util/class.error.php';
 require_once '../util/class.success.php';
 require_once '../push/class.push.php';
-require_once '../google/GooglePlaces.php';
+//require_once '../google/GooglePlaces.php';
 
 class LocationClass extends ReqBase
 {

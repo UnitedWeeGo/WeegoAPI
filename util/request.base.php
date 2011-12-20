@@ -50,6 +50,9 @@ class ReqBase
    		{
    			// for php to properly parse the timezone, a + must be added to positive values
    			$char0 = substr($eventTimeZone, 0, 1);
+   			if ($char0 == ' ') $char0 = substr($eventTimeZone, 1); // trim space
+   			
+   			$char0 = substr($eventTimeZone, 0, 1);
    			if ($char0 != '+' && $char0 != '-') $eventTimeZone = '+' . $eventTimeZone;
    			// now apply the timezone offset to the event date
    			$eventTimeGMT = new DateTime($eventDate . ' GMT');
