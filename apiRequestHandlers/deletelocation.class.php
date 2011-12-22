@@ -12,6 +12,7 @@ require_once '../util/request.base.php';
 require_once '../util/class.error.php';
 require_once '../util/class.success.php';
 
+require_once 'feedmessage.class.php';
 require_once 'get.event.class.php';
 require_once '../push/class.push.php';
 
