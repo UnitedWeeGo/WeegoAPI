@@ -108,16 +108,6 @@ class DeleteLocationClass extends ReqBase
 				die();
 			}
 		}
-		$xmlUtil = new XMLUtil();
-		
-		if ($userTs)
-		{
-			$xml = $xmlUtil->GetEventXML($savedEvent, $me, $userTs);
-		}
-		else
-		{
-			$xml = $xmlUtil->GetEventXML($savedEvent, $me);
-		}
 		
 		$message = new FeedMessage();
 		$message->timestamp = $this->getTimeStamp();
@@ -129,6 +119,19 @@ class DeleteLocationClass extends ReqBase
 		$savedEvent->AddFeedmessage($message);
 		$savedEvent->timestamp = $this->getTimeStamp();
 		$savedEvent->Save(true);
+		
+		$xmlUtil = new XMLUtil();
+		
+		if ($userTs)
+		{
+			$xml = $xmlUtil->GetEventXML($savedEvent, $me, $userTs);
+		}
+		else
+		{
+			$xml = $xmlUtil->GetEventXML($savedEvent, $me);
+		}
+		
+		
 		
 		$push = new Push();
 		$push->triggerClientUpdateForEvent($savedEvent);
