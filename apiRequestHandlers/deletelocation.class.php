@@ -118,6 +118,17 @@ class DeleteLocationClass extends ReqBase
 			$xml = $xmlUtil->GetEventXML($savedEvent, $me);
 		}
 		
+		$message = new FeedMessage();
+		$message->timestamp = $this->getTimeStamp();
+		$message->type = FeedMessageClass::TYPE_SYSTEM_LOCATION_ADDED;
+		$message->message = 'Removed "' . $savedLocation->name . '"';
+		$message->senderId = $me->email;
+		$message->readParticipantList = $me->participantId;
+			
+		$savedEvent->AddFeedmessage($message);
+		$savedEvent->timestamp = $this->getTimeStamp();
+		$savedEvent->Save(true);
+		
 		$push = new Push();
 		$push->triggerClientUpdateForEvent($savedEvent);
 		
