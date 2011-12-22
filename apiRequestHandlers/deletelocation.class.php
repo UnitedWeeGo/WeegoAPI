@@ -122,7 +122,7 @@ class DeleteLocationClass extends ReqBase
 		$message = new FeedMessage();
 		$message->timestamp = $this->getTimeStamp();
 		$message->type = FeedMessageClass::TYPE_SYSTEM_LOCATION_ADDED;
-		$message->message = 'Removed "' . $savedLocation->name . '"';
+		$message->message = 'Removed "' . $location->name . '"';
 		$message->senderId = $me->email;
 		$message->readParticipantList = $me->participantId;
 			
